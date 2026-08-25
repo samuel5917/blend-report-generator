@@ -2,14 +2,13 @@ import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export function Section({
-  numero,
   titulo,
   resumo,
   open,
   onToggle,
   children,
 }: {
-  numero: string;
+  numero?: string;
   titulo: string;
   resumo?: string;
   open: boolean;
@@ -17,21 +16,15 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-xl bg-panel backdrop-blur-md ring-1 ring-line">
+    <section className="rounded-xl bg-panel ring-1 ring-line">
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center gap-3 px-4 py-3 text-left"
+        className="flex w-full items-center gap-3 px-4 py-3.5 text-left"
       >
-        <span className="font-mono text-[10px] text-signal">{numero}</span>
-        <span className="text-sm font-semibold text-foreground">{titulo}</span>
-        {resumo ? <span className="font-mono text-[11px] text-steel2">{resumo}</span> : null}
-        <span
-          className={cn(
-            "ml-auto text-steel2 transition-transform",
-            !open && "-rotate-90",
-          )}
-        >
+        <span className="text-[15px] font-semibold text-foreground">{titulo}</span>
+        {resumo ? <span className="text-[12px] text-steel2">{resumo}</span> : null}
+        <span className={cn("ml-auto text-steel2 transition-transform", !open && "-rotate-90")}>
           ▾
         </span>
       </button>
@@ -43,6 +36,7 @@ export function Section({
     </section>
   );
 }
+
 
 export function Label({ children }: { children: ReactNode }) {
   return (
