@@ -252,7 +252,7 @@ function Index() {
               numero="02"
               titulo="Bancos / Frentes"
               resumo={`${state.bancos.length} selecionados`}
-              open={abertas.bancos!}
+              open={!!abertas["bancos"]}
               onToggle={() => toggleSecao("bancos")}
             >
               <div className="mb-3 flex flex-wrap gap-1.5">
@@ -310,7 +310,7 @@ function Index() {
               numero="03"
               titulo="Outras Observações"
               resumo={`${state.observacoes.filter((o) => o.trim()).length} registro(s)`}
-              open={abertas.obs!}
+              open={!!abertas["obs"]}
               onToggle={() => toggleSecao("obs")}
             >
               <div className="space-y-2">
@@ -362,7 +362,7 @@ function Index() {
               numero="04"
               titulo="Paradas Operacionais"
               resumo={`${state.paradas.length} registro(s)`}
-              open={abertas.paradas!}
+              open={!!abertas["paradas"]}
               onToggle={() => toggleSecao("paradas")}
             >
               <div className="space-y-3">
@@ -482,7 +482,7 @@ function Index() {
             <Section
               numero="05"
               titulo="Outras Movimentações"
-              open={abertas.mov!}
+              open={!!abertas["mov"]}
               onToggle={() => toggleSecao("mov")}
             >
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
