@@ -255,32 +255,36 @@ function Index() {
               open={!!abertas["bancos"]}
               onToggle={() => toggleSecao("bancos")}
             >
-              <div className="mb-3 flex flex-wrap gap-1.5">
-                {BANCOS_PADRAO.map((b) => (
-                  <Chip key={b} active={bancosSelecionados.includes(b)} onClick={() => toggleBanco(b)}>
-                    {b}
-                  </Chip>
-                ))}
-              </div>
-              <div className="mb-4 flex items-end gap-2">
-                <div className="w-56">
+              <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <SelectField
+                  label="Adicionar banco / frente"
+                  value=""
+                  onChange={(v) => {
+                    if (!v || bancosSelecionados.includes(v)) return;
+                    set({ bancos: [...state.bancos, novoBanco(v)] });
+                  }}
+                  options={BANCOS_PADRAO.filter((b) => !bancosSelecionados.includes(b))}
+                  placeholder="Selecione para adicionar…"
+                />
+                <div className="flex items-end gap-2">
                   <TextField
-                    label="Adicionar outro banco"
+                    className="flex-1"
+                    label="Outro (nome livre)"
                     value={bancoCustom}
                     onChange={setBancoCustom}
-                    placeholder="Nome do banco"
+                    placeholder="Ex.: B-1040"
                   />
+                  <ActionButton
+                    onClick={() => {
+                      const nome = bancoCustom.trim();
+                      if (!nome || bancosSelecionados.includes(nome)) return;
+                      set({ bancos: [...state.bancos, novoBanco(nome)] });
+                      setBancoCustom("");
+                    }}
+                  >
+                    ＋ ADICIONAR
+                  </ActionButton>
                 </div>
-                <ActionButton
-                  onClick={() => {
-                    const nome = bancoCustom.trim();
-                    if (!nome || bancosSelecionados.includes(nome)) return;
-                    set({ bancos: [...state.bancos, novoBanco(nome)] });
-                    setBancoCustom("");
-                  }}
-                >
-                  ＋ ADICIONAR
-                </ActionButton>
               </div>
 
               {state.bancos.length === 0 ? (
