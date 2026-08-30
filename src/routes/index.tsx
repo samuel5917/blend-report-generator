@@ -90,14 +90,6 @@ function Index() {
   const toggleSecao = (k: string) => setAbertas((a) => ({ ...a, [k]: !a[k] }));
 
   const bancosSelecionados = state.bancos.map((b) => b.nome);
-  const toggleBanco = (nome: string) => {
-    const existente = state.bancos.find((b) => b.nome === nome);
-    if (existente) {
-      set({ bancos: state.bancos.filter((b) => b.nome !== nome) });
-    } else {
-      set({ bancos: [...state.bancos, novoBanco(nome)] });
-    }
-  };
 
   const copiar = async () => {
     try {
@@ -289,7 +281,7 @@ function Index() {
 
               {state.bancos.length === 0 ? (
                 <p className="text-sm text-steel2">
-                  Selecione os bancos que participaram do turno para configurar as plantas.
+                  Adicione acima os bancos que participaram do turno — só eles aparecerão aqui.
                 </p>
               ) : (
                 <div className="space-y-3">
