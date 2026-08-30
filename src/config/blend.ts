@@ -3,7 +3,7 @@
  * Para adicionar bancos, motivos, locais ou frases, edite apenas este arquivo.
  */
 
-export const TURNOS = ["1°", "2°", "3°"] as const;
+export const TURNOS = ["1°", "2°"] as const;
 export type Turno = (typeof TURNOS)[number];
 
 export const BANCOS_PADRAO = [
@@ -27,131 +27,22 @@ export const BANCOS_PADRAO = [
   "Pulmão 01",
 ];
 
-/* ---------------------------------- Planta 01 --------------------------------- */
+/* ------------------------------- Plantas 01/02 -------------------------------- */
 
-export const P1_SITUACOES = [
+export const PLANTA_SITUACOES = [
   "Atendido",
-  "Não houve movimentação",
-  "Atendido parcialmente",
-  "Outra situação",
+  "Não Atendido",
+  "Atendido Parcialmente",
+  "Outros",
 ] as const;
-export type P1Situacao = (typeof P1_SITUACOES)[number];
+export type PlantaSituacao = (typeof PLANTA_SITUACOES)[number];
 
-export const P1_MOTIVOS_SEM_MOV = [
-  "Planta 01 não operou",
-  "Planta parada",
-  "Pulmão cheio",
-  "Orientação operacional para manter o pulmão sem alimentação",
-  "Montagem da nova estrutura",
-  "Atividades de aterro",
-  "Nova praça operacional em preparação",
-  "Outro",
-];
-
-/** Frase gerada para cada motivo de "Não houve movimentação" na Planta 01. */
-export const P1_FRASES_SEM_MOV: Record<string, string> = {
-  "Planta 01 não operou":
-    "Não houve movimentação para o pulmão da Planta 01 em razão da não operação da Planta 01.",
-  "Planta parada": "Não houve movimentação para o pulmão da Planta 01 em virtude da planta parada.",
-  "Pulmão cheio": "Não houve movimentação para o pulmão da Planta 01 em razão de pulmão cheio.",
-  "Orientação operacional para manter o pulmão sem alimentação":
-    "Não houve movimentação para o pulmão da Planta 01 conforme orientação operacional para manter o pulmão sem alimentação.",
-  "Montagem da nova estrutura":
-    "Não houve movimentação para o pulmão da Planta 01, pois a planta permanece parada para montagem da nova estrutura.",
-  "Atividades de aterro":
-    "Não houve movimentação para o pulmão da Planta 01 em razão das atividades de aterro.",
-  "Nova praça operacional em preparação":
-    "Não houve movimentação para o pulmão da Planta 01, com nova praça operacional em preparação.",
-};
-
-/* ---------------------------------- Planta 02 --------------------------------- */
-
-export const P2_SITUACOES = [
-  "Atendido",
-  "Atendido parcialmente",
-  "Não atendido",
-  "Não houve movimentação",
-  "Substituído por outro material",
-  "Outra situação",
-] as const;
-export type P2Situacao = (typeof P2_SITUACOES)[number];
-
-export const P2_COMPLEMENTOS_ATENDIDO = [
-  "Conforme planejado no Blend proposto pela Qualidade",
-  "Conforme a Diretriz Operacional",
-  "Reiniciado de maneira proporcional",
-  "Blend atendido e reiniciado",
-  "Blend atendido mais de uma vez",
-  "Foram adicionadas novas viagens",
-];
-
-export const P2_MOTIVOS_PARCIAL = [
+/** Motivos para "Não Atendido" e "Atendido Parcialmente". */
+export const PLANTA_MOTIVOS = [
   "Pulmão cheio",
   "Falta de material",
-  "Aguardando geração de material",
-  "Material com elevada umidade",
-  "Falta de frente seca",
-  "Baixa disponibilidade de CBs",
-  "Baixa disponibilidade de motoristas",
-  "Manutenção de equipamento",
-  "Parada da planta",
-  "Material insuficiente na frente",
-  "Material finalizado",
-  "Condição operacional",
-  "Orientação da Qualidade",
-  "Redistribuição das viagens entre outros bancos",
-  "Outro",
-];
-
-export const P2_MOTIVOS_NAO_ATENDIDO = [
-  "Pulmão cheio",
-  "Falta de material",
-  "Aguardando geração de material",
-  "Material com umidade elevada",
-  "Falta de frente seca",
-  "Rompedor em manutenção",
-  "Equipamento em manutenção",
-  "Baixa disponibilidade de CBs",
-  "Baixa disponibilidade de motoristas",
-  "Parada da Planta 02",
-  "Orientação da Qualidade",
-  "Material finalizado",
-  "Falta de condição operacional",
-  "Outro",
-];
-
-/** Trecho em minúscula usado depois de "em razão de/da". */
-export const MOTIVO_FRASE: Record<string, string> = {
-  "Pulmão cheio": "pulmão cheio",
-  "Falta de material": "falta de material",
-  "Aguardando geração de material": "aguardar a geração de material",
-  "Material com elevada umidade": "material com elevada umidade",
-  "Material com umidade elevada": "material com umidade elevada",
-  "Falta de frente seca": "falta de frente seca",
-  "Baixa disponibilidade de CBs": "baixa disponibilidade de CBs",
-  "Baixa disponibilidade de motoristas": "baixa disponibilidade de motoristas",
-  "Manutenção de equipamento": "manutenção de equipamento",
-  "Parada da planta": "parada da planta",
-  "Parada da Planta 02": "parada da Planta 02",
-  "Material insuficiente na frente": "material insuficiente na frente",
-  "Material finalizado": "material finalizado",
-  "Condição operacional": "condição operacional",
-  "Falta de condição operacional": "falta de condição operacional",
-  "Orientação da Qualidade": "orientação da Qualidade",
-  "Redistribuição das viagens entre outros bancos":
-    "redistribuição das viagens entre outros bancos",
-  "Rompedor em manutenção": "rompedor em manutenção",
-  "Equipamento em manutenção": "equipamento em manutenção",
-};
-
-export const OBS_BANCO_SUGESTOES = [
-  "material com elevada umidade",
-  "necessidade de geração de material",
-  "falta de material desmontado",
-  "material finalizado",
-  "necessidade de atuação do rompedor",
-  "acompanhamento da frente",
-  "condição da praça de carregamento",
+  "Definição da equipe de qualidade",
+  "Outros",
 ];
 
 export const OBS_TURNO_SUGESTOES = [
@@ -164,27 +55,12 @@ export const OBS_TURNO_SUGESTOES = [
   "Houve baixa disponibilidade de motoristas.",
   "Houve necessidade de geração de material.",
   "Houve material com elevada umidade.",
-  "Houve movimentação de sínter.",
-  "Houve movimentação para estoque.",
-  "Houve reprocesso.",
-  "Houve atividade de aterro.",
-  "Houve remanejo.",
 ];
 
 /* ------------------------------ Paradas operacionais -------------------------- */
 
-export const PARADA_LOCAIS = [
-  "Pulmão Planta 01",
-  "Pulmão Planta 02",
-  "B-1060",
-  "B-1030",
-  "B-1120",
-  "Planta 01",
-  "Planta 02",
-  "Mina",
-  "Acesso",
-  "Outro",
-];
+/** Parada operacional existe somente para estas categorias. */
+export const PARADA_LOCAIS = ["Pulmão-01", "Pulmão-02", "Planta-01", "Planta-02"];
 
 export const PARADA_MOTIVOS = [
   "Pulmão cheio",
@@ -205,51 +81,29 @@ export const PARADA_MOTIVOS = [
   "Aguardando orientação",
   "Necessidade interna",
   "Manutenção preventiva",
-  "Outro",
+  "Outros",
 ];
 
 /* ----------------------------------- Tipos ----------------------------------- */
 
-export interface Planta01State {
-  situacao: P1Situacao | "";
+export interface PlantaState {
+  situacao: PlantaSituacao | "";
   motivo: string;
   motivoOutro: string;
   texto: string;
-}
-
-export interface SubstituicaoState {
-  bancoPrevisto: string;
-  bancoUtilizado: string;
-  viagens: string;
-  motivo: string;
-  autorizacao: string;
-}
-
-export interface Planta02State {
-  situacao: P2Situacao | "";
-  complementos: string[];
-  motivos: string[];
-  motivoOutro: string;
-  viagensProgramadas: string;
-  viagensRealizadas: string;
-  aderencia: string;
-  texto: string;
-  temSubstituicao: boolean;
-  substituicao: SubstituicaoState;
 }
 
 export interface BancoState {
   id: string;
   nome: string;
-  planta01: Planta01State;
-  planta02: Planta02State;
+  planta01: PlantaState;
+  planta02: PlantaState;
   observacao: string;
 }
 
 export interface ParadaState {
   id: string;
   local: string;
-  localOutro: string;
   inicio: string;
   fim: string;
   motivo: string;
@@ -259,14 +113,9 @@ export interface ParadaState {
 
 export interface MovimentacaoState {
   houve: boolean;
-  quantidade: string;
-  material: string;
   origem: string;
   destino: string;
-  pilha: string;
-  descricao: string;
-  observacao: string;
-  orientacao: string;
+  quantidade: string;
 }
 
 export interface JustificativaState {
@@ -283,45 +132,29 @@ export interface JustificativaState {
 
 export const emptyMovimentacao = (): MovimentacaoState => ({
   houve: false,
-  quantidade: "",
-  material: "",
   origem: "",
   destino: "",
-  pilha: "",
-  descricao: "",
-  observacao: "",
-  orientacao: "",
+  quantidade: "",
+});
+
+const emptyPlanta = (): PlantaState => ({
+  situacao: "",
+  motivo: "",
+  motivoOutro: "",
+  texto: "",
 });
 
 export const novoBanco = (nome: string): BancoState => ({
   id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
   nome,
-  planta01: { situacao: "", motivo: "", motivoOutro: "", texto: "" },
-  planta02: {
-    situacao: "",
-    complementos: [],
-    motivos: [],
-    motivoOutro: "",
-    viagensProgramadas: "",
-    viagensRealizadas: "",
-    aderencia: "",
-    texto: "",
-    temSubstituicao: false,
-    substituicao: {
-      bancoPrevisto: "",
-      bancoUtilizado: "",
-      viagens: "",
-      motivo: "",
-      autorizacao: "",
-    },
-  },
+  planta01: emptyPlanta(),
+  planta02: emptyPlanta(),
   observacao: "",
 });
 
 export const novaParada = (): ParadaState => ({
   id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
   local: "",
-  localOutro: "",
   inicio: "",
   fim: "",
   motivo: "",
@@ -340,3 +173,48 @@ export const estadoInicial = (): JustificativaState => ({
   estoque: emptyMovimentacao(),
   remanejo: emptyMovimentacao(),
 });
+
+/** Normaliza estados antigos (3° turno, situações/campos removidos). */
+export function normalizarEstado(raw: Partial<JustificativaState>): JustificativaState {
+  const base = estadoInicial();
+  const s = { ...base, ...raw };
+  const turno: Turno = TURNOS.includes(s.turno as Turno) ? (s.turno as Turno) : "1°";
+  const planta = (p?: Partial<PlantaState>): PlantaState => {
+    const situacao =
+      p?.situacao && PLANTA_SITUACOES.includes(p.situacao as PlantaSituacao)
+        ? (p.situacao as PlantaSituacao)
+        : "";
+    return {
+      situacao,
+      motivo: PLANTA_MOTIVOS.includes(p?.motivo ?? "") ? p!.motivo! : "",
+      motivoOutro: p?.motivoOutro ?? "",
+      texto: p?.texto ?? "",
+    };
+  };
+  const mov = (m?: Partial<MovimentacaoState>): MovimentacaoState => ({
+    houve: !!m?.houve,
+    origem: m?.origem ?? "",
+    destino: m?.destino ?? "",
+    quantidade: m?.quantidade ?? "",
+  });
+  return {
+    ...s,
+    turno,
+    bancos: (s.bancos ?? []).map((b) => ({
+      id: b.id,
+      nome: b.nome,
+      planta01: planta(b.planta01),
+      planta02: planta(b.planta02),
+      observacao: b.observacao ?? "",
+    })),
+    observacoes: s.observacoes ?? [],
+    paradas: (s.paradas ?? []).map((p) => ({
+      ...p,
+      local: PARADA_LOCAIS.includes(p.local) ? p.local : "",
+    })),
+    om: mov(s.om),
+    reprocesso: mov(s.reprocesso),
+    estoque: mov(s.estoque),
+    remanejo: mov(s.remanejo),
+  };
+}
