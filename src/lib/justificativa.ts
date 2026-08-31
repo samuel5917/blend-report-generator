@@ -24,7 +24,7 @@ function motivoTexto(p: PlantaState): string {
 export function textoPlanta(p: PlantaState): string {
   switch (p.situacao) {
     case "Atendido":
-      return "Atendido. Ok.";
+      return "Atendido.";
     case "Não Atendido":
     case "Atendido Parcialmente": {
       const motivo = motivoTexto(p);
@@ -59,7 +59,7 @@ export function textoParada(parada: ParadaState): string {
 
 /** OM / Reprocesso / Estoque / Remanejo. */
 export function textoMovimentacao(m: MovimentacaoState): string {
-  if (!m.houve) return "Não houve. Ok.";
+  if (!m.houve) return "Não houve.";
   const partes: string[] = ["Houve"];
   if (has(m.origem)) partes.push(`do ${clean(m.origem)}`);
   if (has(m.destino)) partes.push(`para o ${clean(m.destino)}`);
