@@ -9,6 +9,7 @@ import {
   estadoInicial,
   novaParada,
   novoBanco,
+  normalizarEstado,
   type JustificativaState,
   type Turno,
 } from "@/config/blend";
@@ -73,7 +74,7 @@ function Index() {
     setDrafts(listarDrafts());
     try {
       const raw = window.localStorage.getItem(AUTOSAVE_KEY);
-      if (raw) setState({ ...estadoInicial(), ...(JSON.parse(raw) as JustificativaState) });
+      if (raw) setState(normalizarEstado(JSON.parse(raw) as JustificativaState));
     } catch {
       /* rascunho inválido: ignora */
     }
@@ -108,7 +109,7 @@ function Index() {
   };
 
   const abrirDraft = (d: Draft) => {
-    setState({ ...estadoInicial(), ...d.state });
+    setState(normalizarEstado(d.state));
     setTexto(d.texto);
     setEditando(false);
     setDraftId(d.id);
@@ -475,7 +476,7 @@ function Index() {
                   labelSim="Houve OM"
                   value={state.om}
                   onChange={(v) => set({ om: v })}
-                  campos={{ quantidade: true, origem: true, destino: true, descricao: true }}
+                  bancos={bancosSelecionados}
                 />
                 <MovimentacaoBloco
                   titulo="Reprocesso"
@@ -483,7 +484,7 @@ function Index() {
                   labelSim="Houve reprocesso"
                   value={state.reprocesso}
                   onChange={(v) => set({ reprocesso: v })}
-                  campos={{ quantidade: true, material: true, origem: true, destino: true }}
+                  bancos={bancosSelecionados}
                 />
                 <MovimentacaoBloco
                   titulo="Produto para estoque"
@@ -491,14 +492,7 @@ function Index() {
                   labelSim="Houve movimentação"
                   value={state.estoque}
                   onChange={(v) => set({ estoque: v })}
-                  campos={{
-                    quantidade: true,
-                    material: true,
-                    origem: true,
-                    destino: true,
-                    pilha: true,
-                    orientacao: true,
-                  }}
+                  bancos={bancosSelecionados}
                 />
                 <MovimentacaoBloco
                   titulo="Remanejo"
@@ -506,7 +500,7 @@ function Index() {
                   labelSim="Houve remanejo"
                   value={state.remanejo}
                   onChange={(v) => set({ remanejo: v })}
-                  campos={{ quantidade: true, material: true, origem: true, destino: true }}
+                  bancos={bancosSelecionados}
                 />
               </div>
             </Section>
