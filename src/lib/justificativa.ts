@@ -76,19 +76,21 @@ export function gerarJustificativa(state: JustificativaState): string {
   linhas.push(`Data: ${formatarData(state.data)}`);
 
   const bancos = state.bancos.filter((b) => has(b.nome));
-  if (bancos.length > 0) {
+  const linhasBancos: string[] = [];
+  for (const banco of bancos) {
+    const p1 = textoPlanta(banco.planta01);
+    const p2 = textoPlanta(banco.planta02);
+    if (!has(p1) && !has(p2) && !has(banco.observacao)) continue;
+    linhasBancos.push("");
+    linhasBancos.push(`${clean(banco.nome)}:`);
+    if (has(p1)) linhasBancos.push(`  Planta-01: ${p1}`);
+    if (has(p2)) linhasBancos.push(`  Planta-02: ${p2}`);
+    if (has(banco.observacao)) linhasBancos.push(`  Observação: ${clean(banco.observacao)}`);
+  }
+  if (linhasBancos.length > 0) {
     linhas.push("");
     linhas.push("BANCOS");
-    for (const banco of bancos) {
-      const p1 = textoPlanta(banco.planta01);
-      const p2 = textoPlanta(banco.planta02);
-      if (!has(p1) && !has(p2) && !has(banco.observacao)) continue;
-      linhas.push("");
-      linhas.push(`${clean(banco.nome)}:`);
-      if (has(p1)) linhas.push(`  Planta-01: ${p1}`);
-      if (has(p2)) linhas.push(`  Planta-02: ${p2}`);
-      if (has(banco.observacao)) linhas.push(`  Observação: ${clean(banco.observacao)}`);
-    }
+    linhas.push(...linhasBancos);
   }
 
   const obs = state.observacoes.filter(has);
