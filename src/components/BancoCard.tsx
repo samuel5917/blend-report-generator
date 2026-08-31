@@ -102,62 +102,91 @@ export function BancoCard({
   onRemove: () => void;
 }) {
   const [open, setOpen] = useState(true);
-
-  if (!open) {
-    return (
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="flex w-full items-center gap-2 rounded-lg bg-panel2/40 px-3 py-2.5 text-left ring-1 ring-line"
-      >
-        <span className="size-2 rounded-full bg-steel2" />
-        <span className="font-mono text-sm text-steel">{banco.nome}</span>
-        <span className="text-[11px] text-steel2">{resumo(banco)}</span>
-        <span className="ml-auto text-steel2">▾</span>
-      </button>
-    );
-  }
+  const completo = !!(banco.planta01.situacao && banco.planta02.situacao);
 
   return (
-    <div className="rounded-lg bg-panel2/40 p-3 ring-1 ring-signal/30">
-      <div className="mb-3 flex items-center gap-2">
-        <span className="size-2 rounded-full bg-signal" />
+    <div
+      className={`overflow-hidden rounded-lg ring-1 transition-colors ${
+        open ? "bg-panel2/40 ring-signal/30" : "bg-panel2/20 ring-line hover:ring-steel2/50"
+      }`}
+    >
+      {/* Cabeçalho: clique em qualquer lugar abre/fecha */}
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setOpen((v) => !v);
+          }
+        }}
+        className="flex cursor-pointer select-none items-center gap-2.5 px-3 py-2.5"
+      >
+        <span
+          className={`size-2 shrink-0 rounded-full transition-colors ${
+            completo ? "bg-ok" : "bg-steel2"
+          }`}
+        />
         <span className="font-mono text-sm font-semibold text-foreground">{banco.nome}</span>
+        {!open && (
+          <span className="hidden truncate text-[11px] text-steel2 sm:inline">
+            {resumo(banco)}
+          </span>
+        )}
         <button
           type="button"
-          onClick={() => setOpen(false)}
-          className="ml-auto font-mono text-[11px] uppercase tracking-wide text-steel2 hover:text-steel"
-        >
-          Recolher
-        </button>
-        <button
-          type="button"
-          onClick={onRemove}
-          className="font-mono text-[11px] uppercase tracking-wide text-steel2 hover:text-danger"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
+          className="ml-auto shrink-0 rounded px-1.5 py-0.5 font-mono text-[11px] uppercase tracking-wide text-steel2 hover:text-danger"
         >
           Remover
         </button>
+        <span
+          className={`shrink-0 text-steel2 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
+        >
+          ▾
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <PlantaBloco
-          titulo="Planta-01"
-          value={banco.planta01}
-          onChange={(patch) => onChange({ ...banco, planta01: { ...banco.planta01, ...patch } })}
-        />
-        <PlantaBloco
-          titulo="Planta-02"
-          value={banco.planta02}
-          onChange={(patch) => onChange({ ...banco, planta02: { ...banco.planta02, ...patch } })}
-        />
-      </div>
+      {/* Conteúdo com animação suave de altura */}
+      <div
+        className={`grid transition-all duration-200 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-3 pb-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              <PlantaBloco
+                titulo="Planta-01"
+                value={banco.planta01}
+                onChange={(patch) =>
+                  onChange({ ...banco, planta01: { ...banco.planta01, ...patch } })
+                }
+              />
+              <PlantaBloco
+                titulo="Planta-02"
+                value={banco.planta02}
+                onChange={(patch) =>
+                  onChange({ ...banco, planta02: { ...banco.planta02, ...patch } })
+                }
+              />
+            </div>
 
-      <div className="mt-3">
-        <TextField
-          label="Observação do banco (opcional)"
-          value={banco.observacao}
-          onChange={(v) => onChange({ ...banco, observacao: v })}
-        />
+            <div className="mt-3">
+              <TextField
+                label="Observação do banco (opcional)"
+                value={banco.observacao}
+                onChange={(v) => onChange({ ...banco, observacao: v })}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
