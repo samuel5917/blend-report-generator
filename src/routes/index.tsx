@@ -413,20 +413,7 @@ function Index() {
                         }
                         options={PARADA_MOTIVOS}
                       />
-                      {p.local === "Outro" && (
-                        <TextField
-                          label="Local (descreva)"
-                          value={p.localOutro}
-                          onChange={(v) =>
-                            set({
-                              paradas: state.paradas.map((x) =>
-                                x.id === p.id ? { ...x, localOutro: v } : x,
-                              ),
-                            })
-                          }
-                        />
-                      )}
-                      {p.motivo === "Outro" && (
+                      {p.motivo === "Outros" && (
                         <TextField
                           label="Motivo (descreva)"
                           value={p.motivoOutro}
