@@ -8,13 +8,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/mensagens")({
   head: () => ({
     meta: [
-      { title: "Mensagens T2 | MineShift" },
+      { title: "Mensagens T2 | CCO TRINDADE" },
       {
         name: "description",
         content:
           "Encontre e copie rapidamente as mensagens operacionais de comunicação com o T2 durante o turno.",
       },
-      { property: "og:title", content: "Mensagens T2 | MineShift" },
+      { property: "og:title", content: "Mensagens T2 | CCO TRINDADE" },
       {
         property: "og:description",
         content: "Pesquise a mensagem operacional e copie o conteúdo com um clique.",

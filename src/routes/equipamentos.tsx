@@ -29,7 +29,7 @@ import { ActionButton, Chip, Label, Section } from "@/components/kit";
 export const Route = createFileRoute("/equipamentos")({
   head: () => ({
     meta: [
-      { title: "Informe de Turno — Equipamentos Auxiliares | MineShift" },
+      { title: "Informe de Turno — Equipamentos Auxiliares | CCO TRINDADE" },
       {
         name: "description",
         content:

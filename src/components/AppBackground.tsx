@@ -2,7 +2,7 @@ import { useAparencia } from "@/lib/aparencia";
 import minaBg from "@/assets/mina-bg.jpg";
 
 /**
- * Composição de fundo do MineShift: imagem discreta + gradientes difusos.
+ * Composição de fundo do CCO TRINDADE: imagem discreta + gradientes difusos.
  * Fica atrás de todas as superfícies translúcidas.
  */
 export function AppBackground() {

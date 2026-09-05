@@ -8,13 +8,13 @@ export const Route = createFileRoute("/auth")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Acesso ao MineShift | Entrar ou criar conta" },
+      { title: "Acesso ao CCO TRINDADE | Entrar ou criar conta" },
       {
         name: "description",
         content:
-          "Entre com seu usuário e senha para registrar justificativas do Blend no MineShift ou crie um novo acesso.",
+          "Entre com seu usuário e senha para registrar justificativas do Blend no CCO TRINDADE ou crie um novo acesso.",
       },
-      { property: "og:title", content: "Acesso ao MineShift" },
+      { property: "og:title", content: "Acesso ao CCO TRINDADE" },
       {
         property: "og:description",
         content: "Entre com seu usuário e senha para registrar as justificativas do turno.",

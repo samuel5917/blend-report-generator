@@ -4,15 +4,15 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/ata")({
   head: () => ({
     meta: [
-      { title: "Elaboração de Ata | MineShift" },
+      { title: "Elaboração de Ata | CCO TRINDADE" },
       {
         name: "description",
-        content: "Área do MineShift destinada à elaboração das atas de reunião de turno.",
+        content: "Área do CCO TRINDADE destinada à elaboração das atas de reunião de turno.",
       },
-      { property: "og:title", content: "Elaboração de Ata | MineShift" },
+      { property: "og:title", content: "Elaboração de Ata | CCO TRINDADE" },
       {
         property: "og:description",
-        content: "Área do MineShift destinada à elaboração das atas de reunião de turno.",
+        content: "Área do CCO TRINDADE destinada à elaboração das atas de reunião de turno.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

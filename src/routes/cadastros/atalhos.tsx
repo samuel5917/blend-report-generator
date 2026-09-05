@@ -19,13 +19,13 @@ import {
 export const Route = createFileRoute("/cadastros/atalhos")({
   head: () => ({
     meta: [
-      { title: "Cadastro de Atalhos do CCO | MineShift" },
+      { title: "Cadastro de Atalhos do CCO | CCO TRINDADE" },
       {
         name: "description",
         content:
-          "Cadastre, edite, ative, desative e ordene os sites e sistemas do CCO exibidos no Dashboard do MineShift.",
+          "Cadastre, edite, ative, desative e ordene os sites e sistemas do CCO exibidos no Dashboard do CCO TRINDADE.",
       },
-      { property: "og:title", content: "Cadastro de Atalhos do CCO | MineShift" },
+      { property: "og:title", content: "Cadastro de Atalhos do CCO | CCO TRINDADE" },
       {
         property: "og:description",
         content: "Administre os atalhos dos sistemas utilizados pelo CCO durante o turno.",

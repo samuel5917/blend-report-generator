@@ -9,16 +9,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/configuracoes")({
   head: () => ({
     meta: [
-      { title: "Configurações — Aparência | MineShift" },
+      { title: "Configurações — Aparência | CCO TRINDADE" },
       {
         name: "description",
         content:
-          "Escolha o fundo da aplicação MineShift: composição padrão ou uma imagem do seu computador, com as superfícies de vidro por cima.",
+          "Escolha o fundo da aplicação CCO TRINDADE: composição padrão ou uma imagem do seu computador, com as superfícies de vidro por cima.",
       },
-      { property: "og:title", content: "Configurações — Aparência | MineShift" },
+      { property: "og:title", content: "Configurações — Aparência | CCO TRINDADE" },
       {
         property: "og:description",
-        content: "Defina o fundo da aplicação e a aparência do MineShift.",
+        content: "Defina o fundo da aplicação e a aparência do CCO TRINDADE.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
