@@ -26,7 +26,6 @@ import {
   TextArea,
   TextField,
 } from "@/components/kit";
-import minaBg from "@/assets/mina-bg.jpg";
 
 export const Route = createFileRoute("/blend")({
   head: () => ({
