@@ -11,12 +11,14 @@ export interface Aparencia {
   modo: FundoModo;
   /** Data URL da imagem escolhida pelo usuário (opcional). */
   imagem?: string;
+  /** Intensidade do escurecimento sobre o fundo: 0 = totalmente translúcido. */
+  escurecimento: number;
 }
 
 const KEY = "mineshift-aparencia-v1";
 const EVENTO = "mineshift:aparencia";
 
-export const aparenciaPadrao = (): Aparencia => ({ modo: "padrao" });
+export const aparenciaPadrao = (): Aparencia => ({ modo: "padrao", escurecimento: 45 });
 
 export function carregarAparencia(): Aparencia {
   if (typeof window === "undefined") return aparenciaPadrao();
@@ -26,6 +28,10 @@ export function carregarAparencia(): Aparencia {
     const v = JSON.parse(raw) as Aparencia;
     return {
       modo: v.modo === "personalizado" ? "personalizado" : "padrao",
+      escurecimento:
+        typeof v.escurecimento === "number"
+          ? Math.min(100, Math.max(0, v.escurecimento))
+          : 45,
       ...(typeof v.imagem === "string" ? { imagem: v.imagem } : {}),
     };
   } catch {
@@ -42,7 +48,10 @@ export function salvarAparencia(a: Aparencia): boolean {
   } catch {
     ok = false;
     try {
-      window.localStorage.setItem(KEY, JSON.stringify({ modo: "padrao" }));
+      window.localStorage.setItem(
+        KEY,
+        JSON.stringify({ modo: "padrao", escurecimento: a.escurecimento }),
+      );
     } catch {
       /* ignora */
     }
