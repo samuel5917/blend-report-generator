@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Globe } from "lucide-react";
-import { iconePreferido, type AtalhoCCO } from "@/lib/atalhos";
+import { iconePreferido, iniciaisDoNome, type AtalhoCCO } from "@/lib/atalhos";
 import { cn } from "@/lib/utils";
 
-/** Ícone do site com prioridade personalizado → favicon → fallback discreto. */
-export function IconeAtalho({ atalho, tamanho = 44 }: { atalho: AtalhoCCO; tamanho?: number }) {
+export type DadosIcone = Pick<AtalhoCCO, "nome" | "icone_url" | "icone_personalizado">;
+
+/** Ícone salvo do site; sem ícone, mostra as iniciais do sistema. */
+export function IconeAtalho({ atalho, tamanho = 44 }: { atalho: DadosIcone; tamanho?: number }) {
   const src = iconePreferido(atalho);
   const [falhou, setFalhou] = useState(false);
 
@@ -14,10 +15,10 @@ export function IconeAtalho({ atalho, tamanho = 44 }: { atalho: AtalhoCCO; taman
     return (
       <span
         aria-hidden="true"
-        className="grid place-items-center rounded-lg bg-signal/12 text-signal ring-1 ring-signal/30"
-        style={{ width: tamanho, height: tamanho }}
+        className="grid shrink-0 place-items-center rounded-lg bg-signal/12 font-mono font-semibold text-signal ring-1 ring-signal/30"
+        style={{ width: tamanho, height: tamanho, fontSize: Math.round(tamanho * 0.34) }}
       >
-        <Globe className="size-[55%]" strokeWidth={1.75} />
+        {iniciaisDoNome(atalho.nome)}
       </span>
     );
   }
@@ -28,12 +29,11 @@ export function IconeAtalho({ atalho, tamanho = 44 }: { atalho: AtalhoCCO; taman
       alt=""
       aria-hidden="true"
       onError={() => setFalhou(true)}
-      className="rounded-lg bg-panel2/60 object-contain p-1 ring-1 ring-line"
+      className="shrink-0 rounded-lg bg-panel2/60 object-contain p-1 ring-1 ring-line"
       style={{ width: tamanho, height: tamanho }}
     />
   );
 }
-
 /** Card clicável que abre o sistema em uma nova aba. */
 export function AtalhoCard({ atalho, className }: { atalho: AtalhoCCO; className?: string }) {
   return (
