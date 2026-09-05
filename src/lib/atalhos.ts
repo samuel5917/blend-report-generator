@@ -28,19 +28,17 @@ export function normalizarUrl(bruta: string): string {
   return /^https?:\/\//i.test(v) ? v : `https://${v}`;
 }
 
-/** Endereço do favicon .ico do próprio site cadastrado. */
-export function faviconDaUrl(bruta: string): string {
-  try {
-    const u = new URL(normalizarUrl(bruta));
-    return `${u.origin}/favicon.ico`;
-  } catch {
-    return "";
-  }
+/** Ícone a exibir: enviado pelo usuário → descoberto automaticamente → vazio. */
+export function iconePreferido(a: Pick<AtalhoCCO, "icone_personalizado" | "icone_url">): string {
+  return a.icone_personalizado || a.icone_url || "";
 }
 
-/** Ícone a exibir, seguindo a prioridade: personalizado → favicon do site → vazio. */
-export function iconePreferido(a: AtalhoCCO): string {
-  return a.icone_personalizado || a.icone_url || faviconDaUrl(a.url);
+/** Iniciais do nome, usadas como último recurso no card. */
+export function iniciaisDoNome(nome: string): string {
+  const partes = nome.trim().split(/\s+/).filter(Boolean);
+  if (partes.length === 0) return "?";
+  if (partes.length === 1) return partes[0]!.slice(0, 2).toUpperCase();
+  return `${partes[0]![0]}${partes[1]![0]}`.toUpperCase();
 }
 
 const LIMITE_ICONE = 300 * 1024;
@@ -91,7 +89,7 @@ export async function criarAtalho(
     nome: dados.nome.trim(),
     url,
     descricao: dados.descricao.trim(),
-    icone_url: dados.icone_url || faviconDaUrl(url),
+    icone_url: dados.icone_url,
     icone_personalizado: dados.icone_personalizado,
     ativo: dados.ativo ?? true,
     ordem: dados.ordem,
@@ -106,7 +104,6 @@ export async function atualizarAtalho(
   const dados = { ...patch };
   if (typeof dados.url === "string") {
     dados.url = normalizarUrl(dados.url);
-    if (dados.icone_url === undefined) dados.icone_url = faviconDaUrl(dados.url);
   }
   const { error } = await supabase.from("atalhos_cco").update(dados).eq("id", id);
   if (error) throw error;
