@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      atalhos_cco: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          descricao: string
+          icone_personalizado: string
+          icone_url: string
+          id: string
+          nome: string
+          ordem: number
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string
+          icone_personalizado?: string
+          icone_url?: string
+          id?: string
+          nome: string
+          ordem?: number
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string
+          icone_personalizado?: string
+          icone_url?: string
+          id?: string
+          nome?: string
+          ordem?: number
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       blend_justificativa_imagens: {
         Row: {
           created_at: string
