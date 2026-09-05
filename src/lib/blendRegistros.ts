@@ -12,12 +12,12 @@ export type TurnoRegistro = "1°" | "2°";
 
 export interface ImagemT2 {
   /** Presente quando a imagem já está salva no banco. */
-  id?: string;
-  storage_path?: string;
+  id?: string | undefined;
+  storage_path?: string | undefined;
   /** URL exibível (assinada ou objectURL do arquivo pendente). */
   url: string;
   /** Arquivo aguardando envio. */
-  file?: File;
+  file?: File | undefined;
   ordem: number;
 }
 
@@ -55,10 +55,10 @@ async function assinar(path: string): Promise<string> {
 }
 
 export interface FiltroJustificativas {
-  de?: string;
-  ate?: string;
-  turno?: TurnoRegistro | "";
-  userId?: string | "";
+  de?: string | undefined;
+  ate?: string | undefined;
+  turno?: TurnoRegistro | "" | undefined;
+  userId?: string | "" | undefined;
 }
 
 export async function listarJustificativas(f: FiltroJustificativas = {}): Promise<Justificativa[]> {
@@ -121,7 +121,7 @@ async function enviarImagem(justificativaId: string, file: File, ordem: number) 
 }
 
 export interface EntradaJustificativa {
-  id?: string;
+  id?: string | undefined;
   data: string;
   turno: TurnoRegistro;
   texto: string;
@@ -129,7 +129,7 @@ export interface EntradaJustificativa {
   autorNome: string;
   imagens: ImagemT2[];
   /** Ids de imagens já salvas que devem ser removidas. */
-  imagensRemovidas?: Array<{ id: string; storage_path: string }>;
+  imagensRemovidas?: Array<{ id: string; storage_path: string }> | undefined;
 }
 
 export async function salvarJustificativa(e: EntradaJustificativa): Promise<string> {

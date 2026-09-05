@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { CalendarDays, Clock, GripVertical, User } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { ActionButton, Label, SelectField, TextArea, TextField } from "@/components/kit";
+import { ActionButton, Label, TextArea, TextField } from "@/components/kit";
 import { ImagensT2 } from "@/components/ImagensT2";
 import { useAuth, listarPerfis, type Perfil } from "@/lib/auth";
 import {
@@ -10,6 +10,7 @@ import {
   formatarDataBR,
   gravarOrdem,
   ordemCronologica,
+  type FiltroJustificativas,
   salvarJustificativa,
   turnoLabel,
   useJustificativas,
@@ -61,12 +62,7 @@ function RelatorioBlend() {
   const [ate, setAte] = useState("");
   const [turno, setTurno] = useState<"" | TurnoRegistro>("");
   const [usuarioFiltro, setUsuarioFiltro] = useState("");
-  const [filtro, setFiltro] = useState<{
-    de?: string;
-    ate?: string;
-    turno?: "" | TurnoRegistro;
-    userId?: string;
-  }>({});
+  const [filtro, setFiltro] = useState<FiltroJustificativas>({});
 
   const { registros, setRegistros, carregando, erro, recarregar } = useJustificativas(filtro);
   const [perfis, setPerfis] = useState<Perfil[]>([]);
@@ -442,16 +438,25 @@ function RelatorioBlend() {
                   <option value="2°">2º Turno</option>
                 </select>
               </div>
-              <SelectField
-                label="Usuário responsável"
-                value={edicao.userId ?? ""}
-                onChange={(v) => {
-                  const p = perfis.find((x) => x.id === v);
-                  setEdicao({ ...edicao, userId: v || null, autorNome: p?.full_name ?? "" });
-                }}
-                options={perfis.map((p) => p.id)}
-                placeholder={edicao.autorNome || "Selecione…"}
-              />
+              <div>
+                <Label>Usuário responsável</Label>
+                <select
+                  value={edicao.userId ?? ""}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    const p = perfis.find((x) => x.id === v);
+                    setEdicao({ ...edicao, userId: v || null, autorNome: p?.full_name ?? "" });
+                  }}
+                  className="w-full rounded-md bg-panel2 px-3 py-2 text-sm text-foreground ring-1 ring-line outline-none focus:ring-signal/60"
+                >
+                  <option value="">Não informado</option>
+                  {perfis.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.full_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <p className="font-mono text-[10px] uppercase text-steel2">
               Responsável: {edicao.autorNome || "não informado"}
