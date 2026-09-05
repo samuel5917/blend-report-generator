@@ -125,3 +125,41 @@
     overflow: hidden;
   }
 }
+
+/* Superfícies translúcidas — conceito "industrial glass" */
+@utility glass-panel {
+  border-radius: var(--radius-xl);
+  background: color-mix(in oklab, var(--panel) 70%, transparent);
+  backdrop-filter: blur(18px) saturate(130%);
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 0 0 color-mix(in oklab, white 6%, transparent) inset,
+    0 18px 40px -24px oklch(0 0 0 / 0.65);
+}
+
+@utility glass-bar {
+  background: color-mix(in oklab, var(--shell) 62%, transparent);
+  backdrop-filter: blur(16px) saturate(125%);
+  border-bottom: 1px solid var(--line);
+}
+
+@utility glass-drawer {
+  background: color-mix(in oklab, var(--shell) 72%, transparent);
+  backdrop-filter: blur(26px) saturate(135%);
+  border-right: 1px solid var(--line);
+  box-shadow: 24px 0 60px -30px oklch(0 0 0 / 0.8);
+}
+
+@utility glass-btn {
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--panel2) 60%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+  &:hover {
+    color: var(--foreground);
+    background: color-mix(in oklab, var(--panel2) 85%, transparent);
+  }
+}

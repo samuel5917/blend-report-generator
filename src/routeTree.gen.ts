@@ -9,13 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AtaRouteImport } from './routes/ata'
 import { Route as BlendRouteImport } from './routes/blend'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as EquipamentosRouteImport } from './routes/equipamentos'
 import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
+import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtaRoute = AtaRouteImport.update({
+  id: '/ata',
+  path: '/ata',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlendRoute = BlendRouteImport.update({
   id: '/blend',
   path: '/blend',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipamentosRoute = EquipamentosRouteImport.update({
@@ -28,44 +47,108 @@ const CadastrosBancosRoute = CadastrosBancosRouteImport.update({
   path: '/cadastros/bancos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastrosEquipamentosRoute = CadastrosEquipamentosRouteImport.update({
+  id: '/cadastros/equipamentos',
+  path: '/cadastros/equipamentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/ata': typeof AtaRoute
   '/blend': typeof BlendRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
+  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/ata': typeof AtaRoute
   '/blend': typeof BlendRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
+  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/ata': typeof AtaRoute
   '/blend': typeof BlendRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
+  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/blend' | '/equipamentos' | '/cadastros/bancos'
+  fullPaths:
+    | '/'
+    | '/ata'
+    | '/blend'
+    | '/configuracoes'
+    | '/equipamentos'
+    | '/cadastros/bancos'
+    | '/cadastros/equipamentos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/blend' | '/equipamentos' | '/cadastros/bancos'
-  id: '__root__' | '/blend' | '/equipamentos' | '/cadastros/bancos'
+  to:
+    | '/'
+    | '/ata'
+    | '/blend'
+    | '/configuracoes'
+    | '/equipamentos'
+    | '/cadastros/bancos'
+    | '/cadastros/equipamentos'
+  id:
+    | '__root__'
+    | '/'
+    | '/ata'
+    | '/blend'
+    | '/configuracoes'
+    | '/equipamentos'
+    | '/cadastros/bancos'
+    | '/cadastros/equipamentos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AtaRoute: typeof AtaRoute
   BlendRoute: typeof BlendRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
   EquipamentosRoute: typeof EquipamentosRoute
   CadastrosBancosRoute: typeof CadastrosBancosRoute
+  CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ata': {
+      id: '/ata'
+      path: '/ata'
+      fullPath: '/ata'
+      preLoaderRoute: typeof AtaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blend': {
       id: '/blend'
       path: '/blend'
       fullPath: '/blend'
       preLoaderRoute: typeof BlendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipamentos': {
@@ -82,13 +165,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastrosBancosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastros/equipamentos': {
+      id: '/cadastros/equipamentos'
+      path: '/cadastros/equipamentos'
+      fullPath: '/cadastros/equipamentos'
+      preLoaderRoute: typeof CadastrosEquipamentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AtaRoute: AtaRoute,
   BlendRoute: BlendRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
   EquipamentosRoute: EquipamentosRoute,
   CadastrosBancosRoute: CadastrosBancosRoute,
+  CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
