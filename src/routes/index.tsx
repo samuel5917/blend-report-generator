@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  BANCOS_PADRAO,
   OBS_TURNO_SUGESTOES,
-  PARADA_LOCAIS,
   PARADA_MOTIVOS,
   TURNOS,
   estadoInicial,
@@ -13,10 +11,11 @@ import {
   type JustificativaState,
   type Turno,
 } from "@/config/blend";
+import { useLocais } from "@/lib/locais";
 import { gerarJustificativa, textoParada } from "@/lib/justificativa";
 import { duplicarDraft, excluirDraft, listarDrafts, salvarDraft, type Draft } from "@/lib/drafts";
 import { BancoCard } from "@/components/BancoCard";
-import { MovimentacaoBloco } from "@/components/MovimentacaoBloco";
+import { MovimentacaoLista } from "@/components/MovimentacaoLista";
 import {
   ActionButton,
   Chip,
@@ -54,6 +53,7 @@ export const Route = createFileRoute("/")({
 const AUTOSAVE_KEY = "blend-rascunho-atual-v1";
 
 function Index() {
+  const { nomesAtivos, nomesLocaisOperacionais } = useLocais();
   const [state, setState] = useState<JustificativaState>(estadoInicial);
   const [abertas, setAbertas] = useState<Record<string, boolean>>({
     bancos: true,
@@ -148,6 +148,12 @@ function Index() {
               </p>
             </div>
             <div className="ml-auto flex items-center gap-2">
+              <Link
+                to="/bancos"
+                className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
+              >
+                BANCOS
+              </Link>
               <Link
                 to="/equipamentos"
                 className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
@@ -262,7 +268,7 @@ function Index() {
                     if (!v || bancosSelecionados.includes(v)) return;
                     set({ bancos: [...state.bancos, novoBanco(v)] });
                   }}
-                  options={BANCOS_PADRAO.filter((b) => !bancosSelecionados.includes(b))}
+                  options={nomesAtivos.filter((b) => !bancosSelecionados.includes(b))}
                   placeholder="Selecione para adicionar…"
                 />
                 <div className="flex items-end gap-2">
@@ -382,7 +388,7 @@ function Index() {
                             ),
                           })
                         }
-                        options={PARADA_LOCAIS}
+                        options={nomesLocaisOperacionais}
                       />
                       <TextField
                         label="Início"
@@ -472,44 +478,17 @@ function Index() {
             <Section
               numero="05"
               titulo="Outras Movimentações"
+              resumo={`${state.movimentacoes.length} registro(s)`}
               open={!!abertas["mov"]}
               onToggle={() => toggleSecao("mov")}
             >
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <MovimentacaoBloco
-                  titulo="OM"
-                  labelNao="Não houve OM"
-                  labelSim="Houve OM"
-                  value={state.om}
-                  onChange={(v) => set({ om: v })}
-                  bancos={bancosSelecionados}
-                />
-                <MovimentacaoBloco
-                  titulo="Reprocesso"
-                  labelNao="Não houve movimentação"
-                  labelSim="Houve reprocesso"
-                  value={state.reprocesso}
-                  onChange={(v) => set({ reprocesso: v })}
-                  bancos={bancosSelecionados}
-                />
-                <MovimentacaoBloco
-                  titulo="Produto para estoque"
-                  labelNao="Não houve movimentação"
-                  labelSim="Houve movimentação"
-                  value={state.estoque}
-                  onChange={(v) => set({ estoque: v })}
-                  bancos={bancosSelecionados}
-                />
-                <MovimentacaoBloco
-                  titulo="Remanejo"
-                  labelNao="Não houve remanejo"
-                  labelSim="Houve remanejo"
-                  value={state.remanejo}
-                  onChange={(v) => set({ remanejo: v })}
-                  bancos={bancosSelecionados}
-                />
-              </div>
+              <MovimentacaoLista
+                itens={state.movimentacoes}
+                onChange={(itens) => set({ movimentacoes: itens })}
+                locais={nomesAtivos}
+              />
             </Section>
+
 
             <button
               type="button"
