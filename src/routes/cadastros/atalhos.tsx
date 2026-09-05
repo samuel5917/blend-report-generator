@@ -37,65 +37,105 @@ export const Route = createFileRoute("/cadastros/atalhos")({
 });
 
 function CampoIcone({
-  valor,
-  onChange,
+  nome,
   urlSite,
+  iconeAuto,
+  iconePersonalizado,
+  onAuto,
+  onPersonalizado,
 }: {
-  valor: string;
-  onChange: (v: string) => void;
+  nome: string;
   urlSite: string;
+  iconeAuto: string;
+  iconePersonalizado: string;
+  onAuto: (v: string) => void;
+  onPersonalizado: (v: string) => void;
 }) {
   const [erro, setErro] = useState<string | null>(null);
-  const automatico = faviconDaUrl(urlSite);
+  const [buscando, setBuscando] = useState(false);
+  const [status, setStatus] = useState<"" | "ok" | "falhou">("");
+  const buscar = useServerFn(descobrirIcone);
+
+  const buscarIcone = async () => {
+    if (!urlSite.trim()) return;
+    setBuscando(true);
+    setErro(null);
+    try {
+      const r = await buscar({ data: { url: urlSite } });
+      if (r.dataUrl) {
+        onAuto(r.dataUrl);
+        onPersonalizado("");
+        setStatus("ok");
+      } else {
+        setStatus("falhou");
+      }
+    } catch {
+      setStatus("falhou");
+    } finally {
+      setBuscando(false);
+    }
+  };
 
   return (
     <div>
       <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-wide text-steel2">
-        Ícone do site
+        Ícone do sistema
       </span>
       <div className="flex flex-wrap items-center gap-3">
         <IconeAtalho
-          atalho={
-            {
-              id: "",
-              nome: "",
-              url: urlSite,
-              descricao: "",
-              icone_url: automatico,
-              icone_personalizado: valor,
-              ativo: true,
-              ordem: 0,
-            } satisfies AtalhoCCO
-          }
+          atalho={{ nome, icone_url: iconeAuto, icone_personalizado: iconePersonalizado }}
           tamanho={40}
         />
+        <ActionButton onClick={buscarIcone} disabled={buscando || !urlSite.trim()}>
+          {buscando ? (
+            <span className="inline-flex items-center gap-1.5">
+              <Loader2 className="size-3.5 animate-spin" strokeWidth={2} /> BUSCANDO…
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5">
+              <Search className="size-3.5" strokeWidth={1.75} /> BUSCAR AUTOMATICAMENTE
+            </span>
+          )}
+        </ActionButton>
         <label className="cursor-pointer rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground">
-          ENVIAR ÍCONE PERSONALIZADO
+          <span className="inline-flex items-center gap-1.5">
+            <Upload className="size-3.5" strokeWidth={1.75} /> ENVIAR ÍCONE
+          </span>
           <input
             type="file"
-            accept=".ico,.png,.svg,image/x-icon,image/png,image/svg+xml"
+            accept=".ico,.png,.svg,image/x-icon,image/vnd.microsoft.icon,image/png,image/svg+xml"
             className="hidden"
             onChange={async (e) => {
               const file = e.target.files?.[0];
               e.target.value = "";
               if (!file) return;
               try {
-                onChange(await lerIconePersonalizado(file));
+                onPersonalizado(await lerIconePersonalizado(file));
                 setErro(null);
+                setStatus("ok");
               } catch (err) {
                 setErro(err instanceof Error ? err.message : "Falha ao ler o ícone.");
               }
             }}
           />
         </label>
-        {valor ? (
-          <ActionButton onClick={() => onChange("")}>USAR ÍCONE DO SITE</ActionButton>
-        ) : (
-          <span className="font-mono text-[10px] uppercase tracking-wide text-steel2">
-            usando o favicon do site
-          </span>
-        )}
+        {iconePersonalizado ? (
+          <ActionButton onClick={() => onPersonalizado("")}>REMOVER ÍCONE ENVIADO</ActionButton>
+        ) : null}
       </div>
+      {iconePersonalizado ? (
+        <p className="mt-2 font-mono text-[11px] text-ok">Usando o ícone enviado por você.</p>
+      ) : status === "ok" && iconeAuto ? (
+        <p className="mt-2 font-mono text-[11px] text-ok">Ícone encontrado e salvo no cadastro.</p>
+      ) : status === "falhou" ? (
+        <p className="mt-2 font-mono text-[11px] text-steel2">
+          ⚠ Não foi possível encontrar automaticamente. Você pode enviar um ícone personalizado.
+        </p>
+      ) : (
+        <p className="mt-2 font-mono text-[11px] text-steel2">
+          O ícone é buscado no site e salvo aqui; o Dashboard usa sempre a cópia salva.
+        </p>
+      )}
       {erro ? <p className="mt-2 font-mono text-[11px] text-danger">{erro}</p> : null}
     </div>
   );
