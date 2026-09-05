@@ -87,11 +87,25 @@ export interface ParadaState {
   observacao: string;
 }
 
-export interface MovimentacaoState {
-  houve: boolean;
+export const MOVIMENTACAO_TIPOS = ["OM", "Reprocesso", "Estoque", "Remanejo"] as const;
+export type MovimentacaoTipo = (typeof MOVIMENTACAO_TIPOS)[number];
+
+/** Cada movimentação é um registro independente — vários por tipo são permitidos. */
+export interface MovimentacaoItem {
+  id: string;
+  tipo: MovimentacaoTipo;
   origem: string;
   destino: string;
+  material: string;
   quantidade: string;
+}
+
+/** Formato antigo (um único registro por tipo) — mantido só para migração. */
+interface MovimentacaoLegado {
+  houve?: boolean;
+  origem?: string;
+  destino?: string;
+  quantidade?: string;
 }
 
 export interface JustificativaState {
@@ -100,18 +114,10 @@ export interface JustificativaState {
   bancos: BancoState[];
   observacoes: string[];
   paradas: ParadaState[];
-  om: MovimentacaoState;
-  reprocesso: MovimentacaoState;
-  estoque: MovimentacaoState;
-  remanejo: MovimentacaoState;
+  movimentacoes: MovimentacaoItem[];
 }
 
-export const emptyMovimentacao = (): MovimentacaoState => ({
-  houve: false,
-  origem: "",
-  destino: "",
-  quantidade: "",
-});
+const novoId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 
 const emptyPlanta = (): PlantaState => ({
   situacao: "",
@@ -120,8 +126,17 @@ const emptyPlanta = (): PlantaState => ({
   texto: "",
 });
 
+export const novaMovimentacao = (tipo: MovimentacaoTipo = "OM"): MovimentacaoItem => ({
+  id: novoId(),
+  tipo,
+  origem: "",
+  destino: "",
+  material: "",
+  quantidade: "",
+});
+
 export const novoBanco = (nome: string): BancoState => ({
-  id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+  id: novoId(),
   nome,
   planta01: emptyPlanta(),
   planta02: emptyPlanta(),
@@ -129,7 +144,7 @@ export const novoBanco = (nome: string): BancoState => ({
 });
 
 export const novaParada = (): ParadaState => ({
-  id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+  id: novoId(),
   local: "",
   inicio: "",
   fim: "",
@@ -144,16 +159,15 @@ export const estadoInicial = (): JustificativaState => ({
   bancos: [],
   observacoes: [],
   paradas: [],
-  om: emptyMovimentacao(),
-  reprocesso: emptyMovimentacao(),
-  estoque: emptyMovimentacao(),
-  remanejo: emptyMovimentacao(),
+  movimentacoes: [],
 });
 
-/** Normaliza estados antigos (3° turno, situações/campos removidos). */
+/** Normaliza estados antigos sem perder bancos, paradas ou movimentações. */
 export function normalizarEstado(raw: Partial<JustificativaState>): JustificativaState {
   const base = estadoInicial();
-  const s = { ...base, ...raw };
+  const s = { ...base, ...raw } as Partial<JustificativaState> &
+    Record<string, unknown> &
+    JustificativaState;
   const turno: Turno = TURNOS.includes(s.turno as Turno) ? (s.turno as Turno) : "1°";
   const planta = (p?: Partial<PlantaState>): PlantaState => {
     const situacao =
@@ -167,14 +181,39 @@ export function normalizarEstado(raw: Partial<JustificativaState>): Justificativ
       texto: p?.texto ?? "",
     };
   };
-  const mov = (m?: Partial<MovimentacaoState>): MovimentacaoState => ({
-    houve: !!m?.houve,
-    origem: m?.origem ?? "",
-    destino: m?.destino ?? "",
-    quantidade: m?.quantidade ?? "",
-  });
+
+  // Migra o formato antigo (um registro fixo por tipo) para a lista de registros.
+  const migradas: MovimentacaoItem[] = [];
+  for (const tipo of MOVIMENTACAO_TIPOS) {
+    const chave = tipo === "Estoque" ? "estoque" : tipo.toLowerCase();
+    const legado = (s as Record<string, unknown>)[chave] as MovimentacaoLegado | undefined;
+    if (legado && legado.houve) {
+      migradas.push({
+        id: novoId(),
+        tipo,
+        origem: legado.origem ?? "",
+        destino: legado.destino ?? "",
+        material: "",
+        quantidade: legado.quantidade ?? "",
+      });
+    }
+  }
+
+  const movimentacoes: MovimentacaoItem[] = Array.isArray(s.movimentacoes)
+    ? s.movimentacoes
+        .filter((m) => MOVIMENTACAO_TIPOS.includes(m?.tipo as MovimentacaoTipo))
+        .map((m) => ({
+          id: m.id ?? novoId(),
+          tipo: m.tipo,
+          origem: m.origem ?? "",
+          destino: m.destino ?? "",
+          material: m.material ?? "",
+          quantidade: m.quantidade ?? "",
+        }))
+    : [];
+
   return {
-    ...s,
+    data: s.data,
     turno,
     bancos: (s.bancos ?? []).map((b) => ({
       id: b.id,
@@ -186,11 +225,9 @@ export function normalizarEstado(raw: Partial<JustificativaState>): Justificativ
     observacoes: s.observacoes ?? [],
     paradas: (s.paradas ?? []).map((p) => ({
       ...p,
-      local: PARADA_LOCAIS.includes(p.local) ? p.local : "",
+      local: p.local ?? "",
     })),
-    om: mov(s.om),
-    reprocesso: mov(s.reprocesso),
-    estoque: mov(s.estoque),
-    remanejo: mov(s.remanejo),
+    movimentacoes: movimentacoes.length > 0 ? movimentacoes : migradas,
   };
 }
+
