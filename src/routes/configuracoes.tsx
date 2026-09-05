@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { ActionButton } from "@/components/kit";
-import { useAparencia, type FundoModo } from "@/lib/aparencia";
+import { useAparencia, prepararImagemFundo, type FundoModo } from "@/lib/aparencia";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/configuracoes")({
@@ -39,18 +39,16 @@ function Configuracoes() {
     salvar({ ...aparencia, modo });
   };
 
-  const carregarArquivo = (file: File | undefined) => {
+  const carregarArquivo = async (file: File | undefined) => {
     if (!file) return;
-    if (file.size > 4_000_000) {
-      toast.error("Imagem muito grande — use um arquivo de até 4 MB.");
-      return;
+    try {
+      const imagem = await prepararImagemFundo(file);
+      const ok = salvar({ modo: "personalizado", imagem });
+      if (ok) toast.success("Fundo personalizado aplicado.");
+      else toast.error("Não foi possível guardar essa imagem — tente uma menor.");
+    } catch {
+      toast.error("Não foi possível ler essa imagem.");
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      salvar({ modo: "personalizado", imagem: String(reader.result) });
-      toast.success("Fundo personalizado aplicado.");
-    };
-    reader.readAsDataURL(file);
   };
 
   const opcoes: Array<{ modo: FundoModo; titulo: string; texto: string }> = [
