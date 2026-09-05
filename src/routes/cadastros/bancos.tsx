@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { AppShell } from "@/components/AppShell";
 import { useState } from "react";
 import {
   atualizarLocal,
@@ -11,7 +12,7 @@ import {
 } from "@/lib/locais";
 import { ActionButton, Chip, Label, SelectField, TextField } from "@/components/kit";
 
-export const Route = createFileRoute("/bancos")({
+export const Route = createFileRoute("/cadastros/bancos")({
   head: () => ({
     meta: [
       { title: "Cadastro de Bancos e Locais | MineShift" },
@@ -172,28 +173,13 @@ function CadastroBancos() {
   );
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-line bg-shell/60">
-        <div className="mx-auto flex max-w-[900px] items-center gap-4 px-5 py-3">
-          <div>
-            <h1 className="text-sm font-semibold text-foreground">Cadastro de Bancos</h1>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-steel2">
-              Compartilhado entre todos os usuários
-            </p>
-          </div>
-          <div className="ml-auto flex gap-2">
-            <Link
-              to="/"
-              className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line hover:text-foreground"
-            >
-              VOLTAR AO BLEND
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-[900px] space-y-4 px-5 py-6">
-        <section className="rounded-xl bg-panel p-4 ring-1 ring-line">
+    <AppShell
+      titulo="Cadastro de Bancos"
+      subtitulo="Cadastros · compartilhado entre todos os usuários"
+      largura="max-w-[900px]"
+    >
+      <div className="space-y-4">
+        <section className="glass-panel p-4">
           <Label>Adicionar</Label>
           <div className="flex flex-wrap items-end gap-2">
             <TextField
@@ -228,7 +214,7 @@ function CadastroBancos() {
         )}
         {carregando && <p className="text-sm text-steel2">Carregando cadastro…</p>}
 
-        <section className="rounded-xl bg-panel p-4 ring-1 ring-line">
+        <section className="glass-panel p-4">
           <div className="mb-3 flex items-center gap-2">
             <span className="text-[15px] font-semibold text-foreground">Bancos</span>
             <Chip>{bancos.length}</Chip>
@@ -236,14 +222,14 @@ function CadastroBancos() {
           {listar(bancos)}
         </section>
 
-        <section className="rounded-xl bg-panel p-4 ring-1 ring-line">
+        <section className="glass-panel p-4">
           <div className="mb-3 flex items-center gap-2">
             <span className="text-[15px] font-semibold text-foreground">Locais operacionais</span>
             <Chip>{operacionais.length}</Chip>
           </div>
           {listar(operacionais)}
         </section>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

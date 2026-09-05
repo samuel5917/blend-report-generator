@@ -10,17 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BancosRouteImport } from './routes/bancos'
+import { Route as AtaRouteImport } from './routes/ata'
+import { Route as BlendRouteImport } from './routes/blend'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as EquipamentosRouteImport } from './routes/equipamentos'
+import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
+import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BancosRoute = BancosRouteImport.update({
-  id: '/bancos',
-  path: '/bancos',
+const AtaRoute = AtaRouteImport.update({
+  id: '/ata',
+  path: '/ata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlendRoute = BlendRouteImport.update({
+  id: '/blend',
+  path: '/blend',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipamentosRoute = EquipamentosRouteImport.update({
@@ -28,35 +42,83 @@ const EquipamentosRoute = EquipamentosRouteImport.update({
   path: '/equipamentos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastrosBancosRoute = CadastrosBancosRouteImport.update({
+  id: '/cadastros/bancos',
+  path: '/cadastros/bancos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastrosEquipamentosRoute = CadastrosEquipamentosRouteImport.update({
+  id: '/cadastros/equipamentos',
+  path: '/cadastros/equipamentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/bancos': typeof BancosRoute
+  '/ata': typeof AtaRoute
+  '/blend': typeof BlendRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
+  '/cadastros/bancos': typeof CadastrosBancosRoute
+  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/bancos': typeof BancosRoute
+  '/ata': typeof AtaRoute
+  '/blend': typeof BlendRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
+  '/cadastros/bancos': typeof CadastrosBancosRoute
+  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/bancos': typeof BancosRoute
+  '/ata': typeof AtaRoute
+  '/blend': typeof BlendRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
+  '/cadastros/bancos': typeof CadastrosBancosRoute
+  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bancos' | '/equipamentos'
+  fullPaths:
+    | '/'
+    | '/ata'
+    | '/blend'
+    | '/configuracoes'
+    | '/equipamentos'
+    | '/cadastros/bancos'
+    | '/cadastros/equipamentos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bancos' | '/equipamentos'
-  id: '__root__' | '/' | '/bancos' | '/equipamentos'
+  to:
+    | '/'
+    | '/ata'
+    | '/blend'
+    | '/configuracoes'
+    | '/equipamentos'
+    | '/cadastros/bancos'
+    | '/cadastros/equipamentos'
+  id:
+    | '__root__'
+    | '/'
+    | '/ata'
+    | '/blend'
+    | '/configuracoes'
+    | '/equipamentos'
+    | '/cadastros/bancos'
+    | '/cadastros/equipamentos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BancosRoute: typeof BancosRoute
+  AtaRoute: typeof AtaRoute
+  BlendRoute: typeof BlendRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
   EquipamentosRoute: typeof EquipamentosRoute
+  CadastrosBancosRoute: typeof CadastrosBancosRoute
+  CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,11 +130,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bancos': {
-      id: '/bancos'
-      path: '/bancos'
-      fullPath: '/bancos'
-      preLoaderRoute: typeof BancosRouteImport
+    '/ata': {
+      id: '/ata'
+      path: '/ata'
+      fullPath: '/ata'
+      preLoaderRoute: typeof AtaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blend': {
+      id: '/blend'
+      path: '/blend'
+      fullPath: '/blend'
+      preLoaderRoute: typeof BlendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipamentos': {
@@ -82,13 +158,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EquipamentosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastros/bancos': {
+      id: '/cadastros/bancos'
+      path: '/cadastros/bancos'
+      fullPath: '/cadastros/bancos'
+      preLoaderRoute: typeof CadastrosBancosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastros/equipamentos': {
+      id: '/cadastros/equipamentos'
+      path: '/cadastros/equipamentos'
+      fullPath: '/cadastros/equipamentos'
+      preLoaderRoute: typeof CadastrosEquipamentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BancosRoute: BancosRoute,
+  AtaRoute: AtaRoute,
+  BlendRoute: BlendRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
   EquipamentosRoute: EquipamentosRoute,
+  CadastrosBancosRoute: CadastrosBancosRoute,
+  CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { AppShell } from "@/components/AppShell";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -9,7 +10,6 @@ import {
   dadosVazios,
   formatarData,
   hojeISO,
-  salvarCadastro,
   salvarTurno,
   salvarUltimoTurno,
   type DadosTurno,
@@ -18,7 +18,6 @@ import {
 } from "@/lib/equipamentos";
 import { InformeDocumento, DOC_LARGURA } from "@/components/equipamentos/InformeDocumento";
 import { EquipamentoTabelaEdicao } from "@/components/equipamentos/EquipamentoTabelaEdicao";
-import { EquipamentoCadastro } from "@/components/equipamentos/EquipamentoCadastro";
 import {
   baixarImagem,
   copiarImagem,
@@ -54,7 +53,6 @@ function EquipamentosPage() {
   const [turno, setTurno] = useState<TurnoEquip>("1°");
   const [abertas, setAbertas] = useState<Record<string, boolean>>({
     preenchimento: true,
-    cadastro: false,
     previa: true,
   });
   const [exportando, setExportando] = useState(false);
@@ -70,10 +68,6 @@ function EquipamentosPage() {
       setDados(t.dados ?? {});
     }
   }, []);
-
-  useEffect(() => {
-    if (equipamentos.length > 0) salvarCadastro(equipamentos);
-  }, [equipamentos]);
 
   useEffect(() => {
     if (equipamentos.length > 0) salvarTurno({ data, turno, dados });
@@ -125,33 +119,18 @@ function EquipamentosPage() {
   const ativos = equipamentos.filter((e) => e.ativo).length;
 
   return (
-    <div className="min-h-screen bg-shell">
-      <header className="border-b border-line bg-shell/80">
-        <div className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-4 px-5 py-3">
-          <div className="grid size-9 place-items-center rounded-md bg-signal/15 font-mono text-xs font-semibold text-signal ring-1 ring-signal/40">
-            EQ
-          </div>
-          <div className="leading-tight">
-            <h1 className="text-sm font-semibold text-foreground">Informe de Turno</h1>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-steel2">
-              Equipamentos Auxiliares
-            </p>
-          </div>
-          <div className="ml-auto flex flex-wrap items-center gap-2">
-            <Link
-              to="/"
-              className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
-            >
-              JUSTIFICATIVA DO BLEND
-            </Link>
-            <ActionButton onClick={duplicarUltimo}>DUPLICAR ÚLTIMO TURNO</ActionButton>
-            <ActionButton onClick={limpar}>LIMPAR</ActionButton>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-[1440px] space-y-4 px-5 py-5">
-        <div className="flex flex-wrap items-end gap-4 rounded-xl bg-panel px-4 py-3 ring-1 ring-line">
+    <AppShell
+      titulo="Informe de Turno"
+      subtitulo="Equipamentos Auxiliares"
+      acoes={
+        <>
+          <ActionButton onClick={duplicarUltimo}>DUPLICAR ÚLTIMO TURNO</ActionButton>
+          <ActionButton onClick={limpar}>LIMPAR</ActionButton>
+        </>
+      }
+    >
+      <div className="space-y-4">
+        <div className="glass-panel flex flex-wrap items-end gap-4 px-4 py-3">
           <label className="block">
             <Label>Data</Label>
             <input
@@ -176,6 +155,7 @@ function EquipamentosPage() {
           </p>
         </div>
 
+
         <Section
           titulo="Preenchimento do turno"
           resumo="altere apenas o que mudou"
@@ -187,15 +167,6 @@ function EquipamentosPage() {
             dados={dados}
             onChange={atualizar}
           />
-        </Section>
-
-        <Section
-          titulo="Cadastro de equipamentos"
-          resumo="permanente"
-          open={!!abertas["cadastro"]}
-          onToggle={() => setAbertas((p) => ({ ...p, cadastro: !p["cadastro"] }))}
-        >
-          <EquipamentoCadastro equipamentos={equipamentos} onChange={setEquipamentos} />
         </Section>
 
         <Section
@@ -220,7 +191,7 @@ function EquipamentosPage() {
             </div>
           </div>
         </Section>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
