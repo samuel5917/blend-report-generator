@@ -38,12 +38,13 @@ function Linha({
   primeiro,
   ultimo,
   onRefresh,
+  onMover,
 }: {
   item: Local;
   primeiro: boolean;
   ultimo: boolean;
   onRefresh: () => Promise<void>;
-  vizinhoAnterior?: Local;
+  onMover: (dir: -1 | 1) => void;
 }) {
   const [editando, setEditando] = useState(false);
   const [nome, setNome] = useState(item.nome);
@@ -115,22 +116,10 @@ function Linha({
         </>
       )}
       <span className="flex gap-1">
-        <ActionButton
-          onClick={async () => {
-            const evento = new CustomEvent("mover-local", { detail: { id: item.id, dir: -1 } });
-            window.dispatchEvent(evento);
-          }}
-          className={primeiro ? "opacity-30" : ""}
-        >
+        <ActionButton onClick={() => onMover(-1)} className={primeiro ? "opacity-30" : ""}>
           ↑
         </ActionButton>
-        <ActionButton
-          onClick={async () => {
-            const evento = new CustomEvent("mover-local", { detail: { id: item.id, dir: 1 } });
-            window.dispatchEvent(evento);
-          }}
-          className={ultimo ? "opacity-30" : ""}
-        >
+        <ActionButton onClick={() => onMover(1)} className={ultimo ? "opacity-30" : ""}>
           ↓
         </ActionButton>
       </span>
@@ -152,11 +141,6 @@ function CadastroBancos() {
     await recarregar();
   };
 
-  // Listener para os botões de ordem das linhas.
-  if (typeof window !== "undefined") {
-    window.onmoverlocal = undefined;
-  }
-
   const bancos = locais.filter((l) => l.tipo === "banco");
   const operacionais = locais.filter((l) => l.tipo === "local");
 
@@ -174,22 +158,14 @@ function CadastroBancos() {
       {itens.map((item) => {
         const i = locais.findIndex((l) => l.id === item.id);
         return (
-          <li key={item.id} className="contents">
-            <div className="flex items-center gap-2">
-              <div className="flex-1">
-                <Linha
-                  item={item}
-                  primeiro={i === 0}
-                  ultimo={i === locais.length - 1}
-                  onRefresh={recarregar}
-                />
-              </div>
-              <span className="flex flex-col gap-1">
-                <ActionButton onClick={() => void mover(item.id, -1)}>↑</ActionButton>
-                <ActionButton onClick={() => void mover(item.id, 1)}>↓</ActionButton>
-              </span>
-            </div>
-          </li>
+          <Linha
+            key={item.id}
+            item={item}
+            primeiro={i === 0}
+            ultimo={i === locais.length - 1}
+            onRefresh={recarregar}
+            onMover={(dir) => void mover(item.id, dir)}
+          />
         );
       })}
     </ul>

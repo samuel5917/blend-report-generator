@@ -53,6 +53,7 @@ export const Route = createFileRoute("/")({
 const AUTOSAVE_KEY = "blend-rascunho-atual-v1";
 
 function Index() {
+  const { nomesAtivos, nomesLocaisOperacionais } = useLocais();
   const [state, setState] = useState<JustificativaState>(estadoInicial);
   const [abertas, setAbertas] = useState<Record<string, boolean>>({
     bancos: true,
@@ -147,6 +148,12 @@ function Index() {
               </p>
             </div>
             <div className="ml-auto flex items-center gap-2">
+              <Link
+                to="/bancos"
+                className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
+              >
+                BANCOS
+              </Link>
               <Link
                 to="/equipamentos"
                 className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
