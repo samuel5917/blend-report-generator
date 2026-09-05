@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { AppShell } from "@/components/AppShell";
 import { useEffect, useMemo, useState } from "react";
 import {
   OBS_TURNO_SUGESTOES,
@@ -124,52 +125,21 @@ function Index() {
   };
 
   return (
-    <div className="relative min-h-screen">
-      <img
-        src={minaBg}
-        alt=""
-        aria-hidden="true"
-        width={1920}
-        height={1080}
-        className="pointer-events-none fixed inset-0 size-full object-cover opacity-30"
-      />
-      <div className="pointer-events-none fixed inset-0 bg-shell/70" />
-
-      <div className="relative">
-        <header className="border-b border-line bg-shell/60 backdrop-blur-md">
-          <div className="mx-auto flex max-w-[1440px] items-center gap-4 px-5 py-3">
-            <div className="grid size-9 place-items-center rounded-md bg-signal/15 font-mono text-xs font-semibold text-signal ring-1 ring-signal/40">
-              MB
-            </div>
-            <div className="leading-tight">
-              <h1 className="text-sm font-semibold text-foreground">Movimentações do Turno</h1>
-              <p className="font-mono text-[11px] uppercase tracking-wide text-steel2">
-                Gerador de Justificativa do Blend
-              </p>
-            </div>
-            <div className="ml-auto flex items-center gap-2">
-              <Link
-                to="/bancos"
-                className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
-              >
-                BANCOS
-              </Link>
-              <Link
-                to="/equipamentos"
-                className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
-              >
-                EQUIPAMENTOS
-              </Link>
-              <ActionButton onClick={salvar}>SALVAR RASCUNHO</ActionButton>
-              <ActionButton onClick={() => setHistoricoAberto((v) => !v)}>
-                HISTÓRICO ({drafts.length})
-              </ActionButton>
-            </div>
-          </div>
-        </header>
-
+    <AppShell
+      titulo="Justificativa do Blend"
+      subtitulo="Movimentações do Turno"
+      acoes={
+        <>
+          <ActionButton onClick={salvar}>SALVAR RASCUNHO</ActionButton>
+          <ActionButton onClick={() => setHistoricoAberto((v) => !v)}>
+            HISTÓRICO ({drafts.length})
+          </ActionButton>
+        </>
+      }
+    >
         {historicoAberto && (
-          <div className="mx-auto max-w-[1440px] px-5 pt-5">
+          <div className="mb-4">
+
             <div className="rounded-xl bg-panel p-4 ring-1 ring-line backdrop-blur-md">
               <div className="mb-3 font-mono text-[10px] uppercase tracking-wide text-steel2">
                 Histórico salvo no navegador
@@ -213,7 +183,7 @@ function Index() {
           </div>
         )}
 
-        <main className="mx-auto grid max-w-[1440px] grid-cols-1 items-start gap-5 px-5 py-6 lg:grid-cols-[minmax(0,1fr)_420px]">
+        <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_420px]">
           <div className="space-y-3">
             {/* 01 — Data e turno */}
             <section className="rounded-xl bg-panel ring-1 ring-line backdrop-blur-md">
@@ -554,8 +524,7 @@ function Index() {
               </div>
             </div>
           </aside>
-        </main>
-      </div>
-    </div>
+        </div>
+    </AppShell>
   );
 }
