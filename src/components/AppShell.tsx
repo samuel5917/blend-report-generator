@@ -6,6 +6,7 @@ import {
   LogOut,
   Home,
   Layers,
+  Link2,
   Mail,
   Menu as MenuIcon,
   MessageSquare,
@@ -28,6 +29,7 @@ interface ItemNav {
     | "/cadastros/equipamentos"
     | "/cadastros/bancos"
     | "/cadastros/mensagens"
+    | "/cadastros/atalhos"
     | "/configuracoes";
   Icone: LucideIcon;
   rotulo: string;
@@ -57,6 +59,7 @@ const GRUPOS: Array<{ titulo: string; itens: ItemNav[] }> = [
       { to: "/cadastros/equipamentos", Icone: Tractor, rotulo: "Equipamentos", detalhe: "administração" },
       { to: "/cadastros/bancos", Icone: Layers, rotulo: "Bancos", detalhe: "bancos e locais" },
       { to: "/cadastros/mensagens", Icone: MessageSquare, rotulo: "Mensagens T2", detalhe: "administração" },
+      { to: "/cadastros/atalhos", Icone: Link2, rotulo: "Atalhos do CCO", detalhe: "sistemas" },
     ],
   },
   {
