@@ -14,7 +14,7 @@ export function AppBackground() {
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center opacity-25"
-        style={{ backgroundImage: `url(${imagem})` }}
+        style={{ backgroundImage: `url("${imagem}")` }}
       />
       <div className="absolute inset-0 bg-shell/80" />
       <div className="absolute -left-40 -top-40 size-[38rem] rounded-full bg-signal/10 blur-[120px]" />
