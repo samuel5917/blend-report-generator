@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { AppShell } from "@/components/AppShell";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -9,7 +10,6 @@ import {
   dadosVazios,
   formatarData,
   hojeISO,
-  salvarCadastro,
   salvarTurno,
   salvarUltimoTurno,
   type DadosTurno,
@@ -18,7 +18,6 @@ import {
 } from "@/lib/equipamentos";
 import { InformeDocumento, DOC_LARGURA } from "@/components/equipamentos/InformeDocumento";
 import { EquipamentoTabelaEdicao } from "@/components/equipamentos/EquipamentoTabelaEdicao";
-import { EquipamentoCadastro } from "@/components/equipamentos/EquipamentoCadastro";
 import {
   baixarImagem,
   copiarImagem,
@@ -54,7 +53,6 @@ function EquipamentosPage() {
   const [turno, setTurno] = useState<TurnoEquip>("1°");
   const [abertas, setAbertas] = useState<Record<string, boolean>>({
     preenchimento: true,
-    cadastro: false,
     previa: true,
   });
   const [exportando, setExportando] = useState(false);
@@ -70,10 +68,6 @@ function EquipamentosPage() {
       setDados(t.dados ?? {});
     }
   }, []);
-
-  useEffect(() => {
-    if (equipamentos.length > 0) salvarCadastro(equipamentos);
-  }, [equipamentos]);
 
   useEffect(() => {
     if (equipamentos.length > 0) salvarTurno({ data, turno, dados });
