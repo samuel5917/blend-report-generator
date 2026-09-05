@@ -46,6 +46,9 @@
   --color-signal: var(--signal);
   --color-signal-foreground: var(--signal-foreground);
   --color-ok: var(--ok);
+  --color-ok-foreground: var(--ok-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-danger: var(--danger);
 
   --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
@@ -63,6 +66,9 @@
   --signal: oklch(0.72 0.155 158);
   --signal-foreground: oklch(0.17 0.03 160);
   --ok: oklch(0.75 0.15 155);
+  --ok-foreground: oklch(0.17 0.03 160);
+  --info: oklch(0.66 0.14 245);
+  --info-foreground: oklch(0.97 0.01 245);
   --danger: oklch(0.62 0.17 25);
 
   --background: var(--shell);
