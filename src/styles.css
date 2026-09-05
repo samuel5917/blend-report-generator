@@ -129,7 +129,7 @@
 /* Superfícies translúcidas — conceito "industrial glass" */
 @utility glass-panel {
   border-radius: var(--radius-xl);
-  background: color-mix(in oklab, var(--panel) 70%, transparent);
+  background: color-mix(in oklab, var(--panel) 55%, transparent);
   backdrop-filter: blur(18px) saturate(130%);
   border: 1px solid var(--line);
   box-shadow:
