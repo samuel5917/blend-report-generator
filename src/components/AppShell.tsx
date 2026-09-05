@@ -104,7 +104,7 @@ export function AppShell({
         aria-label="Navegação principal"
         aria-hidden={!aberto}
         className={cn(
-          "glass-drawer fixed inset-y-0 left-0 z-50 flex w-[86vw] max-w-[19rem] flex-col transition-transform duration-250 ease-out",
+          "glass-drawer fixed inset-y-0 left-0 z-50 flex w-[86vw] max-w-[19rem] flex-col transition-transform duration-200 ease-out",
           aberto ? "translate-x-0" : "-translate-x-full",
         )}
       >
