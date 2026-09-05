@@ -1,5 +1,5 @@
 import { jsPDF } from "jspdf";
-import logoUrl from "@/assets/trindade-logo.png";
+import capaUrl from "@/assets/capa-relatorio.png.asset.json";
 import { formatarDataBR, turnoCurto, type Justificativa } from "@/lib/blendRegistros";
 
 /**
@@ -60,57 +60,28 @@ export async function gerarRelatorioPdf(
   registros: Justificativa[],
   opcoes: OpcoesRelatorio = {},
 ): Promise<jsPDF> {
-  const doc = new jsPDF({ unit: "mm", format: "a4" });
-
   /* ------------------------------- Capa -------------------------------- */
-  const logo = await comoDataUrl(logoUrl);
-  doc.setFillColor(...AZUL);
-  doc.rect(0, 0, LARGURA, 58, "F");
-  if (logo) {
-    const alturaLogo = 22;
-    const larguraLogo = (logo.w / logo.h) * alturaLogo;
-    doc.addImage(logo.dataUrl, "PNG", (LARGURA - larguraLogo) / 2, 18, larguraLogo, alturaLogo);
+  // Capa em página A4 paisagem, com a arte oficial ocupando a página inteira.
+  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
+  const capa = await comoDataUrl(capaUrl.url);
+  if (capa) {
+    const pagW = 297;
+    const pagH = 210;
+    // Preenche a página inteira (cover), centralizando o corte.
+    let w = pagW;
+    let h = (capa.h / capa.w) * w;
+    if (h < pagH) {
+      h = pagH;
+      w = (capa.w / capa.h) * h;
+    }
+    doc.addImage(capa.dataUrl, "PNG", (pagW - w) / 2, (pagH - h) / 2, w, h);
   }
-
-  doc.setTextColor(...AZUL);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(26);
-  doc.text("Justificativas de", LARGURA / 2, 105, { align: "center" });
-  doc.text("Movimentações e Blend", LARGURA / 2, 118, { align: "center" });
-
-  doc.setDrawColor(...AZUL_CLARO);
-  doc.setLineWidth(0.8);
-  doc.line(MARGEM + 25, 128, LARGURA - MARGEM - 25, 128);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(13);
-  doc.setTextColor(...CINZA);
-  doc.text("RELATÓRIO OPERACIONAL", LARGURA / 2, 140, { align: "center" });
-
-  if (registros.length > 0) {
-    const ordenados = [...registros].map((r) => r.data).sort();
-    const de = opcoes.periodoDe || ordenados[0]!;
-    const ate = opcoes.periodoAte || ordenados[ordenados.length - 1]!;
-    doc.setFontSize(11);
-    doc.text(
-      `Período: ${formatarDataBR(de)} a ${formatarDataBR(ate)}`,
-      LARGURA / 2,
-      152,
-      { align: "center" },
-    );
-    doc.text(`${registros.length} turno(s) registrado(s)`, LARGURA / 2, 160, { align: "center" });
-  }
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(...CINZA);
-  doc.text("Relatório Operacional - Trindade Mineração", LARGURA / 2, ALTURA - 14, {
-    align: "center",
-  });
+  void opcoes;
 
   /* ----------------------------- Registros ----------------------------- */
   let pagina = 1;
   for (const reg of registros) {
-    doc.addPage();
+    doc.addPage("a4", "portrait");
     let y = MARGEM;
 
     const cabecalhoTurno = () => {
@@ -132,7 +103,7 @@ export async function gerarRelatorioPdf(
     rodape(doc, pagina);
 
     const novaPagina = (continuacao = true) => {
-      doc.addPage();
+      doc.addPage("a4", "portrait");
       pagina += 1;
       y = MARGEM;
       if (continuacao) {
