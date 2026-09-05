@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Loader2, Search, Upload } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { descobrirIcone } from "@/lib/favicon.functions";
 import { AppShell } from "@/components/AppShell";
 import { ActionButton, Chip, TextArea, TextField } from "@/components/kit";
 import { IconeAtalho } from "@/components/AtalhoCard";
@@ -8,7 +10,6 @@ import {
   atualizarAtalho,
   criarAtalho,
   excluirAtalho,
-  faviconDaUrl,
   lerIconePersonalizado,
   reordenarAtalhos,
   useAtalhos,
@@ -159,6 +160,7 @@ function Linha({
   const [url, setUrl] = useState(item.url);
   const [descricao, setDescricao] = useState(item.descricao);
   const [icone, setIcone] = useState(item.icone_personalizado);
+  const [iconeAuto, setIconeAuto] = useState(item.icone_url);
   const [confirmar, setConfirmar] = useState(false);
 
   return (
@@ -174,7 +176,14 @@ function Linha({
           <TextField label="Nome" value={nome} onChange={setNome} />
           <TextField label="URL" value={url} onChange={setUrl} />
           <TextArea label="Descrição (opcional)" value={descricao} onChange={setDescricao} rows={2} />
-          <CampoIcone valor={icone} onChange={setIcone} urlSite={url} />
+          <CampoIcone
+            nome={nome}
+            urlSite={url}
+            iconeAuto={iconeAuto}
+            iconePersonalizado={icone}
+            onAuto={setIconeAuto}
+            onPersonalizado={setIcone}
+          />
           <div className="flex gap-2">
             <ActionButton
               variant="primary"
@@ -186,6 +195,7 @@ function Linha({
                   nome: n,
                   url: u,
                   descricao: descricao.trim(),
+                  icone_url: iconeAuto,
                   icone_personalizado: icone,
                 });
                 setEditando(false);
@@ -200,6 +210,7 @@ function Linha({
                 setUrl(item.url);
                 setDescricao(item.descricao);
                 setIcone(item.icone_personalizado);
+                setIconeAuto(item.icone_url);
                 setEditando(false);
               }}
             >
@@ -277,6 +288,7 @@ function CadastroAtalhos() {
   const [url, setUrl] = useState("");
   const [descricao, setDescricao] = useState("");
   const [icone, setIcone] = useState("");
+  const [iconeAuto, setIconeAuto] = useState("");
   const [arrastando, setArrastando] = useState<string | null>(null);
 
   const limpar = () => {
@@ -284,6 +296,7 @@ function CadastroAtalhos() {
     setUrl("");
     setDescricao("");
     setIcone("");
+    setIconeAuto("");
   };
 
   const salvarNovo = async () => {
@@ -295,7 +308,7 @@ function CadastroAtalhos() {
       nome: n,
       url: u,
       descricao: descricao.trim(),
-      icone_url: "",
+      icone_url: iconeAuto,
       icone_personalizado: icone,
       ordem: maiorOrdem + 10,
     });
@@ -353,7 +366,14 @@ function CadastroAtalhos() {
                 rows={2}
                 placeholder="Ex.: Acompanhamento das viagens e qualidade"
               />
-              <CampoIcone valor={icone} onChange={setIcone} urlSite={url} />
+              <CampoIcone
+                nome={nome}
+                urlSite={url}
+                iconeAuto={iconeAuto}
+                iconePersonalizado={icone}
+                onAuto={setIconeAuto}
+                onPersonalizado={setIcone}
+              />
               <div className="flex gap-2 pt-1">
                 <ActionButton
                   onClick={() => {

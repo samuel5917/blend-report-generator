@@ -175,23 +175,27 @@ export function ActionButton({
   variant = "ghost",
   className,
   type = "button",
+  disabled = false,
 }: {
   children: ReactNode;
   onClick?: () => void;
   variant?: "primary" | "ghost" | "danger";
   className?: string;
   type?: "button" | "submit";
+  disabled?: boolean;
 }) {
   return (
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={cn(
         "rounded-md px-3 py-2 text-xs font-semibold tracking-wide transition-colors",
         variant === "primary" &&
           "bg-signal text-signal-foreground ring-1 ring-signal/60 hover:brightness-110",
         variant === "ghost" && "text-steel ring-1 ring-line hover:text-foreground",
         variant === "danger" && "text-danger ring-1 ring-danger/40 hover:bg-danger/10",
+        disabled && "cursor-not-allowed opacity-50",
         className,
       )}
     >
