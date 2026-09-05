@@ -24,7 +24,10 @@ export function carregarAparencia(): Aparencia {
     const raw = window.localStorage.getItem(KEY);
     if (!raw) return aparenciaPadrao();
     const v = JSON.parse(raw) as Aparencia;
-    return { modo: v.modo === "personalizado" ? "personalizado" : "padrao", imagem: v.imagem };
+    return {
+      modo: v.modo === "personalizado" ? "personalizado" : "padrao",
+      ...(typeof v.imagem === "string" ? { imagem: v.imagem } : {}),
+    };
   } catch {
     return aparenciaPadrao();
   }
