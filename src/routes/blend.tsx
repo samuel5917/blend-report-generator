@@ -125,6 +125,30 @@ function Index() {
     setTexto("");
     setEditando(false);
     setDraftId(undefined);
+    setImagens([]);
+    setStatusRegistro(null);
+  };
+
+  const registrar = async () => {
+    if (imagens.length === 0) {
+      setStatusRegistro("Anexe a imagem do controle T2 antes de registrar.");
+      return;
+    }
+    setStatusRegistro("Salvando…");
+    try {
+      await salvarJustificativa({
+        data: state.data,
+        turno: (state.turno === "2°" ? "2°" : "1°") as TurnoRegistro,
+        texto: exibido || previa,
+        userId: perfil?.id ?? null,
+        autorNome: perfil?.full_name ?? "",
+        imagens,
+      });
+      setImagens([]);
+      setStatusRegistro("Justificativa registrada no relatório.");
+    } catch (e) {
+      setStatusRegistro(e instanceof Error ? e.message : "Falha ao registrar.");
+    }
   };
 
   return (
