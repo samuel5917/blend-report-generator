@@ -16,6 +16,7 @@ import { Route as BlendRouteImport } from './routes/blend'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as EquipamentosRouteImport } from './routes/equipamentos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
+import { Route as CadastrosAtalhosRouteImport } from './routes/cadastros/atalhos'
 import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
 import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
 import { Route as CadastrosMensagensRouteImport } from './routes/cadastros/mensagens'
@@ -56,6 +57,11 @@ const MensagensRoute = MensagensRouteImport.update({
   path: '/mensagens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastrosAtalhosRoute = CadastrosAtalhosRouteImport.update({
+  id: '/cadastros/atalhos',
+  path: '/cadastros/atalhos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CadastrosBancosRoute = CadastrosBancosRouteImport.update({
   id: '/cadastros/bancos',
   path: '/cadastros/bancos',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
   '/mensagens': typeof MensagensRoute
+  '/cadastros/atalhos': typeof CadastrosAtalhosRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
   '/mensagens': typeof MensagensRoute
+  '/cadastros/atalhos': typeof CadastrosAtalhosRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
   '/mensagens': typeof MensagensRoute
+  '/cadastros/atalhos': typeof CadastrosAtalhosRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/equipamentos'
     | '/mensagens'
+    | '/cadastros/atalhos'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/equipamentos'
     | '/mensagens'
+    | '/cadastros/atalhos'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/equipamentos'
     | '/mensagens'
+    | '/cadastros/atalhos'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
@@ -167,6 +179,7 @@ export interface RootRouteChildren {
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   EquipamentosRoute: typeof EquipamentosRoute
   MensagensRoute: typeof MensagensRoute
+  CadastrosAtalhosRoute: typeof CadastrosAtalhosRoute
   CadastrosBancosRoute: typeof CadastrosBancosRoute
   CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
   CadastrosMensagensRoute: typeof CadastrosMensagensRoute
@@ -224,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MensagensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastros/atalhos': {
+      id: '/cadastros/atalhos'
+      path: '/cadastros/atalhos'
+      fullPath: '/cadastros/atalhos'
+      preLoaderRoute: typeof CadastrosAtalhosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cadastros/bancos': {
       id: '/cadastros/bancos'
       path: '/cadastros/bancos'
@@ -263,6 +283,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfiguracoesRoute: ConfiguracoesRoute,
   EquipamentosRoute: EquipamentosRoute,
   MensagensRoute: MensagensRoute,
+  CadastrosAtalhosRoute: CadastrosAtalhosRoute,
   CadastrosBancosRoute: CadastrosBancosRoute,
   CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
   CadastrosMensagensRoute: CadastrosMensagensRoute,
