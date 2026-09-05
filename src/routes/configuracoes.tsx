@@ -43,7 +43,7 @@ function Configuracoes() {
     if (!file) return;
     try {
       const imagem = await prepararImagemFundo(file);
-      const ok = salvar({ modo: "personalizado", imagem });
+      const ok = salvar({ ...aparencia, modo: "personalizado", imagem });
       if (ok) toast.success("Fundo personalizado aplicado.");
       else toast.error("Não foi possível guardar essa imagem — tente uma menor.");
     } catch {
@@ -127,13 +127,37 @@ function Configuracoes() {
             <ActionButton
               variant="danger"
               onClick={() => {
-                salvar({ modo: "padrao" });
+                salvar({ ...aparencia, modo: "padrao" });
                 toast.success("Fundo padrão restaurado.");
               }}
             >
               REMOVER IMAGEM
             </ActionButton>
           )}
+        </div>
+
+        <div className="mt-5 border-t border-line pt-4">
+          <div className="flex items-center justify-between gap-3">
+            <label htmlFor="escurecimento" className="text-sm font-semibold text-foreground">
+              Escurecimento do fundo
+            </label>
+            <span className="text-[13px] tabular-nums text-steel2">
+              {aparencia.escurecimento}%
+            </span>
+          </div>
+          <p className="mt-1 text-[13px] text-steel2">
+            0% deixa o fundo totalmente visível; valores maiores escurecem a imagem.
+          </p>
+          <input
+            id="escurecimento"
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={aparencia.escurecimento}
+            onChange={(e) => salvar({ ...aparencia, escurecimento: Number(e.target.value) })}
+            className="mt-3 w-full accent-[var(--signal)]"
+          />
         </div>
 
         {aparencia.imagem && (
