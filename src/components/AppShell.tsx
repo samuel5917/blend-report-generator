@@ -1,10 +1,21 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
+import {
+  BookOpen,
+  Home,
+  Layers,
+  Mail,
+  Menu as MenuIcon,
+  Settings,
+  Tractor,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ItemNav {
   to: "/" | "/equipamentos" | "/blend" | "/ata" | "/cadastros/equipamentos" | "/cadastros/bancos" | "/configuracoes";
-  icone: string;
+  Icone: LucideIcon;
   rotulo: string;
   detalhe?: string;
 }
@@ -13,22 +24,22 @@ const GRUPOS: Array<{ titulo: string; itens: ItemNav[] }> = [
   {
     titulo: "Principal",
     itens: [
-      { to: "/", icone: "🏠", rotulo: "Início" },
-      { to: "/equipamentos", icone: "📋", rotulo: "Equipamentos", detalhe: "informe do turno" },
-      { to: "/blend", icone: "🔀", rotulo: "Justificativa do Blend" },
-      { to: "/ata", icone: "📝", rotulo: "Elaboração de Ata" },
+      { to: "/", Icone: Home, rotulo: "Dashboard" },
+      { to: "/equipamentos", Icone: Tractor, rotulo: "Equipamentos", detalhe: "informe do turno" },
+      { to: "/blend", Icone: BookOpen, rotulo: "Justificativa do Blend" },
+      { to: "/ata", Icone: Mail, rotulo: "Elaboração de Ata" },
     ],
   },
   {
     titulo: "Cadastros",
     itens: [
-      { to: "/cadastros/equipamentos", icone: "•", rotulo: "Equipamentos", detalhe: "administração" },
-      { to: "/cadastros/bancos", icone: "•", rotulo: "Bancos", detalhe: "bancos e locais" },
+      { to: "/cadastros/equipamentos", Icone: Tractor, rotulo: "Equipamentos", detalhe: "administração" },
+      { to: "/cadastros/bancos", Icone: Layers, rotulo: "Bancos", detalhe: "bancos e locais" },
     ],
   },
   {
     titulo: "Sistema",
-    itens: [{ to: "/configuracoes", icone: "⚙", rotulo: "Configurações" }],
+    itens: [{ to: "/configuracoes", Icone: Settings, rotulo: "Configurações" }],
   },
 ];
 
@@ -72,7 +83,7 @@ export function AppShell({
             aria-expanded={aberto}
             className="glass-btn flex shrink-0 items-center gap-2 px-3 py-2 text-xs font-semibold tracking-wide text-steel"
           >
-            <span aria-hidden="true">☰</span>
+            <MenuIcon aria-hidden="true" className="size-4" strokeWidth={1.75} />
             <span className="hidden sm:inline">MENU</span>
           </button>
 
@@ -119,7 +130,7 @@ export function AppShell({
             aria-label="Fechar menu"
             className="ml-auto rounded-md px-2 py-1 text-steel2 transition-colors hover:text-foreground"
           >
-            ✕
+            <X aria-hidden="true" className="size-4" strokeWidth={1.75} />
           </button>
         </div>
 
@@ -141,9 +152,11 @@ export function AppShell({
                           "flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm bg-signal/15 text-signal ring-1 ring-signal/35",
                       }}
                     >
-                      <span aria-hidden="true" className="w-4 shrink-0 text-center text-[13px]">
-                        {item.icone}
-                      </span>
+                      <item.Icone
+                        aria-hidden="true"
+                        className="size-4 shrink-0"
+                        strokeWidth={1.75}
+                      />
                       <span className="min-w-0 flex-1 truncate">{item.rotulo}</span>
                       {item.detalhe ? (
                         <span className="shrink-0 font-mono text-[9px] uppercase tracking-wide text-steel2">
