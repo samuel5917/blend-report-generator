@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AtaRouteImport } from './routes/ata'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BlendRouteImport } from './routes/blend'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as EquipamentosRouteImport } from './routes/equipamentos'
@@ -27,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const AtaRoute = AtaRouteImport.update({
   id: '/ata',
   path: '/ata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlendRoute = BlendRouteImport.update({
@@ -68,6 +74,7 @@ const CadastrosMensagensRoute = CadastrosMensagensRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ata': typeof AtaRoute
+  '/auth': typeof AuthRoute
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ata': typeof AtaRoute
+  '/auth': typeof AuthRoute
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ata': typeof AtaRoute
+  '/auth': typeof AuthRoute
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ata'
+    | '/auth'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ata'
+    | '/auth'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/ata'
+    | '/auth'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
@@ -138,6 +150,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AtaRoute: typeof AtaRoute
+  AuthRoute: typeof AuthRoute
   BlendRoute: typeof BlendRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   EquipamentosRoute: typeof EquipamentosRoute
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/ata'
       fullPath: '/ata'
       preLoaderRoute: typeof AtaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blend': {
@@ -218,6 +238,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AtaRoute: AtaRoute,
+  AuthRoute: AuthRoute,
   BlendRoute: BlendRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   EquipamentosRoute: EquipamentosRoute,
