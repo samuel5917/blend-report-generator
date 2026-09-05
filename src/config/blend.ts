@@ -6,27 +6,6 @@
 export const TURNOS = ["1°", "2°"] as const;
 export type Turno = (typeof TURNOS)[number];
 
-export const BANCOS_PADRAO = [
-  "B-1060",
-  "B-1060 MN",
-  "B-1030",
-  "B-1030 Final do Banco",
-  "B-1030 Meio do Banco",
-  "B-1030 334",
-  "B-1030 353",
-  "B-1120",
-  "B-1070",
-  "B-1020",
-  "Pilha B-1020",
-  "B-1020 SF",
-  "Baia 01",
-  "Baia 01 1110",
-  "Baia 02",
-  "Baia 02 1110",
-  "Baia 03",
-  "Pulmão 01",
-];
-
 /* ------------------------------- Plantas 01/02 -------------------------------- */
 
 export const PLANTA_SITUACOES = [
@@ -58,9 +37,6 @@ export const OBS_TURNO_SUGESTOES = [
 ];
 
 /* ------------------------------ Paradas operacionais -------------------------- */
-
-/** Parada operacional existe somente para estas categorias. */
-export const PARADA_LOCAIS = ["Pulmão-01", "Pulmão-02", "Planta-01", "Planta-02"];
 
 export const PARADA_MOTIVOS = [
   "Pulmão cheio",
