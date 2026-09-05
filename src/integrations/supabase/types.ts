@@ -14,6 +14,85 @@ export type Database = {
   }
   public: {
     Tables: {
+      blend_justificativa_imagens: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          justificativa_id: string
+          ordem: number
+          storage_path: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          justificativa_id: string
+          ordem?: number
+          storage_path: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          justificativa_id?: string
+          ordem?: number
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blend_justificativa_imagens_justificativa_id_fkey"
+            columns: ["justificativa_id"]
+            isOneToOne: false
+            referencedRelation: "blend_justificativas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blend_justificativas: {
+        Row: {
+          autor_nome: string
+          created_at: string
+          data: string
+          id: string
+          ordem: number
+          texto: string
+          turno: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          autor_nome?: string
+          created_at?: string
+          data: string
+          id?: string
+          ordem?: number
+          texto?: string
+          turno: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          autor_nome?: string
+          created_at?: string
+          data?: string
+          id?: string
+          ordem?: number
+          texto?: string
+          turno?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blend_justificativas_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       locais: {
         Row: {
           ativo: boolean
@@ -71,6 +150,30 @@ export type Database = {
           nome?: string
           ordem?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          full_name: string
+          id: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+          username?: string
         }
         Relationships: []
       }

@@ -2,6 +2,8 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   BookOpen,
+  FileText,
+  LogOut,
   Home,
   Layers,
   Mail,
@@ -13,6 +15,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { sair, useAuth } from "@/lib/auth";
 
 interface ItemNav {
   to:
@@ -21,6 +24,7 @@ interface ItemNav {
     | "/mensagens"
     | "/blend"
     | "/ata"
+    | "/relatorios/blend"
     | "/cadastros/equipamentos"
     | "/cadastros/bancos"
     | "/cadastros/mensagens"
@@ -39,6 +43,12 @@ const GRUPOS: Array<{ titulo: string; itens: ItemNav[] }> = [
       { to: "/mensagens", Icone: MessageSquare, rotulo: "Mensagens T2" },
       { to: "/blend", Icone: BookOpen, rotulo: "Justificativa do Blend" },
       { to: "/ata", Icone: Mail, rotulo: "Elaboração de Ata" },
+    ],
+  },
+  {
+    titulo: "Relatórios",
+    itens: [
+      { to: "/relatorios/blend", Icone: FileText, rotulo: "Relatório de Blend", detalhe: "pdf" },
     ],
   },
   {
@@ -70,6 +80,7 @@ export function AppShell({
   largura?: string;
 }) {
   const [aberto, setAberto] = useState(false);
+  const { perfil, autenticado } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => setAberto(false), [pathname]);
@@ -145,6 +156,36 @@ export function AppShell({
           >
             <X aria-hidden="true" className="size-4" strokeWidth={1.75} />
           </button>
+        </div>
+
+        <div className="border-b border-line px-4 py-3">
+          {autenticado ? (
+            <div className="flex items-center gap-2">
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-xs font-medium text-foreground">
+                  {perfil?.full_name ?? "Usuário"}
+                </p>
+                <p className="truncate font-mono text-[10px] uppercase text-steel2">
+                  {perfil?.username ?? ""}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => void sair()}
+                aria-label="Sair"
+                className="rounded-md px-2 py-1 text-steel2 transition-colors hover:text-danger"
+              >
+                <LogOut aria-hidden="true" className="size-4" strokeWidth={1.75} />
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/auth"
+              className="block rounded-md bg-signal/15 px-3 py-2 text-center font-mono text-[10px] uppercase tracking-wide text-signal ring-1 ring-signal/35"
+            >
+              Entrar
+            </Link>
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 py-4">

@@ -17,6 +17,10 @@ import { gerarJustificativa, textoParada } from "@/lib/justificativa";
 import { duplicarDraft, excluirDraft, listarDrafts, salvarDraft, type Draft } from "@/lib/drafts";
 import { BancoCard } from "@/components/BancoCard";
 import { MovimentacaoLista } from "@/components/MovimentacaoLista";
+import { ImagensT2 } from "@/components/ImagensT2";
+import { useAuth } from "@/lib/auth";
+import { salvarJustificativa, type ImagemT2, type TurnoRegistro } from "@/lib/blendRegistros";
+import { Link } from "@tanstack/react-router";
 import {
   ActionButton,
   Chip,
@@ -54,6 +58,9 @@ const AUTOSAVE_KEY = "blend-rascunho-atual-v1";
 
 function Index() {
   const { nomesAtivos, nomesLocaisOperacionais } = useLocais();
+  const { perfil, autenticado } = useAuth();
+  const [imagens, setImagens] = useState<ImagemT2[]>([]);
+  const [statusRegistro, setStatusRegistro] = useState<string | null>(null);
   const [state, setState] = useState<JustificativaState>(estadoInicial);
   const [abertas, setAbertas] = useState<Record<string, boolean>>({
     bancos: true,
@@ -121,6 +128,30 @@ function Index() {
     setTexto("");
     setEditando(false);
     setDraftId(undefined);
+    setImagens([]);
+    setStatusRegistro(null);
+  };
+
+  const registrar = async () => {
+    if (imagens.length === 0) {
+      setStatusRegistro("Anexe a imagem do controle T2 antes de registrar.");
+      return;
+    }
+    setStatusRegistro("Salvando…");
+    try {
+      await salvarJustificativa({
+        data: state.data,
+        turno: (state.turno === "2°" ? "2°" : "1°") as TurnoRegistro,
+        texto: exibido || previa,
+        userId: perfil?.id ?? null,
+        autorNome: perfil?.full_name ?? "",
+        imagens,
+      });
+      setImagens([]);
+      setStatusRegistro("Justificativa registrada no relatório.");
+    } catch (e) {
+      setStatusRegistro(e instanceof Error ? e.message : "Falha ao registrar.");
+    }
   };
 
   return (
@@ -520,6 +551,46 @@ function Index() {
                 <ActionButton className="ml-auto" onClick={novaJustificativa}>
                   NOVA JUSTIFICATIVA
                 </ActionButton>
+              </div>
+            </div>
+
+            {/* REGISTRO NO RELATÓRIO */}
+            <div className="glass-panel mt-3">
+              <div className="border-b border-line px-4 py-3">
+                <span className="font-mono text-[10px] uppercase tracking-wide text-steel2">
+                  Registrar no relatório de Blend
+                </span>
+              </div>
+              <div className="space-y-3 p-4">
+                {autenticado ? (
+                  <>
+                    <ImagensT2 imagens={imagens} onChange={setImagens} />
+                    <div className="flex flex-wrap items-center gap-2">
+                      <ActionButton variant="primary" onClick={() => void registrar()}>
+                        SALVAR NO RELATÓRIO
+                      </ActionButton>
+                      <Link
+                        to="/relatorios/blend"
+                        className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line hover:text-foreground"
+                      >
+                        VER RELATÓRIO
+                      </Link>
+                      <span className="font-mono text-[10px] uppercase text-steel2">
+                        {perfil?.full_name ?? ""}
+                      </span>
+                    </div>
+                    {statusRegistro && (
+                      <p className="font-mono text-[11px] text-steel">{statusRegistro}</p>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-sm text-steel">
+                    <Link to="/auth" className="text-signal underline">
+                      Entre com seu usuário
+                    </Link>{" "}
+                    para salvar esta justificativa com a imagem do controle T2.
+                  </p>
+                )}
               </div>
             </div>
           </aside>

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AtaRouteImport } from './routes/ata'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BlendRouteImport } from './routes/blend'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as EquipamentosRouteImport } from './routes/equipamentos'
@@ -18,6 +19,7 @@ import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
 import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
 import { Route as CadastrosMensagensRouteImport } from './routes/cadastros/mensagens'
+import { Route as RelatoriosBlendRouteImport } from './routes/relatorios/blend'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -27,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const AtaRoute = AtaRouteImport.update({
   id: '/ata',
   path: '/ata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlendRoute = BlendRouteImport.update({
@@ -64,10 +71,16 @@ const CadastrosMensagensRoute = CadastrosMensagensRouteImport.update({
   path: '/cadastros/mensagens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RelatoriosBlendRoute = RelatoriosBlendRouteImport.update({
+  id: '/relatorios/blend',
+  path: '/relatorios/blend',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ata': typeof AtaRoute
+  '/auth': typeof AuthRoute
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
@@ -75,10 +88,12 @@ export interface FileRoutesByFullPath {
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
+  '/relatorios/blend': typeof RelatoriosBlendRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ata': typeof AtaRoute
+  '/auth': typeof AuthRoute
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
@@ -86,11 +101,13 @@ export interface FileRoutesByTo {
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
+  '/relatorios/blend': typeof RelatoriosBlendRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ata': typeof AtaRoute
+  '/auth': typeof AuthRoute
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
@@ -98,12 +115,14 @@ export interface FileRoutesById {
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
+  '/relatorios/blend': typeof RelatoriosBlendRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/ata'
+    | '/auth'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
@@ -111,10 +130,12 @@ export interface FileRouteTypes {
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
+    | '/relatorios/blend'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/ata'
+    | '/auth'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
@@ -122,10 +143,12 @@ export interface FileRouteTypes {
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
+    | '/relatorios/blend'
   id:
     | '__root__'
     | '/'
     | '/ata'
+    | '/auth'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
@@ -133,11 +156,13 @@ export interface FileRouteTypes {
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
+    | '/relatorios/blend'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AtaRoute: typeof AtaRoute
+  AuthRoute: typeof AuthRoute
   BlendRoute: typeof BlendRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   EquipamentosRoute: typeof EquipamentosRoute
@@ -145,6 +170,7 @@ export interface RootRouteChildren {
   CadastrosBancosRoute: typeof CadastrosBancosRoute
   CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
   CadastrosMensagensRoute: typeof CadastrosMensagensRoute
+  RelatoriosBlendRoute: typeof RelatoriosBlendRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -161,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/ata'
       fullPath: '/ata'
       preLoaderRoute: typeof AtaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blend': {
@@ -212,12 +245,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastrosMensagensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/relatorios/blend': {
+      id: '/relatorios/blend'
+      path: '/relatorios/blend'
+      fullPath: '/relatorios/blend'
+      preLoaderRoute: typeof RelatoriosBlendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AtaRoute: AtaRoute,
+  AuthRoute: AuthRoute,
   BlendRoute: BlendRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   EquipamentosRoute: EquipamentosRoute,
@@ -225,6 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   CadastrosBancosRoute: CadastrosBancosRoute,
   CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
   CadastrosMensagensRoute: CadastrosMensagensRoute,
+  RelatoriosBlendRoute: RelatoriosBlendRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
