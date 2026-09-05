@@ -46,6 +46,9 @@
   --color-signal: var(--signal);
   --color-signal-foreground: var(--signal-foreground);
   --color-ok: var(--ok);
+  --color-ok-foreground: var(--ok-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-danger: var(--danger);
 
   --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
