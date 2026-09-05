@@ -1,5 +1,5 @@
 import { jsPDF } from "jspdf";
-import logoUrl from "@/assets/trindade-logo.png";
+import capaUrl from "@/assets/capa-relatorio.png.asset.json";
 import { formatarDataBR, turnoCurto, type Justificativa } from "@/lib/blendRegistros";
 
 /**
