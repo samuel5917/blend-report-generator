@@ -6,6 +6,7 @@ import {
   LogOut,
   Home,
   Layers,
+  Link2,
   Mail,
   Menu as MenuIcon,
   MessageSquare,
