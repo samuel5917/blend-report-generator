@@ -6,6 +6,7 @@ import {
   Layers,
   Mail,
   Menu as MenuIcon,
+  MessageSquare,
   Settings,
   Tractor,
   X,
@@ -14,7 +15,16 @@ import {
 import { cn } from "@/lib/utils";
 
 interface ItemNav {
-  to: "/" | "/equipamentos" | "/blend" | "/ata" | "/cadastros/equipamentos" | "/cadastros/bancos" | "/configuracoes";
+  to:
+    | "/"
+    | "/equipamentos"
+    | "/mensagens"
+    | "/blend"
+    | "/ata"
+    | "/cadastros/equipamentos"
+    | "/cadastros/bancos"
+    | "/cadastros/mensagens"
+    | "/configuracoes";
   Icone: LucideIcon;
   rotulo: string;
   detalhe?: string;
@@ -26,6 +36,7 @@ const GRUPOS: Array<{ titulo: string; itens: ItemNav[] }> = [
     itens: [
       { to: "/", Icone: Home, rotulo: "Dashboard" },
       { to: "/equipamentos", Icone: Tractor, rotulo: "Equipamentos", detalhe: "informe do turno" },
+      { to: "/mensagens", Icone: MessageSquare, rotulo: "Mensagens T2" },
       { to: "/blend", Icone: BookOpen, rotulo: "Justificativa do Blend" },
       { to: "/ata", Icone: Mail, rotulo: "Elaboração de Ata" },
     ],
@@ -35,6 +46,7 @@ const GRUPOS: Array<{ titulo: string; itens: ItemNav[] }> = [
     itens: [
       { to: "/cadastros/equipamentos", Icone: Tractor, rotulo: "Equipamentos", detalhe: "administração" },
       { to: "/cadastros/bancos", Icone: Layers, rotulo: "Bancos", detalhe: "bancos e locais" },
+      { to: "/cadastros/mensagens", Icone: MessageSquare, rotulo: "Mensagens T2", detalhe: "administração" },
     ],
   },
   {
@@ -42,6 +54,7 @@ const GRUPOS: Array<{ titulo: string; itens: ItemNav[] }> = [
     itens: [{ to: "/configuracoes", Icone: Settings, rotulo: "Configurações" }],
   },
 ];
+
 
 export function AppShell({
   titulo,

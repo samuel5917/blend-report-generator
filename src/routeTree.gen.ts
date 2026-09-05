@@ -17,6 +17,7 @@ import { Route as EquipamentosRouteImport } from './routes/equipamentos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
 import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
+import { Route as CadastrosMensagensRouteImport } from './routes/cadastros/mensagens'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const CadastrosEquipamentosRoute = CadastrosEquipamentosRouteImport.update({
   path: '/cadastros/equipamentos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastrosMensagensRoute = CadastrosMensagensRouteImport.update({
+  id: '/cadastros/mensagens',
+  path: '/cadastros/mensagens',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/mensagens': typeof MensagensRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
+  '/cadastros/mensagens': typeof CadastrosMensagensRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/mensagens': typeof MensagensRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
+  '/cadastros/mensagens': typeof CadastrosMensagensRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/mensagens': typeof MensagensRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
+  '/cadastros/mensagens': typeof CadastrosMensagensRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/mensagens'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
+    | '/cadastros/mensagens'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/mensagens'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
+    | '/cadastros/mensagens'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/mensagens'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
+    | '/cadastros/mensagens'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   MensagensRoute: typeof MensagensRoute
   CadastrosBancosRoute: typeof CadastrosBancosRoute
   CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
+  CadastrosMensagensRoute: typeof CadastrosMensagensRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastrosEquipamentosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastros/mensagens': {
+      id: '/cadastros/mensagens'
+      path: '/cadastros/mensagens'
+      fullPath: '/cadastros/mensagens'
+      preLoaderRoute: typeof CadastrosMensagensRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   MensagensRoute: MensagensRoute,
   CadastrosBancosRoute: CadastrosBancosRoute,
   CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
+  CadastrosMensagensRoute: CadastrosMensagensRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
