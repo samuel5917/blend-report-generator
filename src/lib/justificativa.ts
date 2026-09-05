@@ -1,10 +1,10 @@
 import {
   MOVIMENTACAO_TIPOS,
-  type   BancoState,
-  JustificativaState,
-  MovimentacaoItem,
-  ParadaState,
-  PlantaState,
+  type BancoState,
+  type JustificativaState,
+  type MovimentacaoItem,
+  type ParadaState,
+  type PlantaState,
 } from "@/config/blend";
 
 const clean = (v: string) => v.trim();
