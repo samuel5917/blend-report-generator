@@ -19,6 +19,7 @@ import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
 import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
 import { Route as CadastrosMensagensRouteImport } from './routes/cadastros/mensagens'
+import { Route as RelatoriosBlendRouteImport } from './routes/relatorios/blend'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const CadastrosMensagensRoute = CadastrosMensagensRouteImport.update({
   path: '/cadastros/mensagens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RelatoriosBlendRoute = RelatoriosBlendRouteImport.update({
+  id: '/relatorios/blend',
+  path: '/relatorios/blend',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
+  '/relatorios/blend': typeof RelatoriosBlendRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
+  '/relatorios/blend': typeof RelatoriosBlendRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
   '/cadastros/mensagens': typeof CadastrosMensagensRoute
+  '/relatorios/blend': typeof RelatoriosBlendRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
+    | '/relatorios/blend'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
+    | '/relatorios/blend'
   id:
     | '__root__'
     | '/'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
     | '/cadastros/mensagens'
+    | '/relatorios/blend'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +170,7 @@ export interface RootRouteChildren {
   CadastrosBancosRoute: typeof CadastrosBancosRoute
   CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
   CadastrosMensagensRoute: typeof CadastrosMensagensRoute
+  RelatoriosBlendRoute: typeof RelatoriosBlendRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastrosMensagensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/relatorios/blend': {
+      id: '/relatorios/blend'
+      path: '/relatorios/blend'
+      fullPath: '/relatorios/blend'
+      preLoaderRoute: typeof RelatoriosBlendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,6 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   CadastrosBancosRoute: CadastrosBancosRoute,
   CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
   CadastrosMensagensRoute: CadastrosMensagensRoute,
+  RelatoriosBlendRoute: RelatoriosBlendRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
