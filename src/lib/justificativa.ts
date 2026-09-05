@@ -1,7 +1,8 @@
-import type {
-  BancoState,
+import {
+  MOVIMENTACAO_TIPOS,
+  type   BancoState,
   JustificativaState,
-  MovimentacaoState,
+  MovimentacaoItem,
   ParadaState,
   PlantaState,
 } from "@/config/blend";
@@ -57,12 +58,12 @@ export function textoParada(parada: ParadaState): string {
   return has(tail) ? `${head} — ${tail}${tail.endsWith(".") ? "" : "."}` : `${head}.`;
 }
 
-/** OM / Reprocesso / Estoque / Remanejo. */
-export function textoMovimentacao(m: MovimentacaoState): string {
-  if (!m.houve) return "Não houve.";
+/** Texto de uma movimentação individual. */
+export function textoMovimentacao(m: MovimentacaoItem): string {
   const partes: string[] = ["Houve"];
   if (has(m.origem)) partes.push(`do ${clean(m.origem)}`);
   if (has(m.destino)) partes.push(`para o ${clean(m.destino)}`);
+  if (has(m.material)) partes.push(clean(m.material));
   const qtd = clean(m.quantidade);
   if (has(qtd)) partes.push(`com ${qtd} ${qtd === "1" ? "viagem" : "viagens"}`);
   return `${partes.join(", ")}.`;
@@ -109,10 +110,19 @@ export function gerarJustificativa(state: JustificativaState): string {
 
   linhas.push("");
   linhas.push("OUTRAS MOVIMENTAÇÕES");
-  linhas.push(`  OM: ${textoMovimentacao(state.om)}`);
-  linhas.push(`  Reprocesso: ${textoMovimentacao(state.reprocesso)}`);
-  linhas.push(`  Estoque: ${textoMovimentacao(state.estoque)}`);
-  linhas.push(`  Remanejo: ${textoMovimentacao(state.remanejo)}`);
+  for (const tipo of MOVIMENTACAO_TIPOS) {
+    const doTipo = state.movimentacoes.filter((m) => m.tipo === tipo);
+    if (doTipo.length === 0) {
+      linhas.push(`  ${tipo}: Não houve.`);
+      continue;
+    }
+    if (doTipo.length === 1 && doTipo[0]) {
+      linhas.push(`  ${tipo}: ${textoMovimentacao(doTipo[0])}`);
+      continue;
+    }
+    linhas.push(`  ${tipo}:`);
+    doTipo.forEach((m, i) => linhas.push(`    ${i + 1}. ${textoMovimentacao(m)}`));
+  }
 
   return linhas.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
