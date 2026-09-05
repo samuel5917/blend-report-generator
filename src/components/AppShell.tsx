@@ -28,6 +28,7 @@ interface ItemNav {
     | "/cadastros/equipamentos"
     | "/cadastros/bancos"
     | "/cadastros/mensagens"
+    | "/cadastros/atalhos"
     | "/configuracoes";
   Icone: LucideIcon;
   rotulo: string;
