@@ -8,13 +8,13 @@ import { Chip } from "@/components/kit";
 export const Route = createFileRoute("/cadastros/equipamentos")({
   head: () => ({
     meta: [
-      { title: "Cadastro de Equipamentos | MineShift" },
+      { title: "Cadastro de Equipamentos | CCO TRINDADE" },
       {
         name: "description",
         content:
-          "Adicione, edite, desative, exclua e reordene os equipamentos usados no Informe de Turno do MineShift.",
+          "Adicione, edite, desative, exclua e reordene os equipamentos usados no Informe de Turno do CCO TRINDADE.",
       },
-      { property: "og:title", content: "Cadastro de Equipamentos | MineShift" },
+      { property: "og:title", content: "Cadastro de Equipamentos | CCO TRINDADE" },
       {
         property: "og:description",
         content: "Administração da lista de equipamentos do Informe de Turno.",

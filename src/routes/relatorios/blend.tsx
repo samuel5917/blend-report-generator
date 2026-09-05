@@ -31,7 +31,7 @@ export const Route = createFileRoute("/relatorios/blend")({
         content:
           "Consulte, edite, organize e gere o PDF consolidado das justificativas de movimentações e Blend por período e turno.",
       },
-      { property: "og:title", content: "Relatório de Blend | MineShift" },
+      { property: "og:title", content: "Relatório de Blend | CCO TRINDADE" },
       {
         property: "og:description",
         content: "Gerencie as justificativas dos turnos e gere o relatório consolidado em PDF.",

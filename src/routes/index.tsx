@@ -7,17 +7,17 @@ import { useAtalhos } from "@/lib/atalhos";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MineShift — Hub de sistemas do CCO" },
+      { title: "CCO TRINDADE — Hub de sistemas do CCO" },
       {
         name: "description",
         content:
-          "Dashboard do MineShift: acesso rápido aos sistemas do CCO, informe de equipamentos, justificativa do blend e cadastros operacionais.",
+          "Dashboard do CCO TRINDADE: acesso rápido aos sistemas do CCO, informe de equipamentos, justificativa do blend e cadastros operacionais.",
       },
-      { property: "og:title", content: "MineShift — Hub de sistemas do CCO" },
+      { property: "og:title", content: "CCO TRINDADE — Hub de sistemas do CCO" },
       {
         property: "og:description",
         content:
-          "Central de atalhos do CCO com acesso direto aos sistemas do turno e às áreas operacionais do MineShift.",
+          "Central de atalhos do CCO com acesso direto aos sistemas do turno e às áreas operacionais do CCO TRINDADE.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -100,14 +100,14 @@ function SistemasCCO() {
 
 function Inicio() {
   return (
-    <AppShell titulo="MineShift" subtitulo="Hub operacional do CCO" largura="max-w-[1100px]">
+    <AppShell titulo="CCO TRINDADE" subtitulo="Hub operacional do CCO" largura="max-w-[1100px]">
       <div className="glass-panel px-6 py-7 sm:px-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-signal">MineShift</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-signal">CCO TRINDADE</p>
         <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
           Central de acesso do turno.
         </h2>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-steel">
-          Abra os sistemas do CCO com um clique e use o menu no topo para as áreas do MineShift.
+          Abra os sistemas do CCO com um clique e use o menu no topo para as áreas do CCO TRINDADE.
         </p>
       </div>
 

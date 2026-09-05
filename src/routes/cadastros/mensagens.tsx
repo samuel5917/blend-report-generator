@@ -15,16 +15,16 @@ import {
 export const Route = createFileRoute("/cadastros/mensagens")({
   head: () => ({
     meta: [
-      { title: "Cadastro de Mensagens T2 | MineShift" },
+      { title: "Cadastro de Mensagens T2 | CCO TRINDADE" },
       {
         name: "description",
         content:
           "Crie, edite, ative, desative e ordene as mensagens operacionais de comunicação com o T2. A biblioteca é compartilhada entre todos os usuários.",
       },
-      { property: "og:title", content: "Cadastro de Mensagens T2 | MineShift" },
+      { property: "og:title", content: "Cadastro de Mensagens T2 | CCO TRINDADE" },
       {
         property: "og:description",
-        content: "Administre a biblioteca compartilhada de mensagens operacionais do MineShift.",
+        content: "Administre a biblioteca compartilhada de mensagens operacionais do CCO TRINDADE.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

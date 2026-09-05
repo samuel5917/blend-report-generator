@@ -15,13 +15,13 @@ import { ActionButton, Chip, Label, SelectField, TextField } from "@/components/
 export const Route = createFileRoute("/cadastros/bancos")({
   head: () => ({
     meta: [
-      { title: "Cadastro de Bancos e Locais | MineShift" },
+      { title: "Cadastro de Bancos e Locais | CCO TRINDADE" },
       {
         name: "description",
         content:
           "Cadastre, edite, ative, desative e ordene os bancos e locais operacionais usados na Justificativa do Blend. O cadastro é compartilhado entre todos os usuários.",
       },
-      { property: "og:title", content: "Cadastro de Bancos e Locais | MineShift" },
+      { property: "og:title", content: "Cadastro de Bancos e Locais | CCO TRINDADE" },
       {
         property: "og:description",
         content:

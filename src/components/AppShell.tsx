@@ -150,7 +150,7 @@ export function AppShell({
           <div className="grid size-8 shrink-0 place-items-center rounded-md bg-signal/15 font-mono text-[11px] font-semibold text-signal ring-1 ring-signal/40">
             MS
           </div>
-          <span className="text-sm font-semibold tracking-wide text-foreground">MineShift</span>
+          <span className="text-sm font-semibold tracking-wide text-foreground">CCO TRINDADE</span>
           <button
             type="button"
             onClick={() => setAberto(false)}
