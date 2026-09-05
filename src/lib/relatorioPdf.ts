@@ -81,7 +81,7 @@ export async function gerarRelatorioPdf(
   /* ----------------------------- Registros ----------------------------- */
   let pagina = 1;
   for (const reg of registros) {
-    doc.addPage();
+    doc.addPage("a4", "portrait");
     let y = MARGEM;
 
     const cabecalhoTurno = () => {
@@ -103,7 +103,7 @@ export async function gerarRelatorioPdf(
     rodape(doc, pagina);
 
     const novaPagina = (continuacao = true) => {
-      doc.addPage();
+      doc.addPage("a4", "portrait");
       pagina += 1;
       y = MARGEM;
       if (continuacao) {
