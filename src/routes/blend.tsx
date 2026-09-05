@@ -27,7 +27,7 @@ import {
 } from "@/components/kit";
 import minaBg from "@/assets/mina-bg.jpg";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/blend")({
   head: () => ({
     meta: [
       { title: "Gerador de Justificativa do Blend | Movimentações do Turno" },
