@@ -88,8 +88,9 @@ export async function gerarRelatorioPdf(
   doc.text("RELATÓRIO OPERACIONAL", LARGURA / 2, 140, { align: "center" });
 
   if (registros.length > 0) {
-    const de = opcoes.periodoDe ?? registros[0]!.data;
-    const ate = opcoes.periodoAte ?? registros[registros.length - 1]!.data;
+    const ordenados = [...registros].map((r) => r.data).sort();
+    const de = opcoes.periodoDe || ordenados[0]!;
+    const ate = opcoes.periodoAte || ordenados[ordenados.length - 1]!;
     doc.setFontSize(11);
     doc.text(
       `Período: ${formatarDataBR(de)} a ${formatarDataBR(ate)}`,
@@ -99,7 +100,12 @@ export async function gerarRelatorioPdf(
     );
     doc.text(`${registros.length} turno(s) registrado(s)`, LARGURA / 2, 160, { align: "center" });
   }
-  rodape(doc, 0);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(...CINZA);
+  doc.text("Relatório Operacional - Trindade Mineração", LARGURA / 2, ALTURA - 14, {
+    align: "center",
+  });
 
   /* ----------------------------- Registros ----------------------------- */
   let pagina = 1;
@@ -208,7 +214,8 @@ export async function baixarRelatorio(
   opcoes?: OpcoesRelatorio,
 ): Promise<void> {
   const doc = await gerarRelatorioPdf(registros, opcoes);
-  const de = opcoes?.periodoDe ?? registros[0]?.data ?? "";
-  const ate = opcoes?.periodoAte ?? registros[registros.length - 1]?.data ?? "";
+  const datas = registros.map((r) => r.data).sort();
+  const de = opcoes?.periodoDe || datas[0] || "";
+  const ate = opcoes?.periodoAte || datas[datas.length - 1] || "";
   doc.save(`Movimentacoes_e_Blend_${de}_a_${ate}.pdf`);
 }
