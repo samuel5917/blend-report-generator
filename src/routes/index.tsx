@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { BookOpen, Mail, Settings, Tractor } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 
 export const Route = createFileRoute("/")({
@@ -26,25 +27,25 @@ export const Route = createFileRoute("/")({
 const ATALHOS = [
   {
     to: "/equipamentos" as const,
-    icone: "📋",
+    Icone: Tractor,
     titulo: "Informe de Equipamentos",
     texto: "Preencha situação, frente e comunicação do turno e exporte a imagem do informe.",
   },
   {
     to: "/blend" as const,
-    icone: "🔀",
+    Icone: BookOpen,
     titulo: "Justificativa do Blend",
     texto: "Monte as movimentações do turno e gere o texto pronto para copiar.",
   },
   {
     to: "/ata" as const,
-    icone: "📝",
+    Icone: Mail,
     titulo: "Elaboração de Ata",
     texto: "Registro das reuniões de turno.",
   },
   {
     to: "/cadastros/equipamentos" as const,
-    icone: "⚙",
+    Icone: Settings,
     titulo: "Cadastros",
     texto: "Equipamentos, bancos e locais operacionais usados pelo sistema.",
   },
@@ -73,9 +74,9 @@ function Inicio() {
             <div className="flex items-start gap-3">
               <span
                 aria-hidden="true"
-                className="grid size-9 shrink-0 place-items-center rounded-lg bg-signal/12 text-sm ring-1 ring-signal/30"
+                className="grid size-9 shrink-0 place-items-center rounded-lg bg-signal/12 text-foreground ring-1 ring-signal/30"
               >
-                {a.icone}
+                <a.Icone className="size-[18px]" strokeWidth={1.75} />
               </span>
               <div className="min-w-0">
                 <h3 className="text-[15px] font-semibold text-foreground">{a.titulo}</h3>
