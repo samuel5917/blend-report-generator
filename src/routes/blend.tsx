@@ -17,6 +17,10 @@ import { gerarJustificativa, textoParada } from "@/lib/justificativa";
 import { duplicarDraft, excluirDraft, listarDrafts, salvarDraft, type Draft } from "@/lib/drafts";
 import { BancoCard } from "@/components/BancoCard";
 import { MovimentacaoLista } from "@/components/MovimentacaoLista";
+import { ImagensT2 } from "@/components/ImagensT2";
+import { useAuth } from "@/lib/auth";
+import { salvarJustificativa, type ImagemT2, type TurnoRegistro } from "@/lib/blendRegistros";
+import { Link } from "@tanstack/react-router";
 import {
   ActionButton,
   Chip,
