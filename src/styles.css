@@ -55,8 +55,8 @@
   --radius: 0.625rem;
 
   --shell: oklch(0.16 0.018 165);
-  --panel: oklch(0.22 0.02 168 / 0.68);
-  --panel2: oklch(0.27 0.022 168 / 0.6);
+  --panel: oklch(0.22 0.02 168 / 0.48);
+  --panel2: oklch(0.27 0.022 168 / 0.42);
   --line: oklch(0.88 0.02 168 / 0.14);
   --steel: oklch(0.78 0.015 168);
   --steel2: oklch(0.6 0.018 168);
