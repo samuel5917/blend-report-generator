@@ -139,7 +139,7 @@ function Index() {
         {historicoAberto && (
           <div className="mb-4">
 
-            <div className="rounded-xl bg-panel p-4 ring-1 ring-line backdrop-blur-md">
+            <div className="glass-panel p-4">
               <div className="mb-3 font-mono text-[10px] uppercase tracking-wide text-steel2">
                 Histórico salvo no navegador
               </div>
@@ -185,7 +185,7 @@ function Index() {
         <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_420px]">
           <div className="space-y-3">
             {/* 01 — Data e turno */}
-            <section className="rounded-xl bg-panel ring-1 ring-line backdrop-blur-md">
+            <section className="glass-panel">
               <div className="flex items-center gap-3 px-4 py-3">
                 <span className="font-mono text-[10px] text-signal">01</span>
                 <span className="text-sm font-semibold text-foreground">Data e Turno</span>
@@ -473,7 +473,7 @@ function Index() {
 
           {/* PRÉVIA / EDITOR */}
           <aside className="lg:sticky lg:top-5">
-            <div className="rounded-xl bg-panel ring-1 ring-line backdrop-blur-md">
+            <div className="glass-panel">
               <div className="flex items-center gap-2 border-b border-line px-4 py-3">
                 <span className="font-mono text-[10px] uppercase tracking-wide text-steel2">
                   {editando ? "Editor" : texto ? "Justificativa gerada" : "Pré-visualização"}

@@ -16,7 +16,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-xl bg-panel ring-1 ring-line">
+    <section className="glass-panel">
       <button
         type="button"
         onClick={onToggle}
