@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GripVertical, Loader2, Search, Upload } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { descobrirIcone } from "@/lib/favicon.functions";
@@ -56,6 +56,7 @@ function CampoIcone({
   const [buscando, setBuscando] = useState(false);
   const [status, setStatus] = useState<"" | "ok" | "falhou">("");
   const buscar = useServerFn(descobrirIcone);
+  const buscadas = useRef<Set<string>>(new Set());
 
   const buscarIcone = async () => {
     if (!urlSite.trim()) return;
@@ -76,6 +77,18 @@ function CampoIcone({
       setBuscando(false);
     }
   };
+
+  // Busca automática ao informar a URL (uma vez por endereço).
+  useEffect(() => {
+    const alvo = urlSite.trim();
+    if (!alvo || iconePersonalizado || buscadas.current.has(alvo)) return;
+    const t = setTimeout(() => {
+      buscadas.current.add(alvo);
+      void buscarIcone();
+    }, 900);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlSite, iconePersonalizado]);
 
   return (
     <div>
