@@ -67,13 +67,16 @@ export async function gerarRelatorioPdf(
   if (capa) {
     const pagW = 297;
     const pagH = 210;
-    // Preenche a página inteira (cover), centralizando o corte.
+    // Enquadra a arte inteira dentro da página (contain), sem cortes;
+    // o que sobrar fica como borda branca.
     let w = pagW;
     let h = (capa.h / capa.w) * w;
-    if (h < pagH) {
+    if (h > pagH) {
       h = pagH;
       w = (capa.w / capa.h) * h;
     }
+    doc.setFillColor(255, 255, 255);
+    doc.rect(0, 0, pagW, pagH, "F");
     doc.addImage(capa.dataUrl, "PNG", (pagW - w) / 2, (pagH - h) / 2, w, h);
   }
   void opcoes;
