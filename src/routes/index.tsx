@@ -148,6 +148,12 @@ function Index() {
               </p>
             </div>
             <div className="ml-auto flex items-center gap-2">
+              <Link
+                to="/equipamentos"
+                className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line transition-colors hover:text-foreground"
+              >
+                EQUIPAMENTOS
+              </Link>
               <ActionButton onClick={salvar}>SALVAR RASCUNHO</ActionButton>
               <ActionButton onClick={() => setHistoricoAberto((v) => !v)}>
                 HISTÓRICO ({drafts.length})
