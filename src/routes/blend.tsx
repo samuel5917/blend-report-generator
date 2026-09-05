@@ -553,6 +553,46 @@ function Index() {
                 </ActionButton>
               </div>
             </div>
+
+            {/* REGISTRO NO RELATÓRIO */}
+            <div className="glass-panel mt-3">
+              <div className="border-b border-line px-4 py-3">
+                <span className="font-mono text-[10px] uppercase tracking-wide text-steel2">
+                  Registrar no relatório de Blend
+                </span>
+              </div>
+              <div className="space-y-3 p-4">
+                {autenticado ? (
+                  <>
+                    <ImagensT2 imagens={imagens} onChange={setImagens} />
+                    <div className="flex flex-wrap items-center gap-2">
+                      <ActionButton variant="primary" onClick={() => void registrar()}>
+                        SALVAR NO RELATÓRIO
+                      </ActionButton>
+                      <Link
+                        to="/relatorios/blend"
+                        className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line hover:text-foreground"
+                      >
+                        VER RELATÓRIO
+                      </Link>
+                      <span className="font-mono text-[10px] uppercase text-steel2">
+                        {perfil?.full_name ?? ""}
+                      </span>
+                    </div>
+                    {statusRegistro && (
+                      <p className="font-mono text-[11px] text-steel">{statusRegistro}</p>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-sm text-steel">
+                    <Link to="/auth" className="text-signal underline">
+                      Entre com seu usuário
+                    </Link>{" "}
+                    para salvar esta justificativa com a imagem do controle T2.
+                  </p>
+                )}
+              </div>
+            </div>
           </aside>
         </div>
     </AppShell>
