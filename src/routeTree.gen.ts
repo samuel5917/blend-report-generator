@@ -14,6 +14,7 @@ import { Route as AtaRouteImport } from './routes/ata'
 import { Route as BlendRouteImport } from './routes/blend'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as EquipamentosRouteImport } from './routes/equipamentos'
+import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
 import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
 
@@ -42,6 +43,11 @@ const EquipamentosRoute = EquipamentosRouteImport.update({
   path: '/equipamentos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MensagensRoute = MensagensRouteImport.update({
+  id: '/mensagens',
+  path: '/mensagens',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CadastrosBancosRoute = CadastrosBancosRouteImport.update({
   id: '/cadastros/bancos',
   path: '/cadastros/bancos',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
+  '/mensagens': typeof MensagensRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
+  '/mensagens': typeof MensagensRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/blend': typeof BlendRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/equipamentos': typeof EquipamentosRoute
+  '/mensagens': typeof MensagensRoute
   '/cadastros/bancos': typeof CadastrosBancosRoute
   '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
+    | '/mensagens'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
+    | '/mensagens'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
+    | '/mensagens'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   BlendRoute: typeof BlendRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   EquipamentosRoute: typeof EquipamentosRoute
+  MensagensRoute: typeof MensagensRoute
   CadastrosBancosRoute: typeof CadastrosBancosRoute
   CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EquipamentosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mensagens': {
+      id: '/mensagens'
+      path: '/mensagens'
+      fullPath: '/mensagens'
+      preLoaderRoute: typeof MensagensRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cadastros/bancos': {
       id: '/cadastros/bancos'
       path: '/cadastros/bancos'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlendRoute: BlendRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   EquipamentosRoute: EquipamentosRoute,
+  MensagensRoute: MensagensRoute,
   CadastrosBancosRoute: CadastrosBancosRoute,
   CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
 }
