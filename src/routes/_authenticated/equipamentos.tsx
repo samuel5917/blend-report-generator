@@ -1,17 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import {
+  obterInformeEquipamentos,
+  salvarInformeEquipamentos,
+} from "@/lib/equipamentosInforme.functions";
 import { AppShell } from "@/components/AppShell";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
   TURNOS_EQUIP,
   carregarCadastro,
-  carregarTurno,
-  carregarUltimoTurno,
   dadosVazios,
   formatarData,
   hojeISO,
-  salvarTurno,
-  salvarUltimoTurno,
   type DadosTurno,
   type Equipamento,
   type TurnoEquip,
