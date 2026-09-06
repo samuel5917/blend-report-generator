@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { useMensagens, type MensagemT2 } from "@/lib/mensagens";
 import { cn } from "@/lib/utils";
@@ -58,14 +58,63 @@ function BotaoCopiar({ texto }: { texto: string }) {
 }
 
 function Cartao({ item }: { item: MensagemT2 }) {
+  const mostrarTitulo = item.nome.trim() !== item.mensagem.trim();
   return (
-    <li className="glass-panel px-4 py-4">
-      <h2 className="text-[15px] font-semibold text-foreground">{item.nome}</h2>
-      <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-steel">{item.mensagem}</p>
-      <div className="mt-3 flex justify-end">
-        <BotaoCopiar texto={item.mensagem} />
+    <li className="rounded-lg bg-panel2/40 px-4 py-3 ring-1 ring-line">
+      {mostrarTitulo && (
+        <h3 className="text-[14px] font-semibold text-foreground">{item.nome}</h3>
+      )}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <p className="flex-1 whitespace-pre-wrap text-sm leading-relaxed text-steel">
+          {item.mensagem}
+        </p>
+        <div className="shrink-0 self-end sm:self-center">
+          <BotaoCopiar texto={item.mensagem} />
+        </div>
       </div>
     </li>
+  );
+}
+
+function Categoria({
+  titulo,
+  itens,
+  abertaInicial,
+}: {
+  titulo: string;
+  itens: MensagemT2[];
+  abertaInicial: boolean;
+}) {
+  const [aberta, setAberta] = useState(abertaInicial);
+  return (
+    <section className="glass-panel overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setAberta((v) => !v)}
+        aria-expanded={aberta}
+        className="flex w-full items-center gap-2 px-4 py-3 text-left transition-colors hover:bg-panel2/40"
+      >
+        <h2 className="flex-1 text-[15px] font-semibold text-foreground">{titulo}</h2>
+        <span className="font-mono text-[10px] uppercase tracking-wide text-steel2">
+          {itens.length}
+        </span>
+        <ChevronDown
+          aria-hidden="true"
+          strokeWidth={1.75}
+          className={cn(
+            "size-4 shrink-0 text-steel2 transition-transform duration-200",
+            aberta && "rotate-180",
+          )}
+        />
+      </button>
+      {aberta && (
+        <ul className="space-y-2 border-t border-line px-3 py-3">
+          {itens.map((m) => (
+            <Cartao key={m.id} item={m} />
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }
 
@@ -80,6 +129,19 @@ function MensagensOperacional() {
       (m) => m.nome.toLowerCase().includes(q) || m.mensagem.toLowerCase().includes(q),
     );
   }, [ativas, busca]);
+
+  const grupos = useMemo(() => {
+    const mapa = new Map<string, MensagemT2[]>();
+    for (const m of filtradas) {
+      const chave = m.categoria.trim() || "Outras mensagens";
+      const lista = mapa.get(chave);
+      if (lista) lista.push(m);
+      else mapa.set(chave, [m]);
+    }
+    return [...mapa.entries()];
+  }, [filtradas]);
+
+  const buscando = busca.trim().length > 0;
 
   return (
     <AppShell
@@ -115,11 +177,11 @@ function MensagensOperacional() {
           </p>
         )}
 
-        <ul className="space-y-3">
-          {filtradas.map((m) => (
-            <Cartao key={m.id} item={m} />
+        <div className="space-y-3">
+          {grupos.map(([titulo, itens]) => (
+            <Categoria key={titulo} titulo={titulo} itens={itens} abertaInicial={buscando} />
           ))}
-        </ul>
+        </div>
       </div>
     </AppShell>
   );

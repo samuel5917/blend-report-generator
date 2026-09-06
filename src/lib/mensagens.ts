@@ -10,6 +10,7 @@ export interface MensagemT2 {
   id: string;
   nome: string;
   mensagem: string;
+  categoria: string;
   ativo: boolean;
   ordem: number;
 }
@@ -20,13 +21,14 @@ const ordenar = (a: MensagemT2, b: MensagemT2) =>
 export async function listarMensagens(): Promise<MensagemT2[]> {
   const { data, error } = await supabase
     .from("mensagens_t2")
-    .select("id, nome, mensagem, ativo, ordem")
+    .select("id, nome, mensagem, categoria, ativo, ordem")
     .order("ordem", { ascending: true });
   if (error) throw error;
   return (data ?? []).map((r) => ({
     id: r.id,
     nome: r.nome,
     mensagem: r.mensagem,
+    categoria: r.categoria ?? "",
     ativo: r.ativo,
     ordem: r.ordem,
   }));
@@ -36,10 +38,11 @@ export async function criarMensagem(
   nome: string,
   mensagem: string,
   ordem: number,
+  categoria = "",
 ): Promise<void> {
   const { error } = await supabase
     .from("mensagens_t2")
-    .insert({ nome: nome.trim(), mensagem: mensagem.trim(), ordem });
+    .insert({ nome: nome.trim(), mensagem: mensagem.trim(), categoria: categoria.trim(), ordem });
   if (error) throw error;
 }
 
