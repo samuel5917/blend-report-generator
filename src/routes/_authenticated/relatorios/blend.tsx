@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { CalendarDays, Clock, GripVertical, User } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
@@ -57,7 +57,7 @@ interface EdicaoState {
 const hoje = () => new Date().toISOString().slice(0, 10);
 
 function RelatorioBlend() {
-  const { perfil, autenticado, carregando: carregandoAuth } = useAuth();
+  const { perfil, autenticado } = useAuth();
   const [de, setDe] = useState("");
   const [ate, setAte] = useState("");
   const [turno, setTurno] = useState<"" | TurnoRegistro>("");
