@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookOpen, Mail, Settings, Tractor } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { AtalhoCard } from "@/components/AtalhoCard";
 import { useAtalhos } from "@/lib/atalhos";
@@ -12,7 +11,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Dashboard do CCO TRINDADE: acesso rápido aos sistemas do CCO, informe de equipamentos, justificativa do blend e cadastros operacionais.",
+          "Hub do CCO TRINDADE: acesso rápido e direto aos sistemas utilizados pelo Centro de Controle Operacional.",
       },
       { property: "og:title", content: "CCO TRINDADE — Hub de sistemas do CCO" },
       {
@@ -27,69 +26,48 @@ export const Route = createFileRoute("/")({
   component: Inicio,
 });
 
-const ATALHOS = [
-  {
-    to: "/equipamentos" as const,
-    Icone: Tractor,
-    titulo: "Informe de Equipamentos",
-    texto: "Preencha situação, frente e comunicação do turno e exporte a imagem do informe.",
-  },
-  {
-    to: "/blend" as const,
-    Icone: BookOpen,
-    titulo: "Justificativa do Blend",
-    texto: "Monte as movimentações do turno e gere o texto pronto para copiar.",
-  },
-  {
-    to: "/ata" as const,
-    Icone: Mail,
-    titulo: "Elaboração de Ata",
-    texto: "Registro das reuniões de turno.",
-  },
-  {
-    to: "/cadastros/equipamentos" as const,
-    Icone: Settings,
-    titulo: "Cadastros",
-    texto: "Equipamentos, bancos e locais operacionais usados pelo sistema.",
-  },
-];
-
 function SistemasCCO() {
   const { ativos, carregando, erro } = useAtalhos();
 
   return (
-    <section className="mt-4">
-      <div className="mb-3 flex flex-wrap items-center gap-2 px-1">
-        <h2 className="text-[15px] font-semibold text-foreground">Sistemas do CCO</h2>
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-steel2">
+    <section className="mt-6">
+      <div className="mb-4 flex flex-wrap items-baseline gap-3 px-1">
+        <h2 className="text-base font-semibold tracking-tight text-foreground">
+          Sistemas do CCO
+        </h2>
+        <span className="text-[11px] uppercase tracking-[0.12em] text-steel2">
           abre em nova aba
         </span>
         <Link
           to="/cadastros/atalhos"
-          className="ml-auto font-mono text-[10px] uppercase tracking-wide text-signal hover:underline"
+          className="ml-auto text-[11px] uppercase tracking-[0.12em] text-signal transition-opacity hover:opacity-75"
         >
           gerenciar atalhos
         </Link>
       </div>
 
       {erro ? (
-        <p className="rounded-lg bg-danger/10 px-3 py-2 font-mono text-[11px] text-danger">{erro}</p>
+        <p className="rounded-lg bg-danger/10 px-3 py-2 text-[12px] text-danger">{erro}</p>
       ) : null}
 
       {carregando ? (
-        <p className="px-1 text-sm text-steel2">Carregando sistemas…</p>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="glass-panel h-[132px] animate-pulse opacity-60" />
+          ))}
+        </div>
       ) : ativos.length === 0 ? (
-        <div className="glass-panel px-5 py-6 text-center">
+        <div className="glass-panel px-6 py-10 text-center">
           <p className="text-sm text-steel">Nenhum sistema cadastrado ainda.</p>
           <Link
             to="/cadastros/atalhos"
-            className="mt-3 inline-block rounded-md bg-signal/15 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-signal ring-1 ring-signal/35"
+            className="mt-4 inline-block rounded-md bg-signal px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-signal-foreground transition-opacity hover:opacity-90"
           >
             Cadastrar atalhos do CCO
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {ativos.map((a) => (
             <AtalhoCard key={a.id} atalho={a} />
           ))}
@@ -102,56 +80,32 @@ function SistemasCCO() {
 function Inicio() {
   return (
     <AppShell titulo="CCO TRINDADE" subtitulo="Hub operacional do CCO" largura="max-w-[1100px]">
-      <div className="glass-panel relative overflow-hidden border-l-4 border-l-signal px-6 py-6 sm:px-8">
-        <div className="flex items-center gap-5 sm:gap-7">
+      <div className="glass-panel relative overflow-hidden px-6 py-7 sm:px-9 sm:py-9">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(75%_120%_at_100%_50%,color-mix(in_oklab,var(--signal)_18%,transparent),transparent)]"
+        />
+        <div className="relative flex items-center gap-6 sm:gap-8">
           <img
             src={marcaCCO.url}
             alt="CCO TRINDADE"
-            className="size-24 shrink-0 object-contain drop-shadow-lg sm:size-32"
+            className="size-20 shrink-0 object-contain sm:size-28"
           />
           <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-signal">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-signal">
               Centro de Controle Operacional
             </p>
-            <h2 className="mt-1 font-display text-3xl leading-none text-foreground sm:text-5xl">
+            <h2 className="mt-2 font-display text-3xl leading-none text-foreground sm:text-5xl">
               Central de acesso do turno
             </h2>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-steel">
-              Acesso rápido aos sistemas e rotinas do CCO TRINDADE.
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-steel2">
+              Todos os sistemas do CCO TRINDADE em um só lugar.
             </p>
           </div>
         </div>
       </div>
 
       <SistemasCCO />
-
-      <section className="mt-6">
-        <h2 className="mb-3 px-1 text-[15px] font-semibold text-foreground">
-          Outras informações do sistema
-        </h2>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {ATALHOS.map((a) => (
-            <Link
-              key={a.to}
-              to={a.to}
-              className="glass-panel group px-5 py-5 transition-[transform,background-color] duration-200 hover:-translate-y-0.5"
-            >
-              <div className="flex items-start gap-3">
-                <span
-                  aria-hidden="true"
-                  className="grid size-9 shrink-0 place-items-center rounded-lg bg-signal/12 text-foreground ring-1 ring-signal/30"
-                >
-                  <a.Icone className="size-[18px]" strokeWidth={1.75} />
-                </span>
-                <div className="min-w-0">
-                  <h3 className="text-[15px] font-semibold text-foreground">{a.titulo}</h3>
-                  <p className="mt-1 text-[13px] leading-relaxed text-steel2">{a.texto}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
     </AppShell>
   );
 }

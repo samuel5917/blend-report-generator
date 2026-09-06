@@ -43,14 +43,14 @@ export function AtalhoCard({ atalho, className }: { atalho: AtalhoCCO; className
       rel="noopener noreferrer"
       title={atalho.descricao || atalho.nome}
       className={cn(
-        "glass-panel group flex cursor-pointer flex-col items-center gap-3 px-4 py-5 text-center",
-        "transition-[transform,box-shadow,background-color] duration-200",
-        "hover:-translate-y-1 hover:border-signal/60 hover:bg-panel2/70 hover:shadow-lg",
+        "glass-panel group flex cursor-pointer flex-col items-center gap-3 px-4 py-6 text-center",
+        "transition-[transform,box-shadow,border-color] duration-200",
+        "hover:-translate-y-0.5 hover:border-signal/40 hover:shadow-xl",
         className,
       )}
     >
       <IconeAtalho atalho={atalho} />
-      <span className="w-full truncate text-[15px] font-semibold text-foreground">
+      <span className="w-full truncate text-[14px] font-semibold tracking-tight text-foreground">
         {atalho.nome}
       </span>
       {atalho.descricao ? (
@@ -58,6 +58,7 @@ export function AtalhoCard({ atalho, className }: { atalho: AtalhoCCO; className
           {atalho.descricao}
         </span>
       ) : null}
+
     </a>
   );
 }
