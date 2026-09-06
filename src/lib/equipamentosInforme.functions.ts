@@ -2,10 +2,17 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
+const dadosTurnoSchema = z.object({
+  situacao: z.string(),
+  frenteOperacao: z.string(),
+  comunicacaoT2: z.string(),
+  observacaoComunicacao: z.string(),
+});
+
 const informeSchema = z.object({
   data: z.string(),
   turno: z.string(),
-  dados: z.record(z.string(), z.unknown()),
+  dados: z.record(z.string(), dadosTurnoSchema),
 });
 
 const payloadSchema = z.object({
@@ -40,7 +47,7 @@ export const salvarInformeEquipamentos = createServerFn({ method: "POST" })
         : { rascunho: data.informe };
     const { error } = await context.supabase
       .from("equipamentos_informes")
-      .upsert({ user_id: context.userId, ...patch }, { onConflict: "user_id" });
+      .upsert({ user_id: context.userId, ...patch } as never, { onConflict: "user_id" });
     if (error) throw error;
     return { ok: true };
   });
