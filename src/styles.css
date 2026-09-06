@@ -59,19 +59,20 @@
 :root {
   --radius: 0.625rem;
 
-  --shell: oklch(0.17 0.055 257);
-  --panel: oklch(0.24 0.075 257 / 0.68);
-  --panel2: oklch(0.3 0.09 257 / 0.58);
-  --line: oklch(0.86 0.04 250 / 0.2);
-  --steel: oklch(0.84 0.025 250);
-  --steel2: oklch(0.68 0.035 250);
-  --signal: oklch(0.64 0.205 252);
-  --signal-foreground: oklch(0.99 0.005 250);
-  --ok: oklch(0.75 0.15 155);
-  --ok-foreground: oklch(0.17 0.03 160);
-  --info: oklch(0.66 0.14 245);
-  --info-foreground: oklch(0.97 0.01 245);
-  --danger: oklch(0.62 0.17 25);
+  --shell: oklch(0.21 0.022 255);
+  --panel: oklch(0.27 0.026 255 / 0.72);
+  --panel2: oklch(0.33 0.028 255 / 0.6);
+  --line: oklch(0.88 0.012 255 / 0.14);
+  --steel: oklch(0.9 0.008 255);
+  --steel2: oklch(0.72 0.014 255);
+  --signal: oklch(0.66 0.115 245);
+  --signal-foreground: oklch(0.99 0.003 250);
+  --ok: oklch(0.74 0.1 158);
+  --ok-foreground: oklch(0.2 0.02 160);
+  --info: oklch(0.7 0.09 240);
+  --info-foreground: oklch(0.98 0.006 245);
+  --danger: oklch(0.63 0.13 25);
+
 
   --background: var(--shell);
   --foreground: oklch(0.98 0.006 250);
