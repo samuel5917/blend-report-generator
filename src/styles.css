@@ -93,7 +93,7 @@
   --destructive-foreground: oklch(0.98 0.005 250);
   --border: var(--line);
   --input: var(--line);
-  --ring: oklch(0.64 0.205 252 / 0.55);
+  --ring: oklch(0.66 0.115 245 / 0.5);
 }
 
 @layer base {
