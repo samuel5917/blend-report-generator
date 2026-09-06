@@ -1,0 +1,1 @@
+ALTER TABLE public.mensagens_t2 ADD COLUMN IF NOT EXISTS categoria text NOT NULL DEFAULT '';

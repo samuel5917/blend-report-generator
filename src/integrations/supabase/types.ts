@@ -197,6 +197,7 @@ export type Database = {
       mensagens_t2: {
         Row: {
           ativo: boolean
+          categoria: string
           created_at: string
           id: string
           mensagem: string
@@ -206,6 +207,7 @@ export type Database = {
         }
         Insert: {
           ativo?: boolean
+          categoria?: string
           created_at?: string
           id?: string
           mensagem: string
@@ -215,6 +217,7 @@ export type Database = {
         }
         Update: {
           ativo?: boolean
+          categoria?: string
           created_at?: string
           id?: string
           mensagem?: string
