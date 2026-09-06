@@ -1,4 +1,5 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { ActionButton, TextField } from "@/components/kit";
@@ -6,6 +7,10 @@ import { cadastrar, entrar } from "@/lib/auth";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getUser();
+    if (data.user) throw redirect({ to: "/" });
+  },
   head: () => ({
     meta: [
       { title: "Acesso ao CCO TRINDADE | Entrar ou criar conta" },
@@ -43,12 +48,12 @@ function Acesso() {
     try {
       if (modo === "entrar") {
         await entrar(usuario, senha);
-        await navigate({ to: "/blend" });
+        await navigate({ to: "/", replace: true });
       } else {
         await cadastrar(usuario, nome, senha);
         try {
           await entrar(usuario, senha);
-          await navigate({ to: "/blend" });
+          await navigate({ to: "/", replace: true });
         } catch {
           setAviso("Cadastro criado. Faça login com seu usuário e senha.");
           setModo("entrar");
