@@ -22,8 +22,6 @@ export function AppBackground() {
         className="absolute inset-0 bg-shell"
         style={{ opacity: nivel }}
       />
-      <div className="absolute -left-40 -top-40 size-[38rem] rounded-full bg-signal/[0.06] blur-[120px]" />
-      <div className="absolute -bottom-52 right-[-10rem] size-[42rem] rounded-full bg-signal/[0.04] blur-[140px]" />
       <div
         className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_-10%,transparent,var(--shell))]"
         style={{ opacity: nivel * 0.9 }}

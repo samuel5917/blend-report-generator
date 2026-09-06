@@ -45,7 +45,7 @@ export function AtalhoCard({ atalho, className }: { atalho: AtalhoCCO; className
       className={cn(
         "glass-panel group flex cursor-pointer flex-col items-center gap-3 px-4 py-5 text-center",
         "transition-[transform,box-shadow,background-color] duration-200",
-        "hover:-translate-y-1 hover:bg-panel2/50 hover:shadow-[0_0_0_1px_rgba(56,189,248,0.35),0_10px_30px_-12px_rgba(56,189,248,0.45)]",
+        "hover:-translate-y-1 hover:border-signal/60 hover:bg-panel2/70 hover:shadow-lg",
         className,
       )}
     >
