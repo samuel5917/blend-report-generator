@@ -58,7 +58,7 @@ const AUTOSAVE_KEY = "blend-rascunho-atual-v1";
 
 function Index() {
   const { nomesAtivos, nomesLocaisOperacionais } = useLocais();
-  const { perfil, autenticado } = useAuth();
+  const { perfil } = useAuth();
   const [imagens, setImagens] = useState<ImagemT2[]>([]);
   const [statusRegistro, setStatusRegistro] = useState<string | null>(null);
   const [state, setState] = useState<JustificativaState>(estadoInicial);
