@@ -3,6 +3,7 @@ import { BookOpen, Mail, Settings, Tractor } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { AtalhoCard } from "@/components/AtalhoCard";
 import { useAtalhos } from "@/lib/atalhos";
+import marcaCCO from "@/assets/cco-trindade-marca.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -101,14 +102,25 @@ function SistemasCCO() {
 function Inicio() {
   return (
     <AppShell titulo="CCO TRINDADE" subtitulo="Hub operacional do CCO" largura="max-w-[1100px]">
-      <div className="glass-panel px-6 py-7 sm:px-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-signal">CCO TRINDADE</p>
-        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-          Central de acesso do turno.
-        </h2>
-        <p className="mt-3 max-w-xl text-sm leading-relaxed text-steel">
-          Abra os sistemas do CCO com um clique e use o menu no topo para as áreas do CCO TRINDADE.
-        </p>
+      <div className="glass-panel relative overflow-hidden border-l-4 border-l-signal px-6 py-6 sm:px-8">
+        <div className="flex items-center gap-5 sm:gap-7">
+          <img
+            src={marcaCCO.url}
+            alt="CCO TRINDADE"
+            className="size-24 shrink-0 object-contain drop-shadow-lg sm:size-32"
+          />
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-signal">
+              Centro de Controle Operacional
+            </p>
+            <h2 className="mt-1 font-display text-3xl leading-none text-foreground sm:text-5xl">
+              Central de acesso do turno
+            </h2>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-steel">
+              Acesso rápido aos sistemas e rotinas do CCO TRINDADE.
+            </p>
+          </div>
+        </div>
       </div>
 
       <SistemasCCO />

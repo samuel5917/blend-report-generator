@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sair, useAuth } from "@/lib/auth";
+import marcaCCO from "@/assets/cco-trindade-marca.png.asset.json";
 
 interface ItemNav {
   to:
@@ -114,8 +115,15 @@ export function AppShell({
             <span className="hidden sm:inline">MENU</span>
           </button>
 
+          <img
+            src={marcaCCO.url}
+            alt=""
+            aria-hidden="true"
+            className="size-9 shrink-0 object-contain"
+          />
+
           <div className="min-w-0 leading-tight">
-            <h1 className="truncate text-sm font-semibold text-foreground">{titulo}</h1>
+            <h1 className="truncate font-display text-xl text-foreground">{titulo}</h1>
             {subtitulo ? (
               <p className="truncate font-mono text-[11px] uppercase tracking-wide text-steel2">
                 {subtitulo}
@@ -147,10 +155,15 @@ export function AppShell({
         )}
       >
         <div className="flex items-center gap-3 border-b border-line px-4 py-4">
-          <div className="grid size-8 shrink-0 place-items-center rounded-md bg-signal/15 font-mono text-[11px] font-semibold text-signal ring-1 ring-signal/40">
-            MS
+          <img
+            src={marcaCCO.url}
+            alt="Símbolo do CCO TRINDADE"
+            className="size-12 shrink-0 object-contain"
+          />
+          <div className="min-w-0">
+            <span className="block font-display text-2xl leading-none text-foreground">CCO TRINDADE</span>
+            <span className="block text-[9px] uppercase text-steel2">Centro de Controle Operacional</span>
           </div>
-          <span className="text-sm font-semibold tracking-wide text-foreground">CCO TRINDADE</span>
           <button
             type="button"
             onClick={() => setAberto(false)}

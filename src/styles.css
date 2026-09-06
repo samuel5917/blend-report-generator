@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — painel de controle industrial (tema escuro esverdeado).
+ * Design system — identidade industrial azul do CCO TRINDADE.
  * Todos os valores de cor são tokens semânticos em oklch.
  */
 
@@ -52,19 +52,21 @@
   --color-danger: var(--danger);
 
   --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+  --font-sans: "Barlow", sans-serif;
+  --font-display: "Bebas Neue", sans-serif;
 }
 
 :root {
   --radius: 0.625rem;
 
-  --shell: oklch(0.16 0.018 165);
-  --panel: oklch(0.22 0.02 168 / 0.48);
-  --panel2: oklch(0.27 0.022 168 / 0.42);
-  --line: oklch(0.88 0.02 168 / 0.14);
-  --steel: oklch(0.78 0.015 168);
-  --steel2: oklch(0.6 0.018 168);
-  --signal: oklch(0.72 0.155 158);
-  --signal-foreground: oklch(0.17 0.03 160);
+  --shell: oklch(0.17 0.055 257);
+  --panel: oklch(0.24 0.075 257 / 0.68);
+  --panel2: oklch(0.3 0.09 257 / 0.58);
+  --line: oklch(0.86 0.04 250 / 0.2);
+  --steel: oklch(0.84 0.025 250);
+  --steel2: oklch(0.68 0.035 250);
+  --signal: oklch(0.64 0.205 252);
+  --signal-foreground: oklch(0.99 0.005 250);
   --ok: oklch(0.75 0.15 155);
   --ok-foreground: oklch(0.17 0.03 160);
   --info: oklch(0.66 0.14 245);
@@ -72,24 +74,24 @@
   --danger: oklch(0.62 0.17 25);
 
   --background: var(--shell);
-  --foreground: oklch(0.95 0.008 168);
+  --foreground: oklch(0.98 0.006 250);
   --card: var(--panel);
-  --card-foreground: oklch(0.95 0.008 168);
-  --popover: oklch(0.21 0.02 168);
-  --popover-foreground: oklch(0.95 0.008 168);
+  --card-foreground: oklch(0.98 0.006 250);
+  --popover: oklch(0.2 0.065 257);
+  --popover-foreground: oklch(0.98 0.006 250);
   --primary: var(--signal);
   --primary-foreground: var(--signal-foreground);
   --secondary: var(--panel2);
-  --secondary-foreground: oklch(0.95 0.008 168);
+  --secondary-foreground: oklch(0.98 0.006 250);
   --muted: var(--panel2);
   --muted-foreground: var(--steel2);
-  --accent: oklch(0.3 0.04 165 / 0.7);
-  --accent-foreground: oklch(0.95 0.008 168);
+  --accent: oklch(0.36 0.12 252 / 0.75);
+  --accent-foreground: oklch(0.98 0.006 250);
   --destructive: var(--danger);
-  --destructive-foreground: oklch(0.98 0.005 168);
+  --destructive-foreground: oklch(0.98 0.005 250);
   --border: var(--line);
   --input: var(--line);
-  --ring: oklch(0.72 0.155 158 / 0.5);
+  --ring: oklch(0.64 0.205 252 / 0.55);
 }
 
 @layer base {
@@ -104,6 +106,13 @@
   body {
     background-color: var(--color-shell);
     color: var(--color-steel);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: 0;
   }
 
   input,
@@ -134,9 +143,9 @@
 
 /* Superfícies translúcidas — conceito "industrial glass" */
 @utility glass-panel {
-  border-radius: var(--radius-xl);
-  background: color-mix(in oklab, var(--panel) 55%, transparent);
-  backdrop-filter: blur(18px) saturate(130%);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--panel) 72%, transparent);
+  backdrop-filter: blur(16px) saturate(120%);
   border: 1px solid var(--line);
   box-shadow:
     0 1px 0 0 color-mix(in oklab, white 6%, transparent) inset,
@@ -144,13 +153,13 @@
 }
 
 @utility glass-bar {
-  background: color-mix(in oklab, var(--shell) 62%, transparent);
+  background: color-mix(in oklab, var(--shell) 82%, transparent);
   backdrop-filter: blur(16px) saturate(125%);
   border-bottom: 1px solid var(--line);
 }
 
 @utility glass-drawer {
-  background: color-mix(in oklab, var(--shell) 72%, transparent);
+  background: color-mix(in oklab, var(--shell) 92%, transparent);
   backdrop-filter: blur(26px) saturate(135%);
   border-right: 1px solid var(--line);
   box-shadow: 24px 0 60px -30px oklch(0 0 0 / 0.8);
