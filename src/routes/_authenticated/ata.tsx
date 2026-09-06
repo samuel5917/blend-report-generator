@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 
-export const Route = createFileRoute("/ata")({
+export const Route = createFileRoute("/_authenticated/ata")({
   head: () => ({
     meta: [
       { title: "Elaboração de Ata | CCO TRINDADE" },

@@ -12,7 +12,7 @@ import {
   type MensagemT2,
 } from "@/lib/mensagens";
 
-export const Route = createFileRoute("/cadastros/mensagens")({
+export const Route = createFileRoute("/_authenticated/cadastros/mensagens")({
   head: () => ({
     meta: [
       { title: "Cadastro de Mensagens T2 | CCO TRINDADE" },

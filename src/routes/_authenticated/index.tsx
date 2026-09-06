@@ -4,7 +4,7 @@ import { AtalhoCard } from "@/components/AtalhoCard";
 import { useAtalhos } from "@/lib/atalhos";
 import marcaCCO from "@/assets/cco-trindade-marca.png.asset.json";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/")({
   head: () => ({
     meta: [
       { title: "CCO TRINDADE — Hub de sistemas do CCO" },

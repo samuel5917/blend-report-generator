@@ -5,7 +5,7 @@ import { EquipamentoCadastro } from "@/components/equipamentos/EquipamentoCadast
 import { carregarCadastro, salvarCadastro, type Equipamento } from "@/lib/equipamentos";
 import { Chip } from "@/components/kit";
 
-export const Route = createFileRoute("/cadastros/equipamentos")({
+export const Route = createFileRoute("/_authenticated/cadastros/equipamentos")({
   head: () => ({
     meta: [
       { title: "Cadastro de Equipamentos | CCO TRINDADE" },

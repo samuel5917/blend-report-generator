@@ -21,7 +21,7 @@ import {
 import { baixarRelatorio, urlPreviaRelatorio } from "@/lib/relatorioPdf";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/relatorios/blend")({
+export const Route = createFileRoute("/_authenticated/relatorios/blend")({
   ssr: false,
   head: () => ({
     meta: [

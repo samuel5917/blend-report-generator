@@ -31,7 +31,7 @@ import {
   TextField,
 } from "@/components/kit";
 
-export const Route = createFileRoute("/blend")({
+export const Route = createFileRoute("/_authenticated/blend")({
   head: () => ({
     meta: [
       { title: "Gerador de Justificativa do Blend | Movimentações do Turno" },

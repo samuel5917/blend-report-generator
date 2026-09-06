@@ -26,7 +26,7 @@ import {
 } from "@/lib/exportarEquipamentos";
 import { ActionButton, Chip, Label, Section } from "@/components/kit";
 
-export const Route = createFileRoute("/equipamentos")({
+export const Route = createFileRoute("/_authenticated/equipamentos")({
   head: () => ({
     meta: [
       { title: "Informe de Turno — Equipamentos Auxiliares | CCO TRINDADE" },
