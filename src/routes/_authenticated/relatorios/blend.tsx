@@ -197,21 +197,6 @@ function RelatorioBlend() {
     setMensagem(null);
   };
 
-  if (!carregandoAuth && !autenticado) {
-    return (
-      <AppShell titulo="Relatório de Blend" subtitulo="Acesso restrito" largura="max-w-[520px]">
-        <div className="glass-panel px-5 py-8 text-center">
-          <p className="text-sm text-steel">Entre com seu usuário para acessar o relatório.</p>
-          <Link
-            to="/auth"
-            className="mt-4 inline-block rounded-md bg-signal px-4 py-2 text-xs font-semibold text-signal-foreground"
-          >
-            IR PARA O ACESSO
-          </Link>
-        </div>
-      </AppShell>
-    );
-  }
 
   return (
     <AppShell
