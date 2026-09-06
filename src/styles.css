@@ -86,8 +86,9 @@
   --secondary-foreground: oklch(0.98 0.006 250);
   --muted: var(--panel2);
   --muted-foreground: var(--steel2);
-  --accent: oklch(0.36 0.12 252 / 0.75);
+  --accent: oklch(0.38 0.055 250 / 0.7);
   --accent-foreground: oklch(0.98 0.006 250);
+
   --destructive: var(--danger);
   --destructive-foreground: oklch(0.98 0.005 250);
   --border: var(--line);
