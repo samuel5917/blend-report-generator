@@ -1,4 +1,5 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   BookOpen,
@@ -86,6 +87,15 @@ export function AppShell({
   const [aberto, setAberto] = useState(false);
   const { perfil, autenticado } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const encerrarSessao = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await sair();
+    await navigate({ to: "/auth", replace: true });
+  };
 
   useEffect(() => setAberto(false), [pathname]);
 
@@ -187,7 +197,7 @@ export function AppShell({
               </div>
               <button
                 type="button"
-                onClick={() => void sair()}
+                onClick={() => void encerrarSessao()}
                 aria-label="Sair"
                 className="rounded-md px-2 py-1 text-steel2 transition-colors hover:text-danger"
               >

@@ -5,7 +5,7 @@ import { AppShell } from "@/components/AppShell";
 import { useMensagens, type MensagemT2 } from "@/lib/mensagens";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/mensagens")({
+export const Route = createFileRoute("/_authenticated/mensagens")({
   head: () => ({
     meta: [
       { title: "Mensagens T2 | CCO TRINDADE" },

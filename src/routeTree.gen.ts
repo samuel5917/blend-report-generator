@@ -9,27 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AtaRouteImport } from './routes/ata'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as BlendRouteImport } from './routes/blend'
-import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
-import { Route as EquipamentosRouteImport } from './routes/equipamentos'
-import { Route as MensagensRouteImport } from './routes/mensagens'
-import { Route as CadastrosAtalhosRouteImport } from './routes/cadastros/atalhos'
-import { Route as CadastrosBancosRouteImport } from './routes/cadastros/bancos'
-import { Route as CadastrosEquipamentosRouteImport } from './routes/cadastros/equipamentos'
-import { Route as CadastrosMensagensRouteImport } from './routes/cadastros/mensagens'
-import { Route as RelatoriosBlendRouteImport } from './routes/relatorios/blend'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedAtaRouteImport } from './routes/_authenticated/ata'
+import { Route as AuthenticatedBlendRouteImport } from './routes/_authenticated/blend'
+import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated/configuracoes'
+import { Route as AuthenticatedEquipamentosRouteImport } from './routes/_authenticated/equipamentos'
+import { Route as AuthenticatedMensagensRouteImport } from './routes/_authenticated/mensagens'
+import { Route as AuthenticatedCadastrosAtalhosRouteImport } from './routes/_authenticated/cadastros/atalhos'
+import { Route as AuthenticatedCadastrosBancosRouteImport } from './routes/_authenticated/cadastros/bancos'
+import { Route as AuthenticatedCadastrosEquipamentosRouteImport } from './routes/_authenticated/cadastros/equipamentos'
+import { Route as AuthenticatedCadastrosMensagensRouteImport } from './routes/_authenticated/cadastros/mensagens'
+import { Route as AuthenticatedRelatoriosBlendRouteImport } from './routes/_authenticated/relatorios/blend'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AtaRoute = AtaRouteImport.update({
-  id: '/ata',
-  path: '/ata',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -37,101 +32,119 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlendRoute = BlendRouteImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAtaRoute = AuthenticatedAtaRouteImport.update({
+  id: '/ata',
+  path: '/ata',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBlendRoute = AuthenticatedBlendRouteImport.update({
   id: '/blend',
   path: '/blend',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
-  id: '/configuracoes',
-  path: '/configuracoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EquipamentosRoute = EquipamentosRouteImport.update({
-  id: '/equipamentos',
-  path: '/equipamentos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MensagensRoute = MensagensRouteImport.update({
+const AuthenticatedConfiguracoesRoute =
+  AuthenticatedConfiguracoesRouteImport.update({
+    id: '/configuracoes',
+    path: '/configuracoes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEquipamentosRoute =
+  AuthenticatedEquipamentosRouteImport.update({
+    id: '/equipamentos',
+    path: '/equipamentos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMensagensRoute = AuthenticatedMensagensRouteImport.update({
   id: '/mensagens',
   path: '/mensagens',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const CadastrosAtalhosRoute = CadastrosAtalhosRouteImport.update({
-  id: '/cadastros/atalhos',
-  path: '/cadastros/atalhos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CadastrosBancosRoute = CadastrosBancosRouteImport.update({
-  id: '/cadastros/bancos',
-  path: '/cadastros/bancos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CadastrosEquipamentosRoute = CadastrosEquipamentosRouteImport.update({
-  id: '/cadastros/equipamentos',
-  path: '/cadastros/equipamentos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CadastrosMensagensRoute = CadastrosMensagensRouteImport.update({
-  id: '/cadastros/mensagens',
-  path: '/cadastros/mensagens',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RelatoriosBlendRoute = RelatoriosBlendRouteImport.update({
-  id: '/relatorios/blend',
-  path: '/relatorios/blend',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedCadastrosAtalhosRoute =
+  AuthenticatedCadastrosAtalhosRouteImport.update({
+    id: '/cadastros/atalhos',
+    path: '/cadastros/atalhos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCadastrosBancosRoute =
+  AuthenticatedCadastrosBancosRouteImport.update({
+    id: '/cadastros/bancos',
+    path: '/cadastros/bancos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCadastrosEquipamentosRoute =
+  AuthenticatedCadastrosEquipamentosRouteImport.update({
+    id: '/cadastros/equipamentos',
+    path: '/cadastros/equipamentos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCadastrosMensagensRoute =
+  AuthenticatedCadastrosMensagensRouteImport.update({
+    id: '/cadastros/mensagens',
+    path: '/cadastros/mensagens',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRelatoriosBlendRoute =
+  AuthenticatedRelatoriosBlendRouteImport.update({
+    id: '/relatorios/blend',
+    path: '/relatorios/blend',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/ata': typeof AtaRoute
+  '/': typeof AuthenticatedIndexRoute
   '/auth': typeof AuthRoute
-  '/blend': typeof BlendRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/equipamentos': typeof EquipamentosRoute
-  '/mensagens': typeof MensagensRoute
-  '/cadastros/atalhos': typeof CadastrosAtalhosRoute
-  '/cadastros/bancos': typeof CadastrosBancosRoute
-  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
-  '/cadastros/mensagens': typeof CadastrosMensagensRoute
-  '/relatorios/blend': typeof RelatoriosBlendRoute
+  '/ata': typeof AuthenticatedAtaRoute
+  '/blend': typeof AuthenticatedBlendRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/equipamentos': typeof AuthenticatedEquipamentosRoute
+  '/mensagens': typeof AuthenticatedMensagensRoute
+  '/cadastros/atalhos': typeof AuthenticatedCadastrosAtalhosRoute
+  '/cadastros/bancos': typeof AuthenticatedCadastrosBancosRoute
+  '/cadastros/equipamentos': typeof AuthenticatedCadastrosEquipamentosRoute
+  '/cadastros/mensagens': typeof AuthenticatedCadastrosMensagensRoute
+  '/relatorios/blend': typeof AuthenticatedRelatoriosBlendRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/ata': typeof AtaRoute
   '/auth': typeof AuthRoute
-  '/blend': typeof BlendRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/equipamentos': typeof EquipamentosRoute
-  '/mensagens': typeof MensagensRoute
-  '/cadastros/atalhos': typeof CadastrosAtalhosRoute
-  '/cadastros/bancos': typeof CadastrosBancosRoute
-  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
-  '/cadastros/mensagens': typeof CadastrosMensagensRoute
-  '/relatorios/blend': typeof RelatoriosBlendRoute
+  '/ata': typeof AuthenticatedAtaRoute
+  '/blend': typeof AuthenticatedBlendRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/equipamentos': typeof AuthenticatedEquipamentosRoute
+  '/mensagens': typeof AuthenticatedMensagensRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/cadastros/atalhos': typeof AuthenticatedCadastrosAtalhosRoute
+  '/cadastros/bancos': typeof AuthenticatedCadastrosBancosRoute
+  '/cadastros/equipamentos': typeof AuthenticatedCadastrosEquipamentosRoute
+  '/cadastros/mensagens': typeof AuthenticatedCadastrosMensagensRoute
+  '/relatorios/blend': typeof AuthenticatedRelatoriosBlendRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/ata': typeof AtaRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/blend': typeof BlendRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/equipamentos': typeof EquipamentosRoute
-  '/mensagens': typeof MensagensRoute
-  '/cadastros/atalhos': typeof CadastrosAtalhosRoute
-  '/cadastros/bancos': typeof CadastrosBancosRoute
-  '/cadastros/equipamentos': typeof CadastrosEquipamentosRoute
-  '/cadastros/mensagens': typeof CadastrosMensagensRoute
-  '/relatorios/blend': typeof RelatoriosBlendRoute
+  '/_authenticated/ata': typeof AuthenticatedAtaRoute
+  '/_authenticated/blend': typeof AuthenticatedBlendRoute
+  '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/_authenticated/equipamentos': typeof AuthenticatedEquipamentosRoute
+  '/_authenticated/mensagens': typeof AuthenticatedMensagensRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/cadastros/atalhos': typeof AuthenticatedCadastrosAtalhosRoute
+  '/_authenticated/cadastros/bancos': typeof AuthenticatedCadastrosBancosRoute
+  '/_authenticated/cadastros/equipamentos': typeof AuthenticatedCadastrosEquipamentosRoute
+  '/_authenticated/cadastros/mensagens': typeof AuthenticatedCadastrosMensagensRoute
+  '/_authenticated/relatorios/blend': typeof AuthenticatedRelatoriosBlendRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/ata'
     | '/auth'
+    | '/ata'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
@@ -143,13 +156,13 @@ export interface FileRouteTypes {
     | '/relatorios/blend'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/ata'
     | '/auth'
+    | '/ata'
     | '/blend'
     | '/configuracoes'
     | '/equipamentos'
     | '/mensagens'
+    | '/'
     | '/cadastros/atalhos'
     | '/cadastros/bancos'
     | '/cadastros/equipamentos'
@@ -157,49 +170,33 @@ export interface FileRouteTypes {
     | '/relatorios/blend'
   id:
     | '__root__'
-    | '/'
-    | '/ata'
+    | '/_authenticated'
     | '/auth'
-    | '/blend'
-    | '/configuracoes'
-    | '/equipamentos'
-    | '/mensagens'
-    | '/cadastros/atalhos'
-    | '/cadastros/bancos'
-    | '/cadastros/equipamentos'
-    | '/cadastros/mensagens'
-    | '/relatorios/blend'
+    | '/_authenticated/ata'
+    | '/_authenticated/blend'
+    | '/_authenticated/configuracoes'
+    | '/_authenticated/equipamentos'
+    | '/_authenticated/mensagens'
+    | '/_authenticated/'
+    | '/_authenticated/cadastros/atalhos'
+    | '/_authenticated/cadastros/bancos'
+    | '/_authenticated/cadastros/equipamentos'
+    | '/_authenticated/cadastros/mensagens'
+    | '/_authenticated/relatorios/blend'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AtaRoute: typeof AtaRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  BlendRoute: typeof BlendRoute
-  ConfiguracoesRoute: typeof ConfiguracoesRoute
-  EquipamentosRoute: typeof EquipamentosRoute
-  MensagensRoute: typeof MensagensRoute
-  CadastrosAtalhosRoute: typeof CadastrosAtalhosRoute
-  CadastrosBancosRoute: typeof CadastrosBancosRoute
-  CadastrosEquipamentosRoute: typeof CadastrosEquipamentosRoute
-  CadastrosMensagensRoute: typeof CadastrosMensagensRoute
-  RelatoriosBlendRoute: typeof RelatoriosBlendRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ata': {
-      id: '/ata'
-      path: '/ata'
-      fullPath: '/ata'
-      preLoaderRoute: typeof AtaRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -209,85 +206,121 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blend': {
-      id: '/blend'
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ata': {
+      id: '/_authenticated/ata'
+      path: '/ata'
+      fullPath: '/ata'
+      preLoaderRoute: typeof AuthenticatedAtaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/blend': {
+      id: '/_authenticated/blend'
       path: '/blend'
       fullPath: '/blend'
-      preLoaderRoute: typeof BlendRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedBlendRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/configuracoes': {
-      id: '/configuracoes'
+    '/_authenticated/configuracoes': {
+      id: '/_authenticated/configuracoes'
       path: '/configuracoes'
       fullPath: '/configuracoes'
-      preLoaderRoute: typeof ConfiguracoesRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedConfiguracoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/equipamentos': {
-      id: '/equipamentos'
+    '/_authenticated/equipamentos': {
+      id: '/_authenticated/equipamentos'
       path: '/equipamentos'
       fullPath: '/equipamentos'
-      preLoaderRoute: typeof EquipamentosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedEquipamentosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/mensagens': {
-      id: '/mensagens'
+    '/_authenticated/mensagens': {
+      id: '/_authenticated/mensagens'
       path: '/mensagens'
       fullPath: '/mensagens'
-      preLoaderRoute: typeof MensagensRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMensagensRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/cadastros/atalhos': {
-      id: '/cadastros/atalhos'
+    '/_authenticated/cadastros/atalhos': {
+      id: '/_authenticated/cadastros/atalhos'
       path: '/cadastros/atalhos'
       fullPath: '/cadastros/atalhos'
-      preLoaderRoute: typeof CadastrosAtalhosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCadastrosAtalhosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/cadastros/bancos': {
-      id: '/cadastros/bancos'
+    '/_authenticated/cadastros/bancos': {
+      id: '/_authenticated/cadastros/bancos'
       path: '/cadastros/bancos'
       fullPath: '/cadastros/bancos'
-      preLoaderRoute: typeof CadastrosBancosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCadastrosBancosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/cadastros/equipamentos': {
-      id: '/cadastros/equipamentos'
+    '/_authenticated/cadastros/equipamentos': {
+      id: '/_authenticated/cadastros/equipamentos'
       path: '/cadastros/equipamentos'
       fullPath: '/cadastros/equipamentos'
-      preLoaderRoute: typeof CadastrosEquipamentosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCadastrosEquipamentosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/cadastros/mensagens': {
-      id: '/cadastros/mensagens'
+    '/_authenticated/cadastros/mensagens': {
+      id: '/_authenticated/cadastros/mensagens'
       path: '/cadastros/mensagens'
       fullPath: '/cadastros/mensagens'
-      preLoaderRoute: typeof CadastrosMensagensRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCadastrosMensagensRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/relatorios/blend': {
-      id: '/relatorios/blend'
+    '/_authenticated/relatorios/blend': {
+      id: '/_authenticated/relatorios/blend'
       path: '/relatorios/blend'
       fullPath: '/relatorios/blend'
-      preLoaderRoute: typeof RelatoriosBlendRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedRelatoriosBlendRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAtaRoute: typeof AuthenticatedAtaRoute
+  AuthenticatedBlendRoute: typeof AuthenticatedBlendRoute
+  AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
+  AuthenticatedEquipamentosRoute: typeof AuthenticatedEquipamentosRoute
+  AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedCadastrosAtalhosRoute: typeof AuthenticatedCadastrosAtalhosRoute
+  AuthenticatedCadastrosBancosRoute: typeof AuthenticatedCadastrosBancosRoute
+  AuthenticatedCadastrosEquipamentosRoute: typeof AuthenticatedCadastrosEquipamentosRoute
+  AuthenticatedCadastrosMensagensRoute: typeof AuthenticatedCadastrosMensagensRoute
+  AuthenticatedRelatoriosBlendRoute: typeof AuthenticatedRelatoriosBlendRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAtaRoute: AuthenticatedAtaRoute,
+  AuthenticatedBlendRoute: AuthenticatedBlendRoute,
+  AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
+  AuthenticatedEquipamentosRoute: AuthenticatedEquipamentosRoute,
+  AuthenticatedMensagensRoute: AuthenticatedMensagensRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedCadastrosAtalhosRoute: AuthenticatedCadastrosAtalhosRoute,
+  AuthenticatedCadastrosBancosRoute: AuthenticatedCadastrosBancosRoute,
+  AuthenticatedCadastrosEquipamentosRoute:
+    AuthenticatedCadastrosEquipamentosRoute,
+  AuthenticatedCadastrosMensagensRoute: AuthenticatedCadastrosMensagensRoute,
+  AuthenticatedRelatoriosBlendRoute: AuthenticatedRelatoriosBlendRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AtaRoute: AtaRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  BlendRoute: BlendRoute,
-  ConfiguracoesRoute: ConfiguracoesRoute,
-  EquipamentosRoute: EquipamentosRoute,
-  MensagensRoute: MensagensRoute,
-  CadastrosAtalhosRoute: CadastrosAtalhosRoute,
-  CadastrosBancosRoute: CadastrosBancosRoute,
-  CadastrosEquipamentosRoute: CadastrosEquipamentosRoute,
-  CadastrosMensagensRoute: CadastrosMensagensRoute,
-  RelatoriosBlendRoute: RelatoriosBlendRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

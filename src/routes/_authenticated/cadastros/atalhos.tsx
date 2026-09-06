@@ -16,7 +16,7 @@ import {
   type AtalhoCCO,
 } from "@/lib/atalhos";
 
-export const Route = createFileRoute("/cadastros/atalhos")({
+export const Route = createFileRoute("/_authenticated/cadastros/atalhos")({
   head: () => ({
     meta: [
       { title: "Cadastro de Atalhos do CCO | CCO TRINDADE" },

@@ -31,7 +31,7 @@ import {
   TextField,
 } from "@/components/kit";
 
-export const Route = createFileRoute("/blend")({
+export const Route = createFileRoute("/_authenticated/blend")({
   head: () => ({
     meta: [
       { title: "Gerador de Justificativa do Blend | Movimentações do Turno" },
@@ -58,7 +58,7 @@ const AUTOSAVE_KEY = "blend-rascunho-atual-v1";
 
 function Index() {
   const { nomesAtivos, nomesLocaisOperacionais } = useLocais();
-  const { perfil, autenticado } = useAuth();
+  const { perfil } = useAuth();
   const [imagens, setImagens] = useState<ImagemT2[]>([]);
   const [statusRegistro, setStatusRegistro] = useState<string | null>(null);
   const [state, setState] = useState<JustificativaState>(estadoInicial);
@@ -562,34 +562,23 @@ function Index() {
                 </span>
               </div>
               <div className="space-y-3 p-4">
-                {autenticado ? (
-                  <>
-                    <ImagensT2 imagens={imagens} onChange={setImagens} />
-                    <div className="flex flex-wrap items-center gap-2">
-                      <ActionButton variant="primary" onClick={() => void registrar()}>
-                        SALVAR NO RELATÓRIO
-                      </ActionButton>
-                      <Link
-                        to="/relatorios/blend"
-                        className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line hover:text-foreground"
-                      >
-                        VER RELATÓRIO
-                      </Link>
-                      <span className="font-mono text-[10px] uppercase text-steel2">
-                        {perfil?.full_name ?? ""}
-                      </span>
-                    </div>
-                    {statusRegistro && (
-                      <p className="font-mono text-[11px] text-steel">{statusRegistro}</p>
-                    )}
-                  </>
-                ) : (
-                  <p className="text-sm text-steel">
-                    <Link to="/auth" className="text-signal underline">
-                      Entre com seu usuário
-                    </Link>{" "}
-                    para salvar esta justificativa com a imagem do controle T2.
-                  </p>
+                <ImagensT2 imagens={imagens} onChange={setImagens} />
+                <div className="flex flex-wrap items-center gap-2">
+                  <ActionButton variant="primary" onClick={() => void registrar()}>
+                    SALVAR NO RELATÓRIO
+                  </ActionButton>
+                  <Link
+                    to="/relatorios/blend"
+                    className="rounded-md px-3 py-2 text-xs font-semibold tracking-wide text-steel ring-1 ring-line hover:text-foreground"
+                  >
+                    VER RELATÓRIO
+                  </Link>
+                  <span className="font-mono text-[10px] uppercase text-steel2">
+                    {perfil?.full_name ?? ""}
+                  </span>
+                </div>
+                {statusRegistro && (
+                  <p className="font-mono text-[11px] text-steel">{statusRegistro}</p>
                 )}
               </div>
             </div>

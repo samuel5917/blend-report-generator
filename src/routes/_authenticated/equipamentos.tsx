@@ -1,17 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import {
+  obterInformeEquipamentos,
+  salvarInformeEquipamentos,
+} from "@/lib/equipamentosInforme.functions";
 import { AppShell } from "@/components/AppShell";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
   TURNOS_EQUIP,
   carregarCadastro,
-  carregarTurno,
-  carregarUltimoTurno,
   dadosVazios,
   formatarData,
   hojeISO,
-  salvarTurno,
-  salvarUltimoTurno,
   type DadosTurno,
   type Equipamento,
   type TurnoEquip,
@@ -26,7 +27,7 @@ import {
 } from "@/lib/exportarEquipamentos";
 import { ActionButton, Chip, Label, Section } from "@/components/kit";
 
-export const Route = createFileRoute("/equipamentos")({
+export const Route = createFileRoute("/_authenticated/equipamentos")({
   head: () => ({
     meta: [
       { title: "Informe de Turno — Equipamentos Auxiliares | CCO TRINDADE" },
@@ -57,33 +58,59 @@ function EquipamentosPage() {
   });
   const [exportando, setExportando] = useState(false);
   const docRef = useRef<HTMLDivElement>(null);
+  const carregado = useRef(false);
+  const ultimoSalvo = useRef<Record<string, DadosTurno> | null>(null);
+
+  const obter = useServerFn(obterInformeEquipamentos);
+  const persistir = useServerFn(salvarInformeEquipamentos);
 
   useEffect(() => {
-    const cad = carregarCadastro();
-    setEquipamentos(cad);
-    const t = carregarTurno();
-    if (t) {
-      setData(t.data || hojeISO());
-      setTurno(t.turno === "2°" ? "2°" : "1°");
-      setDados(t.dados ?? {});
-    }
-  }, []);
+    setEquipamentos(carregarCadastro());
+    let ativo = true;
+    void obter()
+      .then((res) => {
+        if (!ativo) return;
+        const base = res.informe ?? res.rascunho;
+        if (res.informe) ultimoSalvo.current = res.informe.dados as Record<string, DadosTurno>;
+        if (base) {
+          setData(base.data || hojeISO());
+          setTurno(base.turno === "2°" ? "2°" : "1°");
+          setDados((base.dados ?? {}) as Record<string, DadosTurno>);
+        }
+      })
+      .catch(() => {
+        toast.error("Não foi possível carregar seu último informe.");
+      })
+      .finally(() => {
+        if (ativo) carregado.current = true;
+      });
+    return () => {
+      ativo = false;
+    };
+  }, [obter]);
 
+  // Salvamento automático do rascunho do usuário autenticado
   useEffect(() => {
-    if (equipamentos.length > 0) salvarTurno({ data, turno, dados });
-  }, [data, turno, dados, equipamentos.length]);
+    if (!carregado.current) return;
+    const timer = setTimeout(() => {
+      void persistir({ data: { informe: { data, turno, dados }, tipo: "rascunho" } }).catch(
+        () => undefined,
+      );
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [data, turno, dados, persistir]);
 
   function atualizar(id: string, patch: Partial<DadosTurno>) {
     setDados((prev) => ({ ...prev, [id]: { ...(prev[id] ?? dadosVazios()), ...patch } }));
   }
 
   function duplicarUltimo() {
-    const ultimo = carregarUltimoTurno();
+    const ultimo = ultimoSalvo.current;
     if (!ultimo) {
       toast.error("Nenhum turno anterior salvo ainda.");
       return;
     }
-    setDados(ultimo.dados ?? {});
+    setDados(ultimo);
     toast.success("Dados do último turno carregados.");
   }
 
@@ -98,7 +125,10 @@ function EquipamentosPage() {
     setExportando(true);
     try {
       const blob = await gerarPng(node);
-      salvarUltimoTurno({ data, turno, dados });
+      ultimoSalvo.current = dados;
+      await persistir({ data: { informe: { data, turno, dados }, tipo: "salvo" } }).catch(
+        () => undefined,
+      );
       if (copiar) {
         const ok = await copiarImagem(blob);
         if (ok) {
@@ -115,6 +145,7 @@ function EquipamentosPage() {
       setExportando(false);
     }
   }
+
 
   const ativos = equipamentos.filter((e) => e.ativo).length;
 

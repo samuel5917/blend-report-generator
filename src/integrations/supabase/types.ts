@@ -132,6 +132,38 @@ export type Database = {
           },
         ]
       }
+      equipamentos_informes: {
+        Row: {
+          created_at: string
+          informe: Json
+          rascunho: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          informe?: Json
+          rascunho?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          informe?: Json
+          rascunho?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipamentos_informes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       locais: {
         Row: {
           ativo: boolean

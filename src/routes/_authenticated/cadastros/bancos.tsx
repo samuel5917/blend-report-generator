@@ -12,7 +12,7 @@ import {
 } from "@/lib/locais";
 import { ActionButton, Chip, Label, SelectField, TextField } from "@/components/kit";
 
-export const Route = createFileRoute("/cadastros/bancos")({
+export const Route = createFileRoute("/_authenticated/cadastros/bancos")({
   head: () => ({
     meta: [
       { title: "Cadastro de Bancos e Locais | CCO TRINDADE" },

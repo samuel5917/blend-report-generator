@@ -6,7 +6,7 @@ import { ActionButton } from "@/components/kit";
 import { useAparencia, prepararImagemFundo, type FundoModo } from "@/lib/aparencia";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/configuracoes")({
+export const Route = createFileRoute("/_authenticated/configuracoes")({
   head: () => ({
     meta: [
       { title: "Configurações — Aparência | CCO TRINDADE" },
