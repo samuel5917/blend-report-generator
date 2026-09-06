@@ -49,6 +49,7 @@ function Linha({
   const [editando, setEditando] = useState(false);
   const [nome, setNome] = useState(item.nome);
   const [mensagem, setMensagem] = useState(item.mensagem);
+  const [categoria, setCategoria] = useState(item.categoria);
   const [confirmar, setConfirmar] = useState(false);
 
   return (
@@ -62,6 +63,12 @@ function Linha({
       {editando ? (
         <div className="space-y-2">
           <TextField label="Nome da mensagem" value={nome} onChange={setNome} />
+          <TextField
+            label="Categoria"
+            value={categoria}
+            onChange={setCategoria}
+            placeholder="Ex.: MENSAGENS GERAIS"
+          />
           <TextArea label="Conteúdo da mensagem" value={mensagem} onChange={setMensagem} rows={4} />
           <div className="flex gap-2">
             <ActionButton
@@ -70,7 +77,11 @@ function Linha({
                 const n = nome.trim();
                 const m = mensagem.trim();
                 if (!n || !m) return;
-                await atualizarMensagem(item.id, { nome: n, mensagem: m });
+                await atualizarMensagem(item.id, {
+                  nome: n,
+                  mensagem: m,
+                  categoria: categoria.trim(),
+                });
                 setEditando(false);
                 await onRefresh();
               }}
@@ -81,6 +92,7 @@ function Linha({
               onClick={() => {
                 setNome(item.nome);
                 setMensagem(item.mensagem);
+                setCategoria(item.categoria);
                 setEditando(false);
               }}
             >
@@ -151,6 +163,7 @@ function CadastroMensagens() {
   const [criando, setCriando] = useState(false);
   const [nome, setNome] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const [categoriaNova, setCategoriaNova] = useState("");
   const [arrastando, setArrastando] = useState<string | null>(null);
 
   const salvarNova = async () => {
@@ -158,9 +171,10 @@ function CadastroMensagens() {
     const m = mensagem.trim();
     if (!n || !m) return;
     const maiorOrdem = mensagens.reduce((max, i) => Math.max(max, i.ordem), 0);
-    await criarMensagem(n, m, maiorOrdem + 10);
+    await criarMensagem(n, m, maiorOrdem + 10, categoriaNova);
     setNome("");
     setMensagem("");
+    setCategoriaNova("");
     setCriando(false);
     await recarregar();
   };
@@ -205,6 +219,12 @@ function CadastroMensagens() {
                 onChange={setNome}
                 placeholder="Ex.: Abastecimento da EH"
               />
+              <TextField
+                label="Categoria"
+                value={categoriaNova}
+                onChange={setCategoriaNova}
+                placeholder="Ex.: MENSAGENS GERAIS"
+              />
               <TextArea
                 label="Conteúdo da mensagem"
                 value={mensagem}
@@ -218,6 +238,7 @@ function CadastroMensagens() {
                     setCriando(false);
                     setNome("");
                     setMensagem("");
+                    setCategoriaNova("");
                   }}
                 >
                   CANCELAR
